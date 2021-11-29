@@ -1,0 +1,134 @@
+{% extends "dev/templates/base.html" %}
+
+{% block title %}
+    AGV Monitor
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/js/index.js"></script>
+{% endblock %}
+
+{% block content %}
+    <style>
+        .main-card {
+            margin-left: 10px;
+            margin-top: 10px
+        }
+        .bt-agv {
+            width: 150px;
+            margin-top:10px;
+            margin-left:10px;
+        }
+        .main-card {
+            float: left;
+        }
+    </style>
+
+    <div class="content" id="body-content">
+        
+        <div class="card main-card" style="width: 23rem;">
+            <div class="card-body">
+              <h5 class="card-title">BACKEND TEST</h5>
+              <h6 class="card-subtitle mb-2 text-muted">TEST GIAO LỘ 1</h6>
+              <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV1</h6>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=1&status=m&point=8&route=4')">MOV 8 → 9</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=1&status=i&point=8&route=4')">IDLE 8 → 9</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=1&status=m&point=9&route=4')">MOV 9 → 10</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=1&status=i&point=9&route=4')">IDLE 9 → 10</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=1&status=m&point=10&route=4')">MOV 10 → 11</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=1&status=i&point=10&route=4')">IDLE 10 → 11</button>
+              
+              <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV2</h6>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=2&status=m&point=18&route=5')">MOV 18→ 19</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=2&status=i&point=18&route=5')">IDLE 18 → 19</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=2&status=m&point=19&route=6')">MOV 19 → 10</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=2&status=i&point=19&route=6')">IDLE 19 → 10</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=2&status=m&point=10&route=6')">MOV 10 → 11</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=2&status=i&point=10&route=6')">IDLE 10 → 11</button>
+              
+              <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV3</h6>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=m&point=8&route=4')">MOV 8→ 9</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=i&point=8&route=4')">IDLE 8 → 9</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=m&point=9&route=4')">MOV 9 → 10</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=i&point=9&route=4')">IDLE 9 → 10</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=m&point=10&route=4')">MOV 10 → 11</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=i&point=10&route=4')">IDLE 10 → 11</button>
+              <button  class="btn btn-danger bt-agv" role="button" onclick="send_message('/backend/test?uid=3&status=i&point=19&route=4')">Nhầm đường 19</button>
+            </div>
+        </div>
+        <div class="card main-card" style="width: 23rem;">
+            <div class="card-body">
+              <h5 class="card-title">BACKEND TEST</h5>
+              <h6 class="card-subtitle mb-2 text-muted">TEST GIAO LỘ 2</h6>
+              <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV5</h6>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=5&status=m&point=40&route=22')">MOV 40 → 36</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=5&status=i&point=40&route=22')">IDLE 40 → 36</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=5&status=m&point=36&route=22')">MOV 36 → 35</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=5&status=i&point=36&route=22')">IDLE 36 → 35</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=5&status=m&point=35&route=22')">MOV 35 → 33</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=5&status=i&point=35&route=22')">IDLE 35 → 33</button>
+     
+              <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV7</h6>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=7&status=m&point=24&route=7')">MOV 24→ 25</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=7&status=i&point=24&route=7')">IDLE 24 → 25</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=7&status=m&point=25&route=7')">MOV 25 → 26</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=7&status=i&point=25&route=7')">IDLE 25 → 26</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=7&status=m&point=26&route=7')">MOV 26 → 27</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=7&status=i&point=26&route=7')">IDLE 26 → 27</button>
+              
+              <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV6</h6>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=6&status=m&point=33&route=8')">MOV 33→ 35</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=6&status=i&point=33&route=8')">IDLE 33 → 35</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=6&status=m&point=35&route=8')">MOV 35 → 36</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=6&status=i&point=35&route=8')">IDLE 35 → 36</button>
+              <button  class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=6&status=m&point=36&route=8')">MOV 36 → 37</button>
+              <button  class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=6&status=i&point=36&route=8')">IDLE 36 → 37</button>
+              
+              
+            </div>
+        </div>
+        <div class="card main-card" style="width: 23rem;">
+            <div class="card-body">                
+                <h6 class="card-subtitle mb-2 text-muted">TEST AGV Error</h6>
+                <h6 class="card-subtitle mb-2 sub-title-1 text-muted ml-3 mt-3  font-weight-bold">AGV4</h6>
+                <button class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=4&status=m&point=26&route=7')" >MOVE 26 → 27</button >
+                <button class="btn btn-primary bt-agv" role="button" onclick="send_message('/backend/test?uid=4&status=m&point=27&route=7')" >MOVE 27 → 28</button >
+                <button class="btn btn-warning bt-agv" role="button" onclick="send_message('/backend/test?uid=4&status=i&point=27&route=7')" >IDLE 27 → 28</button >
+                <button class="btn btn-danger bt-agv" role="button" onclick="send_message('/backend/test?uid=4&status=e&point=27&route=7')" >ERROR 27 → 28</button >
+            </div>
+        </div>
+        <div class="card main-card" style="width: 23rem;">   
+            <div class="card-body">
+                <h5 class="card-title">FRONTEND TEST</h5>
+                <h6 class="card-subtitle mb-2 text-muted">TOPIC: /agv/intersect; Giao lộ 1</h6>
+                <button class="btn btn-primary bt-agv" role="button" onclick="send_message('/intersect_0')" >Không có xe   </button >
+                <button class="btn btn-primary bt-agv" role="button" onclick="send_message('/intersect_1')">Giao lộ có 1 xe</button >
+                <button class="btn btn-primary bt-agv" role="button" onclick="send_message('/intersect_2')">Giao lộ có 2 xe</button >
+                <button class="btn btn-primary bt-agv" role="button" onclick="send_message('/intersect_3')">Giao lộ có 3 xe</button >
+              </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">TEST MQTT FRONTEND</h6>
+              <button href="#" id = "agv1" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv1')" >AGV1</button>
+              <button href="#" id = "agv2" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv2')" >AGV2</button>
+              <button href="#" id = "agv3" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv3')" >AGV3</button>
+              <button href="#" id = "agv4" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv4')" >AGV4</button>
+              <button href="#" id = "agv5" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv5')" >AGV5</button>
+              <button href="#" id = "agv6" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv6')" >AGV6</button>
+              <button href="#" id = "agv7" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv7')" >AGV7</button>
+              <button href="#" id = "agv8" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv8')" >AGV8</button>
+              <button href="#" id = "agv9" class="btn btn-info bt-agv" role="button" onclick="send_message('/agv9')">AGV9</button>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Test notification</h6>
+                <button href="#" id = "notify-sucess" class="btn btn-success bt-agv" role="button" onclick="send_message('/notify_sucess')">Notify Sucess</button>
+                <button href="#" id = "notify-error"  class="btn btn-danger bt-agv" role="button" onclick="send_message('/notify_error')">Notify Error</button>
+              </div>
+        </div>
+  
+      
+        
+    </div>
+
+
+{% endblock %}
+

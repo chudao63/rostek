@@ -1,0 +1,19 @@
+<!doctype html>
+{{ fontawesome_html() }}
+<title>{% block title %}{% endblock %}</title>
+<head>
+  {% include 'dev/templates/static.html' %}
+  {% block scripts %} {% endblock %}
+  {% block styles %}{% endblock %}
+  {% block header %}{% endblock %}
+  {% include 'dev/templates/notify.html'%}
+  {% include 'dev/templates/navbar.html'%}
+</head>
+<body >
+  <div id = "main-content">
+  {% block content %}
+    
+  {% endblock %}
+  </div>  
+</body>
+

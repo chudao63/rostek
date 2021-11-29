@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "4e09e0b5-bf29-4f1a-8311-d2f57820254f",
+		"name": "AgvMonitor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hompage",
+			"item": [
+				{
+					"name": "khởi tạo màn realtime",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5009/route/detail",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5009",
+							"path": [
+								"route",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trang cài đặt",
+			"item": [
+				{
+					"name": "Menu Route",
+					"item": [
+						{
+							"name": "get route",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:5009/route",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"route"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add new route",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"list_point\": [1,4]\n}"
+								},
+								"url": {
+									"raw": "127.0.0.1:5009/route",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"route"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "download template",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:5009/route/export/template",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"route",
+										"export",
+										"template"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload data",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "file",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/Users/hoinguyen/Desktop/template.xlsx"
+										}
+									]
+								},
+								"url": {
+									"raw": "127.0.0.1:5009/route/export/template",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"route",
+										"export",
+										"template"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Menu Point",
+					"item": [
+						{
+							"name": "get point",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:5009/point",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"point"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "post point",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n    \"name\": \"Point5\",\n    \"x\": 100,\n    \"y\": 100,\n    \"isDragging\": true,\n    \"type\": \"MOVING\",\n    \"rfid\": \"1001\"\n}"
+								},
+								"url": {
+									"raw": "127.0.0.1:5009/point",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"point"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "patch point",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n    \"id\" : 1,\n    \"x\": 100\n}"
+								},
+								"url": {
+									"raw": "127.0.0.1:5009/point",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5009",
+									"path": [
+										"point"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Menu Robot",
+					"item": []
+				}
+			]
+		}
+	]
+}
