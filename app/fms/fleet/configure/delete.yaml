@@ -1,0 +1,10 @@
+---
+data:
+- name: id
+  label: Mã
+  rules:
+  - required: true
+- name: admin_password
+  label: email
+  rules:
+  - required: true

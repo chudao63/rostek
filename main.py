@@ -6,7 +6,8 @@ from flask import send_from_directory
 IMPORT URL FROM SOFTWARE
 """
 from app.update.urls import *
-from app.warehouse.urls import *
+from app.fms.urls import *
+
 
 if __name__ == "__main__":
     if MqttConfigure.ACTIVE:

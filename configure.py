@@ -1,6 +1,6 @@
 class FlaskConfigure(object):
     HOST    = '0.0.0.0'
-    PORT    = 5009
+    PORT    = 5015
     DEBUG   = True
 
 
@@ -33,8 +33,8 @@ class MysqlConfigure(object):
     # HOST = '13.229.146.39'
     HOST        = '127.0.0.1'
     USER        = 'root'
-    PASSWORD    = 'Rostek@2019'
-    DATABASE    = 'agv_monitor'
+    PASSWORD    = '123456'
+    DATABASE    = 'amr_rostek'
 
 class OperatingSystem(object):
     PASSWORD    = '1'

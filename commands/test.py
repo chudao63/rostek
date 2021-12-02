@@ -8,7 +8,7 @@ from flask_script import Command
 from utils.vntime import VnTimestamp
 import requests, random, logging, coloredlogs
 import yaml, string
-
+from app import db
 class TestCommand(Command):
 	""" Command for testing """
 	def __init__(self):
