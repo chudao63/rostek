@@ -2,7 +2,7 @@ import logging
 from app.users.models import User, UserRole
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource
-from app.ultils import *
+from utils.common import *
 
 class UserValidate:
 	@staticmethod

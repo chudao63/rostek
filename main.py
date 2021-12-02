@@ -5,6 +5,7 @@ from flask import send_from_directory
 """
 IMPORT URL FROM SOFTWARE
 """
+from app.users.urls import *
 from app.update.urls import *
 from app.fms.urls import *
 

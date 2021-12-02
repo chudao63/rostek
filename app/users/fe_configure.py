@@ -1,20 +1,12 @@
 
-from humanfriendly.terminal import message, warning
 from .consts import *
 from .models import *
-from .validators import UserValidate
-from app.ultils import *
-from app.common.apimodel import ApiBase, BaseConfigureApi
+from utils.common import *
+from utils.apimodel import ApiBase, BaseConfigureApi
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_restful import Resource, request
-from passlib.hash import pbkdf2_sha256 as sha256
-import logging
-from sqlalchemy import exc, and_, func
-import json
+import json, os
 from .consts import *
-import os, sys, yaml
-from app.common.yamlmodel import YamlReadWrite
-from pathlib import Path
+from utils.yamlmodel import YamlReadWrite
 
 class UserColumnApi(ApiBase):
     """URL: /user/column
