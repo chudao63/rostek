@@ -12,7 +12,6 @@ api.add_resource(
     '/changestate'
 )
 
-
 api.add_resource(
     OrderConfigureApi, 
     '/order/filter',      # replace order to module name
