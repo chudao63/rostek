@@ -2,11 +2,11 @@ import re
 from sqlalchemy.sql.sqltypes import REAL
 from utils.apimodel import BaseApiPagination
 from flask_restful import Resource, reqparse,request
-from app.models.area import Area
+from app.models.location import Location
 
-class AreaApi(BaseApiPagination):
+class LocationApi(BaseApiPagination):
     """
-    URL: /area
+    URL: /location
     """
     def __init__(self):
-        BaseApiPagination.__init__(self, Area, "/area")
+        BaseApiPagination.__init__(self, Location, "/location")

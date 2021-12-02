@@ -1,17 +1,22 @@
 from app import api
 from .apis import *
-from .fe_configure import NewOrderConfigureApi
+from .fe_configure import OrderConfigureApi
 
 api.add_resource(
-    NewOrderApi,
-    '/neworder'
+    OrderApi,
+    '/order'
+)
+
+api.add_resource(
+    ChangeStateOrderApi,
+    '/changestate'
 )
 
 
 api.add_resource(
-    NewOrderConfigureApi, 
-    '/neworder/filter',      # replace neworder to module name
-    '/neworder/post',        # replace neworder to module name
-    '/neworder/patch',       # replace neworder to module name
-    '/neworder/delete'       # replace neworder to module name
+    OrderConfigureApi, 
+    '/order/filter',      # replace order to module name
+    '/order/post',        # replace order to module name
+    '/order/patch',       # replace order to module name
+    '/order/delete'       # replace order to module name
 )

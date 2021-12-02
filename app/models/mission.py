@@ -10,8 +10,6 @@ from app.models.product import *
 from utils.dbmodel import DbBaseModel
 
 
-
-
 class Mission(db.Model, DbBaseModel):
     id       =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     name     =  Column(String(50),unique= True, nullable= False)
@@ -20,3 +18,4 @@ class Mission(db.Model, DbBaseModel):
     product  =  Column(Integer, ForeignKey(Product.id), nullable= False)
 
 
+db.create_all()
