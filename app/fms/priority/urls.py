@@ -3,7 +3,7 @@ from .apis import *
 from .fe_configure import PriorityConfigureApi
 
 api.add_resource(
-    Priority,
+    PriorityApi,
     '/priority'
 )
 
