@@ -14,4 +14,5 @@ class Order(db.Model, DbBaseModel):
     robot       = Column(Integer, ForeignKey(Robot.id), nullable=False)
     mission     = Column(Integer, ForeignKey(Mission.id), nullable= False)
     priority    = Column(Integer, ForeignKey(Priority.id), nullable= False)
+    active      = Column(String(50), nullable= False)
     note        = Column(String(300), nullable= False)

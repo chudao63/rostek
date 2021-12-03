@@ -7,10 +7,21 @@ api.add_resource(
     '/order'
 )
 
+
 api.add_resource(
-    ChangeStateOrderApi,
-    '/changestate'
+    OrderTypeApi,
+    '/ordertype'
 )
+api.add_resource(
+    DeleteOrder,
+    '/deleteorder'
+)
+api.add_resource(
+    OrderDetailsApi,
+    '/orderdetails'
+)
+
+
 
 api.add_resource(
     OrderConfigureApi, 
@@ -18,4 +29,10 @@ api.add_resource(
     '/order/post',        # replace order to module name
     '/order/patch',       # replace order to module name
     '/order/delete'       # replace order to module name
+)
+
+
+api.add_resource(
+    Test,
+    '/test'
 )
