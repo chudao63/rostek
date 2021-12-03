@@ -14,8 +14,6 @@ from app import db
 from sqlalchemy import and_
 from utils import vntime
 
-
-
 class OrderApi(BaseApiPagination):
     """
     URL: /order
@@ -41,12 +39,10 @@ class OrderTypeApi(Resource):
         args = parser.parse_args()
         dataFilter = []
 
-        if args['id'] != "0":
-            dataFilter.append(Order.id == args['id'])
         if args['status']:
             dataFilter.append(Order.status == args['status'])
         
-        datas = Order.query.filter(and_(*dataFilter)).all()
+        datas = Order.query.filter(and_(*dataFilter)).all() #sua datas
         output =[]
         for data in datas:
             if data.active == "deactive":
@@ -91,12 +87,9 @@ class DeleteOrder(Resource):
         if args['id'] != "0":
             order = Order.query.get(args['id'])
 
-            order.active = "deactive"
+            order.active = "deactive" # true False
             db.session.add(order)
             db.session.commit()
             return order.active
-
-
-
 
      

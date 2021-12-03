@@ -10,4 +10,3 @@ class Area(db.Model, DbBaseModel):
     id      =   Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     name    =   Column(String(50), unique= True, nullable= False)
 
-db.create_all()

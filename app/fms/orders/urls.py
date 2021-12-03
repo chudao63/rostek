@@ -7,11 +7,11 @@ api.add_resource(
     '/order'
 )
 
-
 api.add_resource(
     OrderTypeApi,
-    '/ordertype'
+    '/orders'
 )
+
 api.add_resource(
     DeleteOrder,
     '/deleteorder'
@@ -19,7 +19,8 @@ api.add_resource(
 api.add_resource(
     OrderDetailsApi,
     '/orderdetails'
-)
+) # sua lai details
+
 
 
 

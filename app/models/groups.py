@@ -10,3 +10,4 @@ class Groups(db.Model, DbBaseModel):
     group_name  = Column(db.String(50), unique= True, nullable= False)
     mission     = Column(Integer, ForeignKey(Mission.id), nullable= False)
 
+

@@ -22,3 +22,4 @@ class Robot(db.Model, DbBaseModel):
     type        =   Column(Integer, ForeignKey(TypeRobot.id), nullable= False )
     group       =   Column(Integer, ForeignKey(Groups.id), nullable= True)
 
+

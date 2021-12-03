@@ -26,7 +26,9 @@ APP_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_PATH = os.path.join(APP_PATH, 'app')
 print(TEMPLATE_PATH)
 app = Flask(__name__, template_folder=TEMPLATE_PATH)
+
 CORS(app)
+
 
 """
 CONFIGURE SQLALCHEMY
@@ -49,7 +51,7 @@ app.config['MQTT_PASSWORD'] = MqttConfigure.MQTT_PASSWORD
 app.config['MQTT_KEEPALIVE'] = MqttConfigure.MQTT_KEEPALIVE
 app.config['MQTT_TLS_ENABLED'] = MqttConfigure.MQTT_TLS_ENABLED
 
-api = Api(app)
+api = Api(app, prefix='/api/v1')
 app.config['SECRET_KEY'] = '123456'
 socketio = SocketIO(app)
 

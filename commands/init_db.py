@@ -7,7 +7,7 @@ from app.users.models import *
 
 from app.models.area import *
 from app.models.groups import *
-from app.models.location import *
+from app.models.position import *
 from app.models.mission import *
 from app.models.orders import *
 from app.models.priority import *
