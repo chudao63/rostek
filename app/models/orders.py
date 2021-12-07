@@ -1,20 +1,23 @@
+import re
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import Column, ForeignKey
-from sqlalchemy.sql.sqltypes import Enum, Integer, Boolean
+from sqlalchemy.sql.sqltypes import  Integer, Boolean
+from sqlalchemy import String
 from app import db
-from app.models.robot import *
-from app.models.mission import *
-from app.models.priority import *
 from utils.dbmodel import DbBaseModel
 from app.fms.orders.consts import *
 
 class Order(db.Model, DbBaseModel):
+    __tablename__ = 'order'
     id          = Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     start_time  = Column(String(50), nullable= False)
     end_time    = Column(String(50), nullable= False)
-    status      = Column(Integer, default=OrderStatus.Released.name,  unique=False,  nullable=False)
-    robot       = Column(Integer, ForeignKey(Robot.id), nullable=False)
-    mission     = Column(Integer, ForeignKey(Mission.id), nullable= False)
-    priority    = Column(Integer, ForeignKey(Priority.id), nullable= False)
-    active      = Column(Boolean, default = True, nullable=False)
+    status      = Column(Integer, default=ORDER_STATUS.WAITTING.name,  unique=False,  nullable=False)
+    robot_id    = Column(Integer, ForeignKey('robot.id'), nullable=False)
+    mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= False)
+    priority    = Column(Integer, default=ORDER_PRIORITY.LEVEL_1.name,nullable= False)
+    active      = Column(Boolean, default = ORDER_ACTIVE.ACTIVE.name, nullable=False)
     note        = Column(String(300), nullable= False)
+    robot       = relationship("Robot", backref= "order", lazy= True) #***#
+    mission     = relationship("Mission", backref= "order", lazy= True)
 

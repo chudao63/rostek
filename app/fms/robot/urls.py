@@ -1,11 +1,17 @@
 from app import api 
-from .apis import RobotApi
+from .apis import RobotApi, RobotFoundApi
 from .fe_configure import RobotConfigureApi
 
 
 api.add_resource(
     RobotApi,
     '/robot'
+)
+
+
+api.add_resource(
+    RobotFoundApi,
+    '/robots'
 )
 
 api.add_resource(

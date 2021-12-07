@@ -1,11 +1,13 @@
 import logging
 from operator import attrgetter
+from os import name
 import re
 from typing import NewType
 from humanfriendly.terminal import output
 from sqlalchemy.orm.query import Query
 from sqlalchemy.sql.expression import outerjoin
 from sqlalchemy.sql.sqltypes import REAL
+from app.fms.orders.consts import ORDER_STATUS
 from app.models.product import Product
 from utils.apimodel import BaseApiPagination
 from flask_restful import Resource, reqparse,request
@@ -24,60 +26,97 @@ class OrderApi(BaseApiPagination):
 
 class Test(Resource):
     def get(self):
-        datas = Order.query.all()
-        output = []
-        for data in datas:
-            dataDict = data.__dict__
-            dataDict.pop("_sa_instance_state")
-            output.append(dataDict)
-        return output
-class OrderTypeApi(Resource):
-    def get(self):
+        """
+        Trả về thông tin của các lệnh được tìm theo ID và trạng thái của lệnh
+        """
         parser = reqparse.RequestParser()
-        parser.add_argument('id')
         parser.add_argument('status')
         args = parser.parse_args()
         dataFilter = []
 
         if args['status']:
             dataFilter.append(Order.status == args['status'])
-        
         datas = Order.query.filter(and_(*dataFilter)).all() #sua datas
+
         output =[]
+        
         for data in datas:
-            if data.active == "deactive":
+            robotName   = data.robot.name
+            missionName = data.mission.name
+            jobType = data.mission.type_job
+
+            if data.active == 0:
                 continue
             else:
                 dataDict = data.__dict__
                 dataDict.pop("_sa_instance_state")
+                dataDict.pop("robot")
+                dataDict.pop("mission")
+
+                dataDict["robot_name"]  = robotName
+                dataDict["mision_name"] = missionName
+                dataDict["jobType"]     = jobType
                 output.append(dataDict)
         return output
 
+class OrdersApi(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('status')
+        args = parser.parse_args()
+        dataFilter = []
+
+
+        for orderStatus in ORDER_STATUS:
+            if args['status'] == orderStatus.name.lower():
+                dataFilter.append(Order.status == orderStatus.value)
+        datas = Order.query.filter(and_(*dataFilter)).all()
+        output =[]
+        for data in datas:
+            if data.active == 0:
+                continue
+            else:
+                dataDict = data.__dict__
+                dataDict.pop("_sa_instance_state")
+                # dataDict.pop("robot")
+                # dataDict.pop("mission")
+                output.append(dataDict)
+        return output
 
 
 class OrderDetailsApi(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id')
-
         args = parser.parse_args()
-        dataFilter = [] 
 
-        if args["id"]:
-            dataFilter.append(Order.id == args['id'])
-
-        datas = Order.query.filter(and_(*dataFilter)).all()
-
-        output = []
+        if args['id']:
+            datas = Order.query.filter(Order.id == args['id'])
+        
         for data in datas:
-            if data.active == "deactive":
+            if data.active == 0:
                 continue
             else:
-                dataDict = data.__dict__
+                dataDict    = data.__dict__
+                robotDict   = data.robot.__dict__
+                missionDict = data.mission.__dict__
+                
                 dataDict.pop("_sa_instance_state")
-                output.append(dataDict)
-        return output
+                robotDict.pop("_sa_instance_state")
+                missionDict.pop("_sa_instance_state")
 
+                dataDict.pop("robot")
+                dataDict.pop("mission")
+
+
+                dataDict["robot"]  = robotDict
+                dataDict["mision"] = missionDict
+
+        return dataDict
+
+
+
+  
 class DeleteOrder(Resource):
     def get(self):
         parser = reqparse.RequestParser()
@@ -87,9 +126,9 @@ class DeleteOrder(Resource):
         if args['id'] != "0":
             order = Order.query.get(args['id'])
 
-            order.active = "deactive" # true False
+            order.active = 0 # true False
             db.session.add(order)
             db.session.commit()
-            return order.active
+            return "Deactive thành công"
 
      

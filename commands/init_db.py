@@ -10,7 +10,6 @@ from app.models.groups import *
 from app.models.position import *
 from app.models.mission import *
 from app.models.orders import *
-from app.models.priority import *
 from app.models.product import *
 from app.models.robot import *
 from app.models.type_robot import *

@@ -3,12 +3,12 @@ from .apis import *
 from .fe_configure import OrderConfigureApi
 
 api.add_resource(
-    OrderApi,
+    OrderDetailsApi,
     '/order'
 )
 
 api.add_resource(
-    OrderTypeApi,
+    OrdersApi,
     '/orders'
 )
 
@@ -16,11 +16,6 @@ api.add_resource(
     DeleteOrder,
     '/deleteorder'
 )
-api.add_resource(
-    OrderDetailsApi,
-    '/orderdetails'
-) # sua lai details
-
 
 
 
