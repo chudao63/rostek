@@ -92,7 +92,7 @@ class OrderDetailsApi(Resource):
 
         if args['id']:
             datas = Order.query.filter(Order.id == args['id'])
-        
+        output = []
         for data in datas:
             if data.active == 0:
                 continue
@@ -111,8 +111,8 @@ class OrderDetailsApi(Resource):
 
                 dataDict["robot"]  = robotDict
                 dataDict["mision"] = missionDict
-
-        return dataDict
+                output.append(dataDict)
+        return output
 
 
 
