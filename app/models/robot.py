@@ -15,7 +15,7 @@ class Robot(db.Model, DbBaseModel):
     name        =   Column(String(50), unique= True, nullable= False)
     battery     =   Column(Float, nullable= False)
     ip_adress   =   Column(String(50), nullable= False)
-    active      =   Column(Boolean, default = ORDER_ACTIVE.ACTIVE.name, nullable=False)
+    active      =   Column(Boolean, default = ORDER_ACTIVE.TRUE.name, nullable=False)
     area        =   Column(Integer, ForeignKey('area.id'), nullable= False)
     type        =   Column(Integer, ForeignKey('type_robot.id'), nullable= False )
     group       =   Column(Integer, ForeignKey('groups.id'), nullable= True)

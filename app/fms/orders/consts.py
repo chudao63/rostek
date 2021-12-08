@@ -8,8 +8,9 @@ class ORDER_STATUS(enum.Enum):
 
 
 class ORDER_ACTIVE(enum.Enum):
-    ACTIVE = 1
-    DEACTIVE = 0
+    TRUE = 1
+    FALSE = 0
+    
 
 class ORDER_PRIORITY(enum.Enum):
     LEVEL_1  = 1

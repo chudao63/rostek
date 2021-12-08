@@ -30,8 +30,8 @@ class MqttConfigure(object):
     AGV_COUNT_MESSAGE   = 20
     
 class MysqlConfigure(object):
-    # HOST        = '54.169.159.150'
-    HOST        = '127.0.0.1'
+    HOST        = '54.169.159.150'
+    # HOST        = '127.0.0.1'
     USER        = 'root'
     PASSWORD    = 'Rostek@2019'
     DATABASE    = 'amr'

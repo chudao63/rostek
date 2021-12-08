@@ -13,8 +13,8 @@ api.add_resource(
 )
 
 api.add_resource(
-    DeleteOrder,
-    '/deleteorder'
+    SetActivation,
+    '/setactivation'
 )
 
 

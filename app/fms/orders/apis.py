@@ -117,18 +117,25 @@ class OrderDetailsApi(Resource):
 
 
   
-class DeleteOrder(Resource):
+class SetActivation(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id')
+        parser.add_argument('active')
+
         args = parser.parse_args()
 
-        if args['id'] != "0":
-            order = Order.query.get(args['id'])
-
-            order.active = 0 # true False
-            db.session.add(order)
-            db.session.commit()
-            return "Deactive thành công"
-
+        if  args['id']:
+            data = Order.query.get(args['id']) 
+            if args['active']:
+                if args['active'] == "true":
+                    data.active = 1
+                    db.session.add(data)
+                    db.session.commit()
+                    return "True"
+                if args['active'] == "false":
+                    data.active = 0
+                    db.session.add(data)
+                    db.session.commit()
+                    return "False"
      
