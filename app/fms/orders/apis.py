@@ -73,14 +73,16 @@ class OrdersApi(Resource):
         datas = Order.query.filter(and_(*dataFilter)).all()
         output =[]
         for data in datas:
+            missionName = data.mission.name
+
             if data.active == 0:
                 continue
             else:
                 dataDict = data.__dict__
                 dataDict.pop("_sa_instance_state")
+                dataDict['mission_name'] = missionName
                 output.append(dataDict)
         return output
-
 
 class OrderDetailsApi(Resource):
     def get(self):
