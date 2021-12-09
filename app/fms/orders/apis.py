@@ -87,7 +87,7 @@ class OrderDetailsApi(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id')
         args = parser.parse_args()
-
+        dataDict = {}
         if args['id']:
             datas = Order.query.filter(Order.id == args['id'])
         for data in datas:

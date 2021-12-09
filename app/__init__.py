@@ -35,7 +35,7 @@ CONFIGURE SQLALCHEMY
 """
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://{MysqlConfigure.USER}:{MysqlConfigure.PASSWORD}@{MysqlConfigure.HOST}/{MysqlConfigure.DATABASE}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SQLALCHEMY_POOL_SIZE'] = 20
+app.config['SQLALCHEMY_POOL_SIZE'] = 50
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
