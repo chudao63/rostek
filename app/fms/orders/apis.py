@@ -78,8 +78,6 @@ class OrdersApi(Resource):
             else:
                 dataDict = data.__dict__
                 dataDict.pop("_sa_instance_state")
-                # dataDict.pop("robot")
-                # dataDict.pop("mission")
                 output.append(dataDict)
         return output
 
@@ -92,7 +90,6 @@ class OrderDetailsApi(Resource):
 
         if args['id']:
             datas = Order.query.filter(Order.id == args['id'])
-        output = []
         for data in datas:
             if data.active == 0:
                 continue
@@ -110,9 +107,8 @@ class OrderDetailsApi(Resource):
 
 
                 dataDict["robot"]  = robotDict
-                dataDict["mision"] = missionDict
-                output.append(dataDict)
-        return output
+                dataDict["mission"] = missionDict
+        return dataDict
 
 
 
