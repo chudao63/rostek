@@ -72,12 +72,26 @@ class OrdersApi(Resource):
                 dataFilter.append(Order.status == orderStatus.value)
         datas = Order.query.filter(and_(*dataFilter)).all()
         output =[]
+
+
+
         for data in datas:
+            # robotName = data.robot.name
+            robotName = data.robot.name
+            missionName = data.mission.name
+            job_type = data.mission.type_job
+            logging.error(robotName)
             if data.active == 0:
                 continue
             else:
                 dataDict = data.__dict__
                 dataDict.pop("_sa_instance_state")
+                dataDict.pop("robot")
+                dataDict.pop("mission")
+                dataDict["robot_name"] = robotName
+                dataDict["mission_name"] = missionName
+                dataDict['job_type'] = job_type
+                
                 output.append(dataDict)
         return output
 
