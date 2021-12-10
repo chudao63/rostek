@@ -1,3 +1,4 @@
+from re import I
 from flask_script import Command
 from app import db
 from configure import *
@@ -13,6 +14,7 @@ from app.models.orders import *
 from app.models.product import *
 from app.models.robot import *
 from app.models.type_robot import *
+from app.models.map import *
 # from app.models.users import *
 
 
