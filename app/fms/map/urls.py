@@ -6,6 +6,10 @@ api.add_resource(
     MapsApi,
     '/map'
 )
+api.add_resource(
+    UploadMapApi,
+    '/upload'
+)
 
 
 

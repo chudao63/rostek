@@ -15,3 +15,19 @@ class MapsApi(BaseApiPagination):
     """
     def __init__(self):
         BaseApiPagination.__init__(self, Maps, "/map")
+
+
+
+class UploadMapApi(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('fileName')
+
+        args = parser.parse_args()
+
+        if request.files:
+            infile = request.files['file']
+            appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
+            fileName = f"{appPath}/upload_file/{str(args['fileName'])}.png"
+            infile.save(fileName)
+            return "Done!!!"
