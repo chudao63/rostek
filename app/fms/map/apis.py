@@ -24,7 +24,7 @@ class UploadMapApi(Resource):
         parser.add_argument('fileName')
 
         args = parser.parse_args()
-        map = Maps(fileName = args['fileName'])
+        map = Maps(file_Name = args['fileName'])
         db.session.add(map)
         db.session.commit()
         
