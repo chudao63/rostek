@@ -27,7 +27,6 @@ class UploadMapApi(Resource):
 
         if args['fileName']:
             map = Maps(file_name = args['fileName'])
-            logging.error(args['fileName'])
             db.session.add(map)
             db.session.commit()
         
