@@ -6,10 +6,9 @@ from utils.apimodel import BaseApiPagination
 from flask_restful import Resource, reqparse, request
 import os, sys
 from flask import send_from_directory
-from flask import Flask
-from app import app
-from os import abort
-from app import api 
+from app.models.map import Maps
+from app import db
+
 class MapsApi(BaseApiPagination):
     """
     URL: /map
@@ -25,6 +24,10 @@ class UploadMapApi(Resource):
         parser.add_argument('fileName')
 
         args = parser.parse_args()
+        map = Maps(fileName = args['fileName'])
+        db.session.add(map)
+        db.session.commit()
+        
 
         if request.files:
             infile = request.files['file']
