@@ -23,10 +23,11 @@ class UploadMapApi(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('fileName')
 
-        args = parser.parse_args()
-        
+        data = args = parser.parse_args()
+
         if args['fileName']:
-            map = Maps(file_Name = args['fileName'])
+            map = Maps(file_name = args['fileName'])
+            logging.error(args['fileName'])
             db.session.add(map)
             db.session.commit()
         
