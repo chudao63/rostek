@@ -3,7 +3,7 @@ from utils.apimodel import BaseConfigureApi
 from utils.yamlmodel import YamlReadWrite
 import os, logging
 
-class GroupsConfigureApi(BaseConfigureApi, YamlReadWrite):
+class MapConfigureApi(BaseConfigureApi, YamlReadWrite):
     """
     URL: /module/filter
     Lấy giá trị filter/post/path/delete cho frontend

@@ -1,18 +1,18 @@
 from app import api
 from .apis import *
-from .fe_configure import GroupsConfigureApi
+from .fe_configure import MapConfigureApi
 
 api.add_resource(
-    GroupsApi,
-    '/groups'
+    MapsApi,
+    '/map'
 )
 
 
 
 api.add_resource(
-    GroupsConfigureApi, 
-    '/groups/filter',      # replace groups to module name
-    '/groups/post',        # replace groups to module name
-    '/groups/patch',       # replace groups to module name
-    '/groups/delete'       # replace groups to module name
+    MapConfigureApi, 
+    '/map/filter',      # replace map to module name
+    '/map/post',        # replace map to module name
+    '/map/patch',       # replace map to module name
+    '/map/delete'       # replace map to module name
 )
