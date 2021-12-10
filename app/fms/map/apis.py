@@ -1,3 +1,4 @@
+import logging
 import re
 from sqlalchemy.sql.sqltypes import REAL
 from app.models.map import Maps
@@ -7,8 +8,8 @@ import os, sys
 from flask import send_from_directory
 from flask import Flask
 from app import app
-
-
+from os import abort
+from app import api 
 class MapsApi(BaseApiPagination):
     """
     URL: /map
@@ -31,3 +32,14 @@ class UploadMapApi(Resource):
             fileName = f"{appPath}/upload_file/{str(args['fileName'])}.png"
             infile.save(fileName)
             return "Done!!!"
+
+class DownloadFileApi(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('imageName')
+        args = parser.parse_args()
+        logging.error(args)
+
+        return send_from_directory(
+            directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/upload_file", filename=  (args['imageName']))
+

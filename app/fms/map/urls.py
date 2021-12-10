@@ -11,6 +11,10 @@ api.add_resource(
     '/upload'
 )
 
+api.add_resource(
+    DownloadFileApi,
+    '/download'
+)
 
 
 api.add_resource(
