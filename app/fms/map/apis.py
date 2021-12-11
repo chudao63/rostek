@@ -21,12 +21,12 @@ class MapsApi(BaseApiPagination):
 class UploadMapApi(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('fileName')
+        parser.add_argument('imageName')
 
         data = args = parser.parse_args()
 
-        if args['fileName']:
-            map = Maps(file_name = args['fileName'])
+        if args['imageName']:
+            map = Maps(file_name = args['imageName'])
             db.session.add(map)
             db.session.commit()
         
@@ -34,7 +34,7 @@ class UploadMapApi(Resource):
         if request.files:
             infile = request.files['file']
             appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
-            fileName = f"{appPath}/upload_file/{str(args['fileName'])}.png"
+            fileName = f"{appPath}/upload_file/{str(args['imageName'])}.png"
             infile.save(fileName)
             return "Done!!!"
 
@@ -46,5 +46,5 @@ class DownloadFileApi(Resource):
         logging.error(args)
 
         return send_from_directory(
-            directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/upload_file", filename=  (args['imageName']))
+            directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/upload_file", filename= f"{args['imageName']}.png")
 
