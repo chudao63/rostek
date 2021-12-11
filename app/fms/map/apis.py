@@ -1,5 +1,6 @@
 import logging
 import re
+from sqlalchemy.sql.expression import delete
 from sqlalchemy.sql.sqltypes import REAL
 from app.models.map import Maps
 from utils.apimodel import BaseApiPagination
@@ -26,7 +27,6 @@ class UploadMapApi(Resource):
         args = parser.parse_args()
 
         if args['imageName']:
-            
             datas = Maps.query.all()
             for data in datas:
                 logging.error(data.file_name)
@@ -55,3 +55,17 @@ class DownloadFileApi(Resource):
         return send_from_directory(
             directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/upload_file", filename= f"{args['imageName']}.png")
 
+
+
+class DeleteImageApi(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id')
+        args = parser.parse_args()
+
+        if args['id']:
+            deleteImage = Maps.query.filter(Maps.id == args['id']).one()
+            db.session.delete(deleteImage)
+            db.session.commit()
+            return "delete done"
+        

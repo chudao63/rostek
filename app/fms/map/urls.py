@@ -13,8 +13,14 @@ api.add_resource(
 
 api.add_resource(
     DownloadFileApi,
-    '/download'
+    '/display'
 )
+
+api.add_resource(
+    DeleteImageApi,
+    '/deleteimage'
+)
+
 
 
 api.add_resource(
