@@ -23,9 +23,16 @@ class UploadMapApi(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('imageName')
 
-        data = args = parser.parse_args()
+        args = parser.parse_args()
 
         if args['imageName']:
+            
+            datas = Maps.query.all()
+            for data in datas:
+                logging.error(data.file_name)
+                if data.file_name == args['imageName']:
+                    return "Namesake"
+
             map = Maps(file_name = args['imageName'])
             db.session.add(map)
             db.session.commit()
