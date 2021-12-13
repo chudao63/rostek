@@ -1,5 +1,4 @@
-import logging, json, roslibpy, time, arrow
-from app import db
+import logging, json, roslibpy, time
 from app.models.robot_status import RobotStatus
 from .subcriber import mqtt
 from configure import MqttConfigure
@@ -30,7 +29,6 @@ class RobotRuning:
 		self.ip = ip
 		self.port = port
 		self.init_ros_bridge()
-		self.currentMessageToAgv = [] #message to send to AGV
 		self.latestTimeSendOrder = VnTimestamp.now() # Lần cuối nhận lệnh gửi Order xuống AGV
 		self.latestChangeState   = VnTimestamp.now() # Lần cuốit thay đổi trạng thái
 
@@ -61,7 +59,7 @@ class RobotRuning:
 		}
 		mqtt.publish(MqttConfigure.FRONTEND_TOPIC, json.dumps(data))
 		self.mqtt_count += 1
-		# print(f"Pub to frontend -> {self.mqtt_count}")
+		print(f"Pub to frontend -> {self.mqtt_count}")
 
 
 	def update(self, data):
@@ -177,6 +175,7 @@ class RobotRuning:
 		"""
 		Lắng nghe thay đổi vị trí của robot
 		"""
+		print("->>",message)
 		pose = message['pose']['pose']['position']
 		pose.pop('z')
 		orientation = message['pose']['pose']['orientation']
@@ -232,7 +231,7 @@ class RobotRuning:
 		# print(message)
 		pass
 
-	def create_command_to_agv(self,point_type, station, floor):
+	def send_message_to_agv(self,point_type, station, floor):
 		"""
 		Tạo bản tin chứa data cần gửi xuống AGV
 		"""

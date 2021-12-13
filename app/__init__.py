@@ -13,7 +13,7 @@ from configure import *
 """
 CONFIGURE LOG
 """
-coloredlogs.install(level='INFO', fmt = '[%(hostname)s] [%(filename)s:%(lineno)s - %(funcName)s() ] %(asctime)s %(levelname)s %(message)s' )
+coloredlogs.install(level='INFO', fmt = '[%(hostname)s] [%(pathname)s:%(lineno)s - %(funcName)s() ] %(asctime)s %(levelname)s %(message)s' )
 # homepath = os.path.expanduser('~')
 # logging.basicConfig(
 #     format  = '%(asctime)s - %(filename)s:%(lineno)s - %(funcName)10s() - %(levelname)s - %(message)s',

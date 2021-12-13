@@ -1,7 +1,6 @@
 from app import mqtt
 import logging, json
 from .realtime import RobotRuning
-from configure import ROS_BRIDGE
 from app.models.robot import Robot
 
 class Monitor:
@@ -18,16 +17,16 @@ class Monitor:
 
 	def __init__(self):
 		self.robots = {}
+		robots = Robot.query.all()
+		for robot in robots:
+			self.robots[robot.id] = RobotRuning(robot.id, robot.ip, robot.port)
+
 		if Monitor.__instance != None:
 			raise Exception("Do not call __init__(). Monitor is a singleton!")
 		else:
 			Monitor.__instance = self
 
-if ROS_BRIDGE.ACTIVE:
-	robots = Robot.query.all()
-	for robot in robots:
-		Monitor.getInstance().robots[robot.id] = RobotRuning(robot.id, robot.ip, robot.port)
-
+mqtt.subscribe("/agv/cmd")
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
@@ -40,7 +39,10 @@ def handle_mqtt_message(client, userdata, message):
 		topic=message.topic
 		payload=json.loads(message.payload.decode())
 		logging.info(payload)
-
+		robot_id = payload["robot_id"]
+		cmd = payload["cmd"]
+		Monitor.getInstance().robots[robot_id].
 	except Exception as e:
 		logging.error(e)
 
+Monitor.getInstance()

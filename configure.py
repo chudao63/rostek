@@ -39,3 +39,4 @@ class MysqlConfigure(object):
 class OperatingSystem(object):
     PASSWORD    = '1'
     BRIDGE_SERVICE = 'rostek-bridge.service'
+    # ROS_BRIDGE  = 'rostek-bridge.service'
