@@ -2,6 +2,12 @@ from app import api
 from .apis import *
 from .fe_configure import OrderConfigureApi
 
+
+api.add_resource(
+    OrderApi,
+    '/order-base'
+)
+
 api.add_resource(
     OrderDetailsApi,
     '/order'
@@ -17,6 +23,11 @@ api.add_resource(
     '/setactivation'
 )
 
+
+api.add_resource(
+    UpdateOrderApi,
+    '/update-order'
+)
 
 
 api.add_resource(

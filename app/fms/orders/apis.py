@@ -103,6 +103,13 @@ class SetActivation(Resource):
                     db.session.add(data)
                     db.session.commit()
                     return "False"
+
+class UpdateOrderApi(Resource):
+    def patch(self):
+        data = request.get_json(force=True)
+        robot = Order.query.get(data['id'])
+        
+
      
 class Test(Resource):
     def post(self):
