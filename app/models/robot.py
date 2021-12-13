@@ -1,6 +1,3 @@
-
-from humanfriendly.compat import basestring
-from sqlalchemy.sql.expression import false
 from sqlalchemy.sql.schema import Column, ForeignKey
 from sqlalchemy.sql.sqltypes import Float, Integer, String,Boolean
 from app.fms.orders.consts import *
