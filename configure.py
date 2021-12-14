@@ -18,8 +18,8 @@ class Development(object):
 
 class MqttConfigure(object):
     ACTIVE              = True
-    # MQTT_BROKER_URL = '13.229.146.39'
-    MQTT_BROKER_URL     = '127.0.0.1'
+    MQTT_BROKER_URL = '13.229.146.39'
+    # MQTT_BROKER_URL     = '127.0.0.1'
     MQTT_BROKER_PORT    = 1883
     MQTT_USERNAME       = ''
     MQTT_PASSWORD       = ''
@@ -39,3 +39,4 @@ class MysqlConfigure(object):
 class OperatingSystem(object):
     PASSWORD    = '1'
     BRIDGE_SERVICE = 'rostek-bridge.service'
+    # ROS_BRIDGE  = 'rostek-bridge.service'

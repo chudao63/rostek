@@ -6,10 +6,10 @@ from utils.dbmodel import DbBaseModel
 
 
 
-class Groups(db.Model, DbBaseModel):
-    __tablename__ = 'groups'
+class Group(db.Model, DbBaseModel):
+    __tablename__ = 'group'
     id          = Column(Integer, primary_key= True, autoincrement= True, nullable= False)
-    group_name  = Column(String(50), unique= True, nullable= False)
-    mission     = Column(Integer, ForeignKey('mission.id'), nullable= False)
+    name        = Column(String(50), unique= True, nullable= False)
+    # mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= False)
 
 
