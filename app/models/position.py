@@ -12,6 +12,7 @@ class Position(db.Model, DbBaseModel):
     X            =   Column(String(50), nullable= False)
     Y            =   Column(String(50), nullable= False)
     R            =   Column(Float, nullable= False)
+    type         =   Column(String(50), nullable= False)
 
 
 

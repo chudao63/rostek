@@ -251,7 +251,11 @@ class RobotRuning:
 			'pose': {'position': {'y': 0, 'x': 0, 'z': 0}, 
 			'orientation': {'y': 0, 'x': 0, 'z': 0, 'w': 0}}
 		}
-		self.currentMessageToAgv.append(message)
+		if self.agvWayPoint:
+			self.agvWayPoint.publish(message)
+		else:
+			logging.error("AGV chua ket noi voi server")
+
 		
 	def finish_load(self):
 		"""
