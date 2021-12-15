@@ -52,12 +52,16 @@ def handle_mqtt_message(client, userdata, message):
 
 		if cmd == 'unload':
 			print("unload")
-			Monitor.getInstance().robots[robot_id].send_message_to_agv(4,1,1) #gửi lệnh xuống agv, có 3 tham số, use poit_typequ
+			position = {'y': 2, 'x':3, 'z': 0}
+			orientation ={'y': 12, 'x': 3, 'z': 5, 'w': 1}
+			Monitor.getInstance().robots[robot_id].send_message_to_agv(4,1,1,position,orientation) #gửi lệnh xuống agv, có 3 tham số, use poit_typequ
 	
 		
 		if cmd == 'moving':
 			print("moving")
-			Monitor.getInstance().robots[robot_id].send_message_to_agv(1,1,1) #gửi lệnh xuống agv, có 3 tham số, use poit_type
+			position = {'y': 14, 'x':25, 'z': 37}
+			orientation ={'y': 81, 'x': 121, 'z': 172, 'w': 54}
+			Monitor.getInstance().robots[robot_id].send_message_to_agv(1,1,1,position,orientation) #gửi lệnh xuống agv, có 3 tham số, use poit_type
 		
 	
 

@@ -13,26 +13,26 @@ from .consts import *
 
 class RobotRuning:
 	def __init__(self, robotId, ip, port):
-		self.engine = engine.create_engine(f"mysql://{MysqlConfigure.USER}:{MysqlConfigure.PASSWORD}@{MysqlConfigure.HOST}/{MysqlConfigure.DATABASE}")
-		self.Session = sessionmaker(bind=self.engine)
-		self.robotId = robotId
-		lasteastStatus = RobotStatus.get_lasteast_status(robotId)
-		self.__robotStatus = lasteastStatus["status"]
-		self.pose = lasteastStatus["pose"]
-		self.info = lasteastStatus["info"]
-		self.__robotState = 0
-		self.count = 0
-		self.number = 0
-		self.mqtt_count = 0
-		self.error = False
-		self.time = 0
-		self.agvWayPointCountFeedback = 0
+		self.engine 					= engine.create_engine(f"mysql://{MysqlConfigure.USER}:{MysqlConfigure.PASSWORD}@{MysqlConfigure.HOST}/{MysqlConfigure.DATABASE}")
+		self.Session 					= sessionmaker(bind=self.engine)
+		self.robotId 					= robotId
+		lasteastStatus 					= RobotStatus.get_lasteast_status(robotId)
+		self.__robotStatus				= lasteastStatus["status"]
+		self.pose 						= lasteastStatus["pose"]
+		self.info 						= lasteastStatus["info"]
+		self.__robotState 				= 0
+		self.count						= 0
+		self.number 					= 0
+		self.mqtt_count 				= 0
+		self.error 						= False
+		self.time 						= 0
+		self.agvWayPointCountFeedback 	= 0
 		self.agvWayPointLengthFeedback  = 0
-		self.ip = ip
-		self.port = port
+		self.ip 						= ip
+		self.port 						= port
 		self.init_ros_bridge()
-		self.latestTimeSendOrder = VnTimestamp.now() # Lần cuối nhận lệnh gửi Order xuống AGV
-		self.latestChangeState   = VnTimestamp.now() # Lần cuốit thay đổi trạng thái
+		self.latestTimeSendOrder 		= VnTimestamp.now() # Lần cuối nhận lệnh gửi Order xuống AGV
+		self.latestChangeState  		= VnTimestamp.now() # Lần cuốit thay đổi trạng thái
 		self.count = 0
 
 	def __repr__(self):
@@ -166,7 +166,7 @@ class RobotRuning:
 		"""
   		Lắng nghe feedback từ agv sau khi gửi command
     	"""
-		# logging.error(f" <<-- {message}")
+		logging.error(f" <<-- {message}")
 		self.agvWayPointCountFeedback += 1
 		if self.agvWayPointCountFeedback == self.agvWayPointLengthFeedback:
 			if self.agvWayPointCurrentTypeFeedback == 3:
@@ -256,11 +256,12 @@ class RobotRuning:
 			'header': {'stamp': {'secs': 0, 'nsecs': 0}, 
 			'frame_id': json.dumps(frame_id), 
 			'seq': 1}, 
-			'pose': {'position':{'y': 0, 'x': 0, 'z': 0, 'w': 0},
-			'orientation': {'y': 0, 'x': 0, 'z': 0, 'w': 0}}
+			'pose': {'position': positon,
+			'orientation': orientation}
 		}
 		if self.agvWayPoint:
 			self.agvWayPoint.publish(message)
+			logging.warning(message)
 		else:
 			logging.error("AGV chua ket noi voi server")
 
