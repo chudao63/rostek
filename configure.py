@@ -19,7 +19,10 @@ class Development(object):
 class MqttConfigure(object):
     ACTIVE              = True
     MQTT_BROKER_URL = '13.229.146.39'
-    # MQTT_BROKER_URL     = '127.0.0.1'
+    # MQTT_BROKER_URL     = '192.168.10.17'
+    # MQTT_BROKER_URL     = '192.168.10.10'
+    # MQTT_BROKER_URL = "192.168.10.30"
+
     MQTT_BROKER_PORT    = 1883
     MQTT_USERNAME       = ''
     MQTT_PASSWORD       = ''
@@ -30,11 +33,13 @@ class MqttConfigure(object):
     AGV_COUNT_MESSAGE   = 20
     
 class MysqlConfigure(object):
-    HOST        = '54.169.159.150'
-    # HOST        = '127.0.0.1'
+    # HOST        = '54.169.159.150'
+    HOST        = '127.0.0.1'
     USER        = 'root'
-    PASSWORD    = 'Rostek@2019'
-    DATABASE    = 'amr'
+    # PASSWORD    = 'Rostek@2019'
+    PASSWORD    = '123456'
+
+    DATABASE    = 'amr_rostek'
 
 class OperatingSystem(object):
     PASSWORD    = '1'

@@ -1,4 +1,6 @@
 import logging, json, roslibpy, time
+
+from sqlalchemy.sql.functions import count
 from app.models.robot_status import RobotStatus
 from .subcriber import mqtt
 from configure import MqttConfigure
@@ -31,6 +33,7 @@ class RobotRuning:
 		self.init_ros_bridge()
 		self.latestTimeSendOrder = VnTimestamp.now() # Lần cuối nhận lệnh gửi Order xuống AGV
 		self.latestChangeState   = VnTimestamp.now() # Lần cuốit thay đổi trạng thái
+		self.count = 0
 
 	def __repr__(self):
 		return json.dumps(self.as_dict)
@@ -175,6 +178,9 @@ class RobotRuning:
 		"""
 		Lắng nghe thay đổi vị trí của robot
 		"""
+		# if self.count <50:
+		# 	self.count = self.count +1
+		# 	return 
 		print("->>",message)
 		pose = message['pose']['pose']['position']
 		pose.pop('z')
@@ -219,6 +225,8 @@ class RobotRuning:
 				"batery" : frame_id["battery"]
 			},
 			"conveyor_status" : frame_id["conveyor_status"]
+			# "conveyor_status" : 1
+
 		}
 		self.update(payload)
 
@@ -231,7 +239,7 @@ class RobotRuning:
 		# print(message)
 		pass
 
-	def send_message_to_agv(self,point_type, station, floor):
+	def send_message_to_agv(self,point_type, station, floor, positon, orientation):
 		"""
 		Tạo bản tin chứa data cần gửi xuống AGV
 		"""
@@ -248,7 +256,7 @@ class RobotRuning:
 			'header': {'stamp': {'secs': 0, 'nsecs': 0}, 
 			'frame_id': json.dumps(frame_id), 
 			'seq': 1}, 
-			'pose': {'position': {'y': 0, 'x': 0, 'z': 0}, 
+			'pose': {'position':{'y': 0, 'x': 0, 'z': 0, 'w': 0},
 			'orientation': {'y': 0, 'x': 0, 'z': 0, 'w': 0}}
 		}
 		if self.agvWayPoint:

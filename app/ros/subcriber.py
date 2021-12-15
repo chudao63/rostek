@@ -46,17 +46,20 @@ def handle_mqtt_message(client, userdata, message):
 
 		if cmd == 'load':
 			print("load")
-			Monitor.getInstance().robots[robot_id].send_message_to_agv(3,1,1) #gửi lệnh xuống agv, có 3 tham số, use poit_type
-		
+			position = {'y': 4, 'x':5, 'z': 7}
+			orientation ={'y': 8, 'x': 11, 'z': 12, 'w': 4}
+			Monitor.getInstance().robots[robot_id].send_message_to_agv(3,1,1,position,orientation) #gửi lệnh xuống agv, có 3 tham số, use poit_type
+
 		if cmd == 'unload':
 			print("unload")
-			Monitor.getInstance().robots[robot_id].send_message_to_agv(4,1,1) #gửi lệnh xuống agv, có 3 tham số, use poit_type
+			Monitor.getInstance().robots[robot_id].send_message_to_agv(4,1,1) #gửi lệnh xuống agv, có 3 tham số, use poit_typequ
+	
 		
 		if cmd == 'moving':
 			print("moving")
 			Monitor.getInstance().robots[robot_id].send_message_to_agv(1,1,1) #gửi lệnh xuống agv, có 3 tham số, use poit_type
 		
-		# Monitor.getInstance().robots[robot_id].agv_status_printer(payload['pose'])
+	
 
 			
 

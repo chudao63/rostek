@@ -10,6 +10,10 @@ from app.update.urls import *
 from app.fms.urls import *
 from app.ros.subcriber import *
 
+
+
+
+
 if __name__ == "__main__":
     # if MqttConfigure.ACTIVE:
     #     socketio.run(app, host=FlaskConfigure.HOST, port=FlaskConfigure.PORT, use_reloader=True , debug=FlaskConfigure.DEBUG)
