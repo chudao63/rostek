@@ -12,7 +12,7 @@ class OrderApi(BaseApiPagination):
     URL: /order
     """
     def __init__(self):
-        BaseApiPagination.__init__(self, Order, "/order")
+        BaseApiPagination.__init__(self, Order, "/order-base")
 
 
 class OrdersApi(Resource):
