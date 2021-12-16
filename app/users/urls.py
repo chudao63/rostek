@@ -1,6 +1,7 @@
 from app import api
 from .apis import  *
 from .fe_configure import UserFilterApi, UserColumnApi
+
 api.add_resource(
     UserApi, 
     '/user',            #GET for all level, POST/PATCH/DELETE for only admin level
