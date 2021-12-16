@@ -70,10 +70,6 @@ def handle_mqtt_message(client, userdata, message):
 # 	orientation ={'y': 81, 'x': 121, 'z': 172, 'w': 54}
 # 	Monitor.getInstance().robots[robot_id].send_message_to_agv(1,1,1,position,orientation) #gửi lệnh xuống agv, có 3 tham số, use poit_type
 
-	
-
-			
-
 	except Exception as e:
 		logging.error(e)
 Monitor.getInstance()
