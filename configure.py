@@ -17,14 +17,7 @@ class Development(object):
     ACTIVE = True
 
 class MqttConfigure(object):
-    ACTIVE              = True
-    # MQTT_BROKER_URL = '127.0.0.1'
-
-    MQTT_BROKER_URL     = '13.229.146.39'
-    # MQTT_BROKER_URL     = '192.168.10.17'
-    # MQTT_BROKER_URL     = '192.168.10.10'
-    # MQTT_BROKER_URL     = "192.168.10.30"
-
+    MQTT_BROKER_URL = '127.0.0.1'
     MQTT_BROKER_PORT    = 1883
     MQTT_USERNAME       = ''
     MQTT_PASSWORD       = ''
@@ -33,6 +26,7 @@ class MqttConfigure(object):
     FRONTEND_TOPIC      = '/agv/realtime'
     COM_NOTIFY_TOPIC    = '/notify_com'
     AGV_COUNT_MESSAGE   = 20
+    ACTIVE              = True
     
 class MysqlConfigure(object):
     HOST        = '54.169.159.150'
@@ -41,9 +35,8 @@ class MysqlConfigure(object):
     PASSWORD    = 'Rostek@2019'
     # PASSWORD    = '123456'
 
-    # DATABASE    = 'amr_rostek'
-    DATABASE    = 'amr'
-
+    DATABASE    = 'amr_rostek'
+    # DATABASE    = 'amr'
 
 class OperatingSystem(object):
     PASSWORD    = '1'

@@ -17,9 +17,9 @@ class UserApi(ApiCommon):
 	def __init__(self):
 		ApiCommon.__init__(self, User, "/user")
 
+	@ApiCommon.exception_error
 	@UserValidate.admin_level
 	def get(self):
-		if "/all" in request.path:
 			parser = self.request_parser(['current', 'number_of_page', 'username', 'name'], [])
 			# users = User.query.all()
 			_filter = []
@@ -42,43 +42,7 @@ class UserApi(ApiCommon):
 				total = len(users)
 			data = []
 			for user in  users:
-				user_dict = as_dict(user)
-				user_dict["password"] = ""
-				userRole = UserRole.query.get(user_dict["role_id"])
-				user_dict["role_name"] = userRole.name
-				data.append(user_dict)
-			return {
-				"data" : data,
-				"page_info" : {
-					"current" : pageNumber + 1,
-					"number_of_page" : int(quantityInPage),
-					"total" : total
-				}
-			}
-		else:
-			parser = self.request_parser(['current', 'number_of_page', 'username', 'name'], [])
-			_filter = []
-			_filter.append(User.role_id == 1 or User.role_id == 2)
-			if parser['username']:
-				_filter.append(User.id.contains(parser['username']))
-			if parser['name']:
-				_filter.append(User.name.contains(parser['name']))
-			if parser['current']:
-				pageNumber = int(parser['current']) - 1
-				quantityInPage = int(parser['number_of_page']) if parser['number_of_page'] else 10
-				total = db.session.query(func.count(User.id)).filter(and_(*_filter)).scalar()
-				users= User.query.filter(and_(*_filter)).limit(quantityInPage).offset(pageNumber*quantityInPage).all()
-			else:
-				if parser['number_of_page']:
-					quantityInPage = parser['number_of_page']
-				else:
-					quantityInPage = 10
-				pageNumber = 0
-				users= User.query.filter(and_(*_filter)).all()
-				total = len(users)
-			data = []
-			for user in  users:
-				user_dict = as_dict(user)
+				user_dict = object_as_dict(user)
 				user_dict["password"] = ""
 				userRole = UserRole.query.get(user_dict["role_id"])
 				user_dict["role_name"] = userRole.name
