@@ -12,7 +12,7 @@ api.add_resource(
 )
 
 api.add_resource(
-    DownloadFileApi,
+    DisplayMapApi,
     '/display'
 )
 

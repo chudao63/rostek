@@ -45,7 +45,7 @@ class UploadMapApi(Resource):
             infile.save(fileName)
             return "Done!!!"
 
-class DownloadFileApi(Resource):
+class DisplayMapApi(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('imageName')
