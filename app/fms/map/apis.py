@@ -17,8 +17,6 @@ class MapsApi(BaseApiPagination):
     def __init__(self):
         BaseApiPagination.__init__(self, Maps, "/map")
 
-
-
 class UploadMapApi(Resource):
     def post(self):
         parser = reqparse.RequestParser()

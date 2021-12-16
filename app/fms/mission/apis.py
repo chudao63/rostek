@@ -9,3 +9,4 @@ class MissionApi(BaseApiPagination):
     """
     def __init__(self):
         BaseApiPagination.__init__(self, Mission, "/mission")
+
