@@ -25,12 +25,6 @@ api.add_resource(
 
 
 api.add_resource(
-    UpdateOrderApi,
-    '/update-order'
-)
-
-
-api.add_resource(
     OrderConfigureApi, 
     '/order/filter',      # replace order to module name
     '/order/post',        # replace order to module name

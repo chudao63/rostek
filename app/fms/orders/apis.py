@@ -104,13 +104,6 @@ class SetActivation(Resource):
                     db.session.commit()
                     return "False"
 
-class UpdateOrderApi(Resource):
-    def patch(self):
-        data = request.get_json(force=True)
-        robot = Order.query.get(data['id'])
-        
-        
-
      
 class Test(Resource):
     def post(self):
@@ -125,3 +118,4 @@ class Test(Resource):
             fileName = f"{appPath}/upload_file/{str(args['fileName'])}.png"
             infile.save(fileName)
             return "Done!!!"
+
