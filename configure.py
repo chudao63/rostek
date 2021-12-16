@@ -18,10 +18,12 @@ class Development(object):
 
 class MqttConfigure(object):
     ACTIVE              = True
-    MQTT_BROKER_URL = '13.229.146.39'
+    # MQTT_BROKER_URL = '127.0.0.1'
+
+    MQTT_BROKER_URL     = '13.229.146.39'
     # MQTT_BROKER_URL     = '192.168.10.17'
     # MQTT_BROKER_URL     = '192.168.10.10'
-    # MQTT_BROKER_URL = "192.168.10.30"
+    # MQTT_BROKER_URL     = "192.168.10.30"
 
     MQTT_BROKER_PORT    = 1883
     MQTT_USERNAME       = ''

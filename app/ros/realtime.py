@@ -236,7 +236,7 @@ class RobotRuning:
 		In các bản tin điều khiển
 		"""
 		# print("Control message ->")
-		# print(message)
+		print(message)
 		pass
 
 	def send_message_to_agv(self,point_type, station, floor, positon, orientation):
@@ -261,7 +261,7 @@ class RobotRuning:
 		}
 		if self.agvWayPoint:
 			self.agvWayPoint.publish(message)
-			logging.warning(message)
+			# logging.warning(message)
 		else:
 			logging.error("AGV chua ket noi voi server")
 
