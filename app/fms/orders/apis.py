@@ -115,7 +115,7 @@ class Test(Resource):
         if request.files:
             infile = request.files['file']
             appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
-            fileName = f"{appPath}/upload_file/{str(args['fileName'])}.png"
+            fileName = f"{appPath}/app/fms/map/img/{str(args['fileName'])}.png"
             infile.save(fileName)
             return "Done!!!"
 
