@@ -39,7 +39,8 @@ class UploadMapApi(Resource):
         if request.files:
             infile = request.files['file']
             appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
-            fileName = f"{appPath}/upload_file/{str(args['imageName'])}.png"
+            fileName = f"{appPath}/app/fms/map/img/{str(args['imageName'])}.png"
+
             infile.save(fileName)
             return "Done!!!"
 
@@ -51,7 +52,7 @@ class DisplayMapApi(Resource):
         logging.error(args)
 
         return send_from_directory(
-            directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/upload_file", filename= f"{args['imageName']}.png")
+            directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/app/fms/map/img", filename= f"{args['imageName']}.png")
 
 
 
