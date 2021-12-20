@@ -10,7 +10,7 @@ from app.ros.subcriber import Monitor
 from utils.common import object_as_dict, create_response_message
 
 
-class MapApi(BaseApiPagination):
+class MapApiBase(BaseApiPagination):
     """
     URL: /map
     """
@@ -90,7 +90,7 @@ class ActiveMapDataApi(ApiBase):
 			mapData.active = True
 			db.session.add(mapData)
 			db.session.commit()
-			Monitor.getInstance().reload_map_data()
+			# Monitor.getInstance().reload_map_data()
 			# return create_response_message("Thêm mới thành công", 200)
 			return create_response_message("Active thành công",200)
 		return parser["message"]
@@ -186,20 +186,20 @@ class MapDataApi(ApiCommon):
 	# 			Route.delete_route_file(id)
 	# 			return create_response_message("Xóa thành công", 200)
 
-# class MapApi(ApiBase):
-# 	"""URL: /route/detail
-# 	DỮ LIỆU ĐƯỜNG ĐI TRÊN BẢN ĐỒ
-# 	"""
-# 	@ApiBase.exception_error
-# 	def get(self):
-# 		return MapData.get_data()
+class MapApi(ApiBase):
+	"""URL: /route/detail
+	DỮ LIỆU ĐƯỜNG ĐI TRÊN BẢN ĐỒ
+	"""
+	@ApiBase.exception_error
+	def get(self):
+		return MapData.get_data()
 	
-# 	@ApiBase.exception_error
-# 	def post(self):
-# 		data = request.get_json(force=True)
-# 		MapData.save_data(data)
-# 		Monitor.getInstance().reload_map_data()
-# 		return create_response_message("Sửa thành công", 200)
+	@ApiBase.exception_error
+	def post(self):
+		data = request.get_json(force=True)
+		MapData.save_data(data)
+		# Monitor.getInstance().reload_map_data()
+		return create_response_message("Sửa thành công", 200)
 
 
 

@@ -65,6 +65,7 @@ class MapData(db.Model, DbBaseModel):
 		id = MapData.get_current_id()
 		appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
 		fileName = f"{appPath}/app/fms/map/data/{id}.yaml"
+		logging.error(id)
 		with open(fileName, 'w') as file:
 			yaml.dump(data, file,  explicit_start=True,sort_keys=False,  allow_unicode=True)
 	

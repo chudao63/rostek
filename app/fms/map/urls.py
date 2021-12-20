@@ -3,7 +3,7 @@ from .apis import *
 from .fe_configure import MapConfigureApi
 
 api.add_resource(
-    MapApi,
+    MapApiBase,
     '/map'
 )
 api.add_resource(
@@ -54,7 +54,7 @@ api.add_resource(
 #     '/map_data/speed'
 # )
  
-# api.add_resource( 
-#     MapApi, 
-#     '/route/detail'
-# )
+api.add_resource( 
+    MapApi, 
+    '/route/detail'
+)
