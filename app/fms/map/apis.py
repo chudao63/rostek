@@ -24,16 +24,16 @@ class UploadMapApi(Resource):
 
         args = parser.parse_args()
 
-        if args['imageName']:
-            datas = Map.query.all()
-            for data in datas:
-                logging.error(data.file_name)
-                if data.file_name == args['imageName']:
-                    return "Namesake"
+        # if args['imageName']:
+        #     # datas = Map.query.all()
+        #     # for data in datas:
+        #     #     logging.error(data.file_name)
+        #     #     if data.file_name == args['imageName']:
+        #     #         return "Namesake"
 
-            map = Map(file_name = args['imageName'])
-            db.session.add(map)
-            db.session.commit()
+        #     map = Map(file_name = args['imageName'])
+        #     db.session.add(map)
+        #     db.session.commit()
         
 
         if request.files:
