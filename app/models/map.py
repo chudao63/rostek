@@ -1,3 +1,4 @@
+from dateutil.rrule import TU
 from sqlalchemy import Column, String, ForeignKey, Boolean, Integer, exc
 from utils.dbmodel import DbBaseModel
 from app import db
@@ -7,7 +8,8 @@ from PIL import Image
 class Map(db.Model, DbBaseModel):
 	__tablename__ = "map"
 	id 		= Column(String(50), primary_key=True, nullable=False)
-	active  = Column(Boolean, default=False, nullable=False)
+	active  = Column(Boolean, default=False, nullable=True)
+	
 
 	
 class MapData(db.Model, DbBaseModel):

@@ -27,6 +27,10 @@ class Monitor:
 			raise Exception("Do not call __init__(). Monitor is a singleton!")
 		else:
 			Monitor.__instance = self
+			
+	def reload_map_data(self):
+		#reload data
+		pass
 
 mqtt.subscribe("/agv/cmd")
 

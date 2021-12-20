@@ -1,0 +1,440 @@
+[33mcommit 3a33a962f4dbacb3e59db538d1f09ed078267d77[m[33m ([m[1;36mHEAD -> [m[1;32mbackend_dao[m[33m)[m
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Mon Dec 20 17:51:59 2021 +0700
+
+    commit server
+
+[33mcommit 5fa405818fa0dd55fff525f4f4f22409570743a7[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 14:55:03 2021 +0700
+
+     Thêm lại return trong OrderDetailApi - Xác nhận không đồng bộ code
+
+[33mcommit d0b7a13745c70548b247e700fd568a38b72d549c[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 14:51:27 2021 +0700
+
+     Xóa return ở OrderDetailApi để test lỗi không đồng bộ sever
+
+[33mcommit 82b9fbafdda102183b9eb4ef8a8d7f309b197565[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 14:19:46 2021 +0700
+
+     Thêm active ở bảng Group
+
+[33mcommit 8a191f9c002b875b69bbb81a0bd0aea0b3626668[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 14:02:45 2021 +0700
+
+     Tắt kết nối robot để test api
+
+[33mcommit aacb15c4abe50b48debda375a34c80b2c1503e0c[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 12:20:59 2021 +0700
+
+     Fix lỗi upload đường đi của bản đồ, thêm api active_map, upload file image - chưa xong phần lưu trên db, cần thiết kế lại models
+
+[33mcommit c0e138458ac7cfe069199cd899ba13bbfa773971[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 10:57:07 2021 +0700
+
+    Fix xong lỗi không upload được file do sai thiết kế models
+
+[33mcommit c156e3a76fcbdfa9bf390dedcb6d03b6d8381001[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 20 09:22:51 2021 +0700
+
+    Daocm Update Get Data Map, Post Data Map, Get Data Map -yaml
+
+[33mcommit 721737dbc30d5a5209ba719a3ca2f935de7ac9cd[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 17 10:39:18 2021 +0700
+
+    Đổi đường dẫn trong thư mục app/fms/map để lưu và hiển thị ảnh
+
+[33mcommit 88eb7527bb071700b0382694f6b3f49106a9d118[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 17 10:36:01 2021 +0700
+
+    Đổi đường dẫn file lưu img
+
+[33mcommit 06afc5e1f5236a687030c7633039666912ae413b[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 17:38:41 2021 +0700
+
+     import kết nối robot
+
+[33mcommit b0fa0d3a4712fbcfc281ff0da3fc3d728b0d97d5[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 17:28:25 2021 +0700
+
+    update
+
+[33mcommit bcb923915260ad251d6a819e32d464b709f212e8[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 16:06:07 2021 +0700
+
+     sửa Class DownloadApi -> DisplayMapApi
+
+[33mcommit 2573a6a83357edafd43f6e1675ba92afebc9a2a7[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 15:59:30 2021 +0700
+
+     sửa url /order -> order-base trong OrderApi
+
+[33mcommit 7eb1ed0ca266f6a08fb5a94797eca0b43ff8a8de[m
+Merge: 2748811 48b004d
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 15:27:34 2021 +0700
+
+     connect DATABASE = 'amr_rostek'
+
+[33mcommit 27488111965797330840179035d91b205809754e[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 15:13:59 2021 +0700
+
+    daocm
+
+[33mcommit 48b004dda8e1d528bedaf7e48c5b297c56643466[m
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Thu Dec 16 15:10:15 2021 +0700
+
+    fix user
+
+[33mcommit efdaedf83e860361ec05f06898f79fb752e47768[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 14:09:28 2021 +0700
+
+    Tat ket noi voi robot de test api
+
+[33mcommit 32a6168d87eca0a8ce77c697c6ffd7121345050c[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 11:55:32 2021 +0700
+
+    update send waypoit, command to agv ok
+
+[33mcommit 8bee20341433e5dfa63f3dd823c78486e82fcd96[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 16 10:52:03 2021 +0700
+
+    update send_message_to_agv (1) send_waypoint (2) send_command
+
+[33mcommit 893895086a424db19cb168d48b68dd9ab9a090b2[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Wed Dec 15 12:01:57 2021 +0700
+
+    Update send_message_to_agv()
+
+[33mcommit 29a98edb6e99d4cee91b15d9c5b8da251f2b1eb8[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Wed Dec 15 11:28:31 2021 +0700
+
+    update
+
+[33mcommit f2adb98dc5d07d3532b35312b8e5a3586016c546[m
+Merge: 84928cc c9ad697
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Tue Dec 14 11:20:28 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit c9ad697c8f82c88415039406b703cf1999a8603f[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Tue Dec 14 11:14:12 2021 +0700
+
+    update send data agv
+
+[33mcommit 7a360b22f674093a01cb296712c1012222f1a2ca[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 13 21:26:00 2021 +0700
+
+    update mqtt
+
+[33mcommit 01e308ac7620dd218e001e19ec7d338b060acf0e[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 13 18:18:33 2021 +0700
+
+    update ros
+
+[33mcommit 84928ccc247f93b2d16e271d52ce9044c3578d22[m
+Merge: 8c1c6c0 79d43bb
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Mon Dec 13 10:05:08 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 79d43bb06c71c67391e72aaf2db0a622f03eff13[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Mon Dec 13 10:04:15 2021 +0700
+
+    update DeleteRobot, update UpdateOrder
+
+[33mcommit 8c1c6c05e353fa3a9fe752d71b5b6d950c017069[m
+Merge: 39b6a5b 1be2df7
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Sat Dec 11 09:56:41 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 1be2df786f919e1e79227e12225eb070818de5b5[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Sat Dec 11 09:56:24 2021 +0700
+
+    update delete image
+
+[33mcommit 39b6a5bda1e011a2d6f3380d57c40562da107ecd[m
+Merge: 7bb4e58 e56e850
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Sat Dec 11 09:19:04 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit e56e850d457d909966dee7e70002080120661e26[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Sat Dec 11 09:17:39 2021 +0700
+
+    Namesake in upload
+
+[33mcommit 7bb4e58b6314653efd7fa918e6d4683632e39afd[m
+Merge: aa13af6 f0d5df6
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Sat Dec 11 09:04:46 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit f0d5df6149bc1998ba1906505a176b32d4dd4bd2[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Sat Dec 11 09:03:59 2021 +0700
+
+    update para upload fileName -> imageName
+
+[33mcommit aa13af6ec6c98fa6fabed2fd284c89dddb1dfc27[m
+Merge: 1038a00 4497b14
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 17:16:17 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 4497b14803de4d9d8978c776328a29058fc07b40[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 17:15:42 2021 +0700
+
+    Them upload thi ghi data len db
+
+[33mcommit 1038a00b873138aa7c61c0092ed2207731b5ea53[m
+Merge: 2b2cd09 94e556a
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 17:12:53 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 94e556a7d4bd04b1aa9379a974296470ff432d01[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 17:12:41 2021 +0700
+
+    daocm
+
+[33mcommit 2b2cd095cb5f50dd87b5ba0f7fe6e4a5e34c853e[m
+Merge: 7f59e1d 9c839be
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 17:05:49 2021 +0700
+
+    upload
+
+[33mcommit 9c839be8173e6656c2005cde57d1ca6ae87b9c44[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 17:04:10 2021 +0700
+
+    daocm
+
+[33mcommit 7f59e1d8afd9b5b593aa4446a129b700954444c2[m
+Merge: 65f156d a901cb8
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 17:02:09 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit a901cb8bd3e66790fa57b450aab9249e8dbf6d28[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 17:01:58 2021 +0700
+
+    daocm
+
+[33mcommit 65f156df5de35eab57a03e6e620366d8812b9d9f[m
+Merge: fbc9f9c 79a2181
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 17:01:11 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 79a2181132e4740ae9e1d9edc7f0a2c7a71defda[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 17:00:58 2021 +0700
+
+    daocm
+
+[33mcommit fbc9f9c38fa05d9dda60586ae4dc567e26e7a46d[m
+Merge: cdb9be6 2ad398e
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 16:42:34 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 2ad398e67487b2a2a9d2085abcfd79f7df1e58ef[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 16:41:42 2021 +0700
+
+    add download_file and upload_file
+
+[33mcommit 1bd133fa690ba541cc23280880c2044d82bce129[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 16:13:05 2021 +0700
+
+    update upload map
+
+[33mcommit 358281e5a1c63835792c2f3bc8e0300cdaed127d[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 16:10:29 2021 +0700
+
+    update
+
+[33mcommit 1addd96d9b5f42d04823c430ab3a776fd4b48069[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 15:32:05 2021 +0700
+
+    update uploads and sending_file
+
+[33mcommit e45e856e038aa26ae090a8e1e19a99207ce2ffba[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 10 15:12:44 2021 +0700
+
+    create folder map
+
+[33mcommit cdb9be69b7cadec24b03cde72e6de4c5e277bd18[m
+Merge: 565a709 865b7ff
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Fri Dec 10 00:00:08 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 865b7ff4299d7fcd3b9f54e61596ba1bfeefe0e4[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 9 23:59:49 2021 +0700
+
+    update robot_name, mission_name, type_job in orders
+
+[33mcommit 565a709bdf514b780d085ef11a3551e2efa537d5[m
+Merge: c3561b1 86add4e
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Thu Dec 9 23:40:44 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 86add4e619a1f1693e714dcb43ff65e91f41fa79[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 9 23:40:32 2021 +0700
+
+    update
+
+[33mcommit c3561b120d5fc47e85713508d1e8834d7b4083e7[m
+Merge: 1a78d66 33428b3
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Thu Dec 9 23:39:57 2021 +0700
+
+    Merge branch 'backend_dao' of https://gitlab.com/rostek-it/rostek-system-v2/rostek-amr/rostek-amr-backend into backend_dao
+
+[33mcommit 33428b345d3e394c6d536061c97c07f2e5059d73[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 9 23:35:40 2021 +0700
+
+    update
+
+[33mcommit 99520c42ab6eb5b01366aed3da69b38a7d43b430[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 9 23:26:42 2021 +0700
+
+    Update db Robot, missionName
+
+[33mcommit 1a78d660d3dd54e87f3658545b334cfd29e7cdce[m
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Thu Dec 9 17:58:28 2021 +0700
+
+    update pool size
+
+[33mcommit 4b2b4489fd731ce63327161827a85b2b0c871e5a[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 9 13:48:45 2021 +0700
+
+    update mission, obj -> obj in details
+
+[33mcommit 2aba7174c813422452dd2f4d3ae9663e7c235f65[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Wed Dec 8 12:20:58 2021 +0700
+
+    update activation
+
+[33mcommit f41692a7756b03c3b77dca762ce24e39d119e268[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Wed Dec 8 09:26:21 2021 +0700
+
+    update
+
+[33mcommit a192e30854196ba0a1edbccdbd8ff13d5b0cdedd[m
+Author: nguyen.khac.cong.1998@gmail.com <@nguyen.khac.cong.1998>
+Date:   Tue Dec 7 12:28:52 2021 +0700
+
+    update
+
+[33mcommit 48d1d528ae0e9a9deddc33395a657b29cd3efe6d[m[33m ([m[1;31morigin/backend_v1[m[33m)[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 3 19:28:18 2021 +0700
+
+    update
+
+[33mcommit 7c1af678f8766ae11d0c09594fd0d69286df4029[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Fri Dec 3 15:38:00 2021 +0700
+
+    Update
+
+[33mcommit dedaa153de1c6f943f7f17ad5f66933dc3511787[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 2 22:07:16 2021 +0700
+
+    Update
+
+[33mcommit 6096bdbf7e0bdc227c8a0e3b7a2177271e4cf300[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 2 17:19:43 2021 +0700
+
+    Done Get
+
+[33mcommit 7fc4b27f272b34db48a004bb968b3113725a90e1[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 2 17:09:11 2021 +0700
+
+    update priority
+
+[33mcommit 831c0ab9394d7cea17d9c94888e592c83b838c0e[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 2 17:06:44 2021 +0700
+
+    commit
+
+[33mcommit e0327ba73eaf29c92f1b1de874c841fa8ae4762a[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 2 15:51:20 2021 +0700
+
+    udpate user in code base
+
+[33mcommit fc135150cfa6cdac0bbbb82c219c882b5bc996dc[m
+Author: Chu Minh Dao - Loser Chu <chudao63@gmail.com>
+Date:   Thu Dec 2 15:49:14 2021 +0700
+
+    dao update v1
+
+[33mcommit 83bcdd7e04ed956b067e29b7ffb6586e847224d1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Ubuntu <ubuntu@ip-172-26-13-192.ap-southeast-1.compute.internal>
+Date:   Mon Nov 29 12:21:23 2021 +0700
+
+    update

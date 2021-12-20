@@ -1,4 +1,7 @@
 import logging
+from unicodedata import name
+
+from sqlalchemy.sql.expression import true
 from app.models.map import Map
 from utils.apimodel import BaseApiPagination, ApiBase, ApiCommon
 from flask_restful import Resource, reqparse, request
@@ -6,7 +9,7 @@ import os, sys
 from flask import send_from_directory
 from app.models.map import Map, MapData
 from app import db
-# from app.ros.subcriber import Monitor
+from app.ros.subcriber import Monitor
 from utils.common import object_as_dict, create_response_message
 
 
@@ -24,16 +27,16 @@ class UploadMapApi(Resource):
 
         args = parser.parse_args()
 
-        # if args['imageName']:
-        #     # datas = Map.query.all()
-        #     # for data in datas:
-        #     #     logging.error(data.file_name)
-        #     #     if data.file_name == args['imageName']:
-        #     #         return "Namesake"
+        if args['imageName']:
+            datas = Map.query.all()
+            for data in datas:
+                logging.error(data.id)
+                if data.id == args['imageName']:
+                    return "Namesake"
 
-        #     map = Map(file_name = args['imageName'])
-        #     db.session.add(map)
-        #     db.session.commit()
+            map = Map(id = args['imageName'])
+            db.session.add(map)
+            db.session.commit()
         
 
         if request.files:
@@ -222,7 +225,7 @@ class MapApi(ApiBase):
 # 		return create_response_message("Lưu thành công", 200)
 
 
-# Đã xong
+# # Đã xong
 # class MapImageApi(ApiBase):
 # 	def get(self):
 # 		""" URL: /map/img
