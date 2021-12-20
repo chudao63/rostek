@@ -1,37 +1,5 @@
 ---
-description: 'null'
-points:
-- id: Point43
-  x: 1598.2499999999995
-  y: 245.8
-  name: Point43
-  isDragging: false
-  type: MOVING
-  note:
-    x: 0
-    y: 0
-  rfid: ''
-  robot_id: ''
-  action: ''
-  station_code: ''
-  isDraggingNote: false
-
-paths:
-- from: Point1
-  to: Point2
-  type: GOTO
-  name: Point1-Point2
-  route: 3
-  c1:
-    x: 1071.85
-    y: 214.20000000000005
-  c2:
-    x: 1071.85
-    y: 214.20000000000005
-
-notes:
-- id: Note3
-  name: Note3
-  x: 1640
-  y: 428.8
-  text: Giao 
+points: []
+paths: []
+intersect: []
+routes: []
