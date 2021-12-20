@@ -65,8 +65,8 @@ class UserApi(ApiCommon):
 		if parser["validate"]:
 			data = parser["data"]
 			data["id"] = data["username"].lower().strip()
-			userRole = UserRole.query.filter(UserRole.name == data["role_id"]).first()
-			assert userRole, f"Không có role tên {data['role_id']}"
+			userRole = UserRole.query.filter(UserRole.name == data["role_name"]).first()
+			assert userRole, f"Không có role tên {data['role_name']}"
 			data["role_id"] = userRole.id
 			User.add_new_from_dict(data)
 			return create_response_message(f"Tạo user {data['id']} thành công!", 200)
@@ -79,17 +79,15 @@ class UserApi(ApiCommon):
 		args.append("admin_password")
 		required_args = ["id", "admin_password"]
 		parser = self.json_parser(args, required_args)
-		if parser["validate"]:
-			data = parser["data"]
-			admin_password = data.pop("admin_password")
-			admin = User.query.get("admin")
-			assert admin.verify_password(admin_password), "Mật khẩu cho account admin không chính xác"
-			userRole = UserRole.query.filter(UserRole.name == data["role_name"]).first()
-			assert userRole, f"Không có role tên {data['role_name']}"
-			data["role_id"] = userRole.id
-			self.ModelType.update_from_dict(data)
-			return create_response_message("Thay đổi thành công!",200)
-		return parser["message"]
+		data = parser["data"]
+		admin_password = data.pop("admin_password")
+		admin = User.query.get("admin")
+		assert admin.verify_password(admin_password), "Mật khẩu cho account admin không chính xác"
+		userRole = UserRole.query.filter(UserRole.name == data["role_name"]).first()
+		assert userRole, f"Không có role tên {data['role_name']}"
+		data["role_id"] = userRole.id
+		self.ModelType.update_from_dict(data)
+		return create_response_message("Thay đổi thành công!",200)
 
 	@UserValidate.admin_level
 	@ApiCommon.exception_error

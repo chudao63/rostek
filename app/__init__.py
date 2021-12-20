@@ -52,6 +52,7 @@ app.config['MQTT_KEEPALIVE'] = MqttConfigure.MQTT_KEEPALIVE
 app.config['MQTT_TLS_ENABLED'] = MqttConfigure.MQTT_TLS_ENABLED
 
 api = Api(app, prefix='/api/v1')
+# api = Api(app)
 app.config['SECRET_KEY'] = '123456'
 socketio = SocketIO(app)
 
