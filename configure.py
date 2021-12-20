@@ -34,7 +34,6 @@ class MysqlConfigure(object):
     USER        = 'root'
     PASSWORD    = 'Rostek@2019'
     # PASSWORD    = '123456'
-
     DATABASE    = 'amr_rostek'
     # DATABASE    = 'amr'
 
