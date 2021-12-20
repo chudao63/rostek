@@ -3,8 +3,11 @@ points: []
 paths: []
 intersect: []
 routes: []
+<<<<<<< HEAD
 ---
 points: []
 paths: []
 intersect: []
 routes: []
+=======
+>>>>>>> parent of 2149ce2 ( Sửa upload image: Khi thêm img vào folder thì thêm cùng lúc lên db)
