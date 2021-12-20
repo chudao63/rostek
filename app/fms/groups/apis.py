@@ -9,4 +9,4 @@ class GroupApi(BaseApiPagination):
     URL: /order
     """
     def __init__(self):
-        BaseApiPagination.__init__(self, Group, "/groups")
+        BaseApiPagination.__init__(self, Group, "/group")

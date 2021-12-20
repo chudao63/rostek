@@ -4,10 +4,8 @@ from .fe_configure import GroupConfigureApi
 
 api.add_resource(
     GroupApi,
-    '/groups'
+    '/group'
 )
-
-
 
 api.add_resource(
     GroupConfigureApi, 
