@@ -6,7 +6,7 @@ import os, sys
 from flask import send_from_directory
 from app.models.map import Map, MapData
 from app import db
-from app.ros.subcriber import Monitor
+# from app.ros.subcriber import Monitor
 from utils.common import object_as_dict, create_response_message
 
 
@@ -115,7 +115,7 @@ class MapFileImEx(ApiBase):
 		id 		= request.form['id']
 		assert infile, "File not found"
 		MapData.import_file(infile,id)
-		Monitor.getInstance().reload_map_data()
+		# Monitor.getInstance().reload_map_data()
 		return create_response_message("Upload thành công", 200)
 
 
