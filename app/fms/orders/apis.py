@@ -77,7 +77,7 @@ class OrderDetailsApi(Resource):
 
                 dataDict["robot"]  = robotDict
                 dataDict["mission"] = missionDict
-        # return dataDict
+        return dataDict
 
 
 
