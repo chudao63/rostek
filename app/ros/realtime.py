@@ -133,6 +133,8 @@ class RobotRuning:
 		try:
 			if self.rosClient.is_connected :
 				self.agvStatus = roslibpy.Topic(self.rosClient, '/agv_status', 'geometry_msgs/PoseStamped')
+				# self.agvStatus = roslibpy.Topic(self.rosClient, '/agv_status', 'geometry_msgs/PoseStamped')
+
 				self.agvWayPoint = roslibpy.Topic(self.rosClient, '/agv_waypoints', 'geometry_msgs/PoseStamped')
 				self.agvOrderCommand = roslibpy.Topic(self.rosClient, '/order_command', 'std_msgs/String')
 				self.agvWayPoint.subscribe(self.agv_control_printer)
@@ -214,6 +216,7 @@ class RobotRuning:
 		payload = {
 			"robot_id" : self.robotId,
 			"status" : AGV_STATUS[frame_id['status']],
+			
 			"state" : frame_id['state'],
 			"pose" : {
 				"x" : round(pose['x']*1000),

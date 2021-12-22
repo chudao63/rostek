@@ -17,7 +17,8 @@ class Development(object):
     ACTIVE = True
 
 class MqttConfigure(object):
-    MQTT_BROKER_URL = '127.0.0.1'
+    # MQTT_BROKER_URL     = '127.0.0.1'
+    MQTT_BROKER_URL     = '13.229.146.39'    
     MQTT_BROKER_PORT    = 1883
     MQTT_USERNAME       = ''
     MQTT_PASSWORD       = ''
@@ -25,7 +26,7 @@ class MqttConfigure(object):
     MQTT_TLS_ENABLED    = False
     FRONTEND_TOPIC      = '/agv/realtime'
     COM_NOTIFY_TOPIC    = '/notify_com'
-    AGV_COUNT_MESSAGE   = 20
+    AGV_COUNT_MESSAGE   = 5
     ACTIVE              = True
     
 class MysqlConfigure(object):

@@ -5,10 +5,11 @@ from flask_restful import Resource, reqparse, request
 import os, sys
 from flask import send_from_directory
 from app.models.map import Map, MapData
-from app import db
+from app import APP_PATH, db
 # from app.ros.subcriber import Monitor
 from utils.common import object_as_dict, create_response_message
-
+import yaml
+from utils.yamlmodel import YamlReadWrite
 
 class MapApiBase(BaseApiPagination):
     """
@@ -106,8 +107,12 @@ class MapFileImEx(ApiBase):
 		parser = reqparse.RequestParser()
 		parser.add_argument("id", required = True)
 		data = parser.parse_args()
-		return send_from_directory(directory="fms/map/data",filename=f"{data['id']}.yaml" )
-        
+		appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
+		fileName = f"{appPath}/app/fms/map/data/{data['id']}.yaml"
+		yamlRead = YamlReadWrite.read(fileName)
+		return yamlRead
+
+
 
 	@ApiBase.exception_error
 	def post(self):
