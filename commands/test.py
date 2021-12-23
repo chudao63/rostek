@@ -41,19 +41,7 @@ class TestCommand(Command):
 		# ms1 =  Mission.query.get(1)
 		# print(ms1.steps)
 
-		#----- Join product - mission - step ---#
-		# missionDb = db.session.query(Step).all()
-		# productDb = db.session.query(Product).all()
-
-		# findStep = db.session.query(
-		# 	Step,
-		# 	Mission,
-		# 	Product
-		# ).join(
-		# 	Mission,
-		# 	Step.id == Product.
-
-		# )
+	
 
 	def run(self):
 		db.session.begin_nested()

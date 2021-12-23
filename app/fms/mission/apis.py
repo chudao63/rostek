@@ -53,7 +53,7 @@ class MissionStepApi(Resource):
                 stepDict["product"] = product.as_dict
             missionDict["steps"].append(stepDict)
         return missionDict
-
+        # ---- Code cũ đúng nhưng dài ---- 
         # listSteps   = []
         # for indexStep in range(len(mission.steps)):
         #     listProduct = {}
@@ -72,31 +72,19 @@ class MissionStepApi(Resource):
         # missionDict = mission.__dict__
         # missionDict.pop("_sa_instance_state")
         # missionDict["steps"] = listSteps
+        # return missionDict
 
 
-		#---- mission-step -----#
-		# missions = Mission.query.all()
-		# for mission in missions:
-		# 	print(mission.id , "->>")
-		# 	print(mission.steps)
-		# # print(missions)
-		# steps = Step.query.all()
-		# # print(steps)
-		# for step in steps:
-		# 	print(step.id , "->>")
-		# 	print(step.missions)
-		# #append 
-		# ms1 =  Mission.query.get(1)
-		# st1 = Step.query.get(1)
-		# # ms1.steps.pop(0)
-		# ms1.steps.append(st1)
-		# db.session.add(ms1)
-		# db.session.commit()
-		# ms1 =  Mission.query.get(1)
-		# print(ms1.steps)
+
 class CreateMissionApi(Resource):
     def post(self):
-        stepList = [{'start': 1,'end': 2, 'product' : 3},{'start': 3,'end': 1, 'product' : 4}]
+        """
+        URL: '/create-mision'
+        Tạo mission mới 
+        1, Ghi bản tin vào mission
+        2, Ghi bản tin vào bảng Step
+        3, Ghi bản tin vào bảng tạm giữa step và Product
+        """
         data = request.get_json(force = True)
         mission = Mission(name = data['name'])
         db.session.add(mission)
@@ -104,16 +92,32 @@ class CreateMissionApi(Resource):
         dataMission = Mission.query.order_by(Mission.id.desc()).first()
 
         for stepIndex in data['step']:
-            logging.warning(stepIndex)
+
             step = Step(start_point = stepIndex['start_point'], end_point = stepIndex['end_point'])
             db.session.add(step)
             db.session.commit()
+
             stepMission = Step.query.order_by(Step.id.desc()).first()
             product = Product.query.get(stepIndex['product'])
             stepMission.products.append(product)
-       
-
+    
             dataMission.steps.append(stepMission)
             db.session.add(dataMission)
             db.session.commit()
 
+        #Body:
+        #     {
+        # "name" : "MissionTest5",
+        # "step" : [
+        #             {
+        #                 "start_point" : 2,
+        #                 "end_point"   : 1,
+        #                 "product"     : 1
+        #             },
+        #             {
+        #                 "start_point" : 1,
+        #                 "end_point"   : 2,
+        #                 "product"     : 2
+        #             }
+        #         ]
+        #    }   
