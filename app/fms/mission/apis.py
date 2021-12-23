@@ -51,7 +51,7 @@ class MissionStepApi(Resource):
                 for product in step.products:
                     stepDict["product"] = product.as_dict
                 missionDict["steps"].append(stepDict)
-                output.append(missionDict)
+            output.append(missionDict)
         return output
         # ---- Code cũ đúng nhưng dài ---- 
         # listSteps   = []
