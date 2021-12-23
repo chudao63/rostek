@@ -18,16 +18,19 @@ class TestCommand(Command):
 		self.count = 1
 
 	def test(self):
-		# missions = Mission.query.all()
-		# for mission in missions:
-		# 	print(mission.id , "->>")
-		# 	print(mission.steps)
-		# # print(missions)
-		# steps = Step.query.all()
-		# # print(steps)
-		# for step in steps:
-		# 	print(step.id , "->>")
-		# 	print(step.missions)
+		missions = Mission.query.all()
+		for mission in missions:
+			print(mission.id , "->>")
+			print(mission.steps)
+		# print(missions)
+		steps = Step.query.all()
+		# print(steps)
+		for step in steps:
+			print(step.id , "->>")
+			print(step.missions)
+
+
+		#append 
 		ms1 =  Mission.query.get(1)
 		st1 = Step.query.get(1)
 		# ms1.steps.pop(0)

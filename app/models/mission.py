@@ -15,6 +15,5 @@ class Mission(db.Model, DbBaseModel):
     __tablename__ = 'mission'
     id       =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     name     =  Column(String(50),unique= True, nullable= False)
-    product_id  =  Column(Integer, ForeignKey('product.id'), nullable= False)
     steps = relationship("Step",secondary=mission_step, lazy='subquery', backref=backref('missions', lazy=False))
 
