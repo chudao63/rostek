@@ -14,3 +14,9 @@ api.add_resource(
     '/step/patch',       # replace step to module name
     '/step/delete'       # replace step to module name
 )
+
+
+api.add_resource(
+    StepProductApi,
+    '/step-product'
+)

@@ -1,11 +1,5 @@
 import logging
-import re
 from flask_restful import Resource, reqparse
-from flask_sqlalchemy.model import camel_to_snake_case
-from humanfriendly.terminal import output
-from sqlalchemy.sql.expression import and_
-from sqlalchemy.sql.sqltypes import REAL
-from app.models.step import Step
 from utils.apimodel import BaseApiPagination
 from app.models.mission import Mission
 
@@ -43,24 +37,39 @@ class MissionDetailApi(Resource):
 class MissionStepApi(Resource):
     def get(self):
         parser   = reqparse.RequestParser()
-        parser.add_argument('id')
+        parser.add_argument('id', required=True,help="id cannot be blank!")
         args = parser.parse_args()
 
-        if args['id']:
-            missions = Mission.query.filter(Mission.id == args['id'])
+        mission = Mission.query.get(args['id'])
 
-        for mission in missions:
-            listSteps   = []
-            for x in range(len(mission.steps)):
-                missionStepDict = mission.steps[x].__dict__
-                missionStepDict.pop("_sa_instance_state")
-                missionStepDict.pop("missions")
-                listSteps.append(missionStepDict)
-                
-            missionDict = mission.__dict__
-            missionDict.pop("_sa_instance_state")
-            missionDict["steps"] = listSteps
-            return missionDict
+        missionDict = mission.as_dict
+        missionDict["steps"] = []
+        for step in mission.steps:
+            stepDict = step.as_dict
+            for product in step.products:
+                stepDict["product"] = product.as_dict
+            missionDict["steps"].append(stepDict)
+        return missionDict
+
+        # listSteps   = []
+        # for indexStep in range(len(mission.steps)):
+        #     listProduct = {}
+        #     for indexProduct in range(len(mission.steps[indexStep].products)):
+        #         productDict = mission.steps[indexStep].products[indexProduct].__dict__
+        #         listProduct['id'] = productDict['id']
+        #         listProduct['name'] = productDict['name']
+
+        #     missionStepDict = mission.steps[indexStep].__dict__
+        #     missionStepDict.pop("_sa_instance_state")
+        #     missionStepDict.pop("missions")
+        #     missionStepDict.pop("products")
+        #     missionStepDict['products'] = listProduct
+        #     listSteps.append(missionStepDict)
+            
+        # missionDict = mission.__dict__
+        # missionDict.pop("_sa_instance_state")
+        # missionDict["steps"] = listSteps
+
 
    
 
