@@ -23,5 +23,9 @@ api.add_resource(
 api.add_resource(
     MissionStepApi,
     '/mission-step'
+)
 
+api.add_resource(
+CreateMissionApi,
+    '/create-mission'
 )

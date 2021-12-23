@@ -1,8 +1,11 @@
 import logging
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, request
 from utils.apimodel import BaseApiPagination
 from app.models.mission import Mission
+from app.models.step import Step
+from app.models.product import Product
 
+from app import db
 class MissionApi(BaseApiPagination):
     """
     URL: /location
@@ -71,5 +74,46 @@ class MissionStepApi(Resource):
         # missionDict["steps"] = listSteps
 
 
-   
+		#---- mission-step -----#
+		# missions = Mission.query.all()
+		# for mission in missions:
+		# 	print(mission.id , "->>")
+		# 	print(mission.steps)
+		# # print(missions)
+		# steps = Step.query.all()
+		# # print(steps)
+		# for step in steps:
+		# 	print(step.id , "->>")
+		# 	print(step.missions)
+		# #append 
+		# ms1 =  Mission.query.get(1)
+		# st1 = Step.query.get(1)
+		# # ms1.steps.pop(0)
+		# ms1.steps.append(st1)
+		# db.session.add(ms1)
+		# db.session.commit()
+		# ms1 =  Mission.query.get(1)
+		# print(ms1.steps)
+class CreateMissionApi(Resource):
+    def post(self):
+        stepList = [{'start': 1,'end': 2, 'product' : 3},{'start': 3,'end': 1, 'product' : 4}]
+        data = request.get_json(force = True)
+        mission = Mission(name = data['name'])
+        db.session.add(mission)
+        db.session.commit()
+        dataMission = Mission.query.order_by(Mission.id.desc()).first()
+
+        for stepIndex in data['step']:
+            logging.warning(stepIndex)
+            step = Step(start_point = stepIndex['start_point'], end_point = stepIndex['end_point'])
+            db.session.add(step)
+            db.session.commit()
+            stepMission = Step.query.order_by(Step.id.desc()).first()
+            product = Product.query.get(stepIndex['product'])
+            stepMission.products.append(product)
+       
+
+            dataMission.steps.append(stepMission)
+            db.session.add(dataMission)
+            db.session.commit()
 
