@@ -12,7 +12,7 @@ from commands import *
 
 manager = Manager(app)
 manager.add_command('init_db', InitDbCommand)
-manager.add_command('testapi', TestCommand)
+manager.add_command('test', TestCommand)
 manager.add_command('create_yaml', CreateYamlCommand)
 
 if __name__ == "__main__":

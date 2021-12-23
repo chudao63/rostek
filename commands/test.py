@@ -9,13 +9,34 @@ from utils.vntime import VnTimestamp
 import requests, random, logging, coloredlogs
 import yaml, string
 from app import db
+from app.models.mission import Mission
+from app.models.step import Step
+
 class TestCommand(Command):
 	""" Command for testing """
 	def __init__(self):
 		self.count = 1
 
 	def test(self):
-		print("testing")
+		# missions = Mission.query.all()
+		# for mission in missions:
+		# 	print(mission.id , "->>")
+		# 	print(mission.steps)
+		# # print(missions)
+		# steps = Step.query.all()
+		# # print(steps)
+		# for step in steps:
+		# 	print(step.id , "->>")
+		# 	print(step.missions)
+		ms1 =  Mission.query.get(1)
+		st1 = Step.query.get(1)
+		# ms1.steps.pop(0)
+		ms1.steps.append(st1)
+		db.session.add(ms1)
+		db.session.commit()
+
+		ms1 =  Mission.query.get(1)
+		print(ms1.steps)
 
 	def run(self):
 		db.session.begin_nested()
@@ -27,7 +48,6 @@ class TestCommand(Command):
 		except Exception as e:
 			db.session.rollback()
 			logging.critical(e, exc_info=True)
-			return create_response_message(str(e),409)
 		finally:
 			db.session.commit()
 			db.session.close()

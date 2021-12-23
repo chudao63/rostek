@@ -17,7 +17,7 @@ from app.models.type_robot import *
 from app.models.map import *
 # from app.models.users import *
 from app.models.robot_status import *
-
+from app.models.step import *
 
 
 
