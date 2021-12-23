@@ -1,5 +1,6 @@
 import logging
 from flask_restful import Resource, reqparse, request
+from sqlalchemy.orm.util import outerjoin
 from utils.apimodel import BaseApiPagination
 from app.models.mission import Mission
 from app.models.step import Step
@@ -39,20 +40,19 @@ class MissionDetailApi(Resource):
 
 class MissionStepApi(Resource):
     def get(self):
-        parser   = reqparse.RequestParser()
-        parser.add_argument('id', required=True,help="id cannot be blank!")
-        args = parser.parse_args()
-
-        mission = Mission.query.get(args['id'])
-
-        missionDict = mission.as_dict
-        missionDict["steps"] = []
-        for step in mission.steps:
-            stepDict = step.as_dict
-            for product in step.products:
-                stepDict["product"] = product.as_dict
-            missionDict["steps"].append(stepDict)
-        return missionDict
+       
+        missions = Mission.query.all()
+        output = []
+        for mission in missions:
+            missionDict = mission.as_dict
+            missionDict["steps"] = []
+            for step in mission.steps:
+                stepDict = step.as_dict
+                for product in step.products:
+                    stepDict["product"] = product.as_dict
+                missionDict["steps"].append(stepDict)
+                output.append(missionDict)
+        return output
         # ---- Code cũ đúng nhưng dài ---- 
         # listSteps   = []
         # for indexStep in range(len(mission.steps)):
