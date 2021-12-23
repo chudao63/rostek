@@ -7,6 +7,7 @@ from app.models.step import Step
 from app.models.product import Product
 
 from app import db
+from utils.common import create_response_message
 class MissionApi(BaseApiPagination):
     """
     URL: /location
@@ -91,7 +92,7 @@ class CreateMissionApi(Resource):
         db.session.commit()
         dataMission = Mission.query.order_by(Mission.id.desc()).first()
 
-        for stepIndex in data['step']:
+        for stepIndex in data['steps']:
 
             step = Step(start_point = stepIndex['start_point'], end_point = stepIndex['end_point'])
             db.session.add(step)
@@ -104,7 +105,7 @@ class CreateMissionApi(Resource):
             dataMission.steps.append(stepMission)
             db.session.add(dataMission)
             db.session.commit()
-
+        return "Tạo thành công"
         #Body:
         #     {
         # "name" : "MissionTest5",
