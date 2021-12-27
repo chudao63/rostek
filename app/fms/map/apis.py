@@ -120,7 +120,6 @@ class MapFileImEx(ApiBase):
 		id 		= request.form['id']
 		assert infile, "File not found"
 		MapData.import_file(infile,id)
-		# Monitor.getInstance().reload_map_data()
 		return create_response_message("Upload thành công", 200)
 
 

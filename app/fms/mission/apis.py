@@ -1,7 +1,9 @@
 import logging
+from os import name
+import re
 from flask_restful import Resource, reqparse, request
 from sqlalchemy.orm.util import outerjoin
-from utils.apimodel import BaseApiPagination
+from utils.apimodel import BaseApiPagination, ApiBase
 from app.models.mission import Mission
 from app.models.step import Step
 from app.models.product import Product
@@ -77,7 +79,8 @@ class MissionStepApi(Resource):
 
 
 
-class CreateMissionApi(Resource):
+class CreateMissionApi(ApiBase):
+    @ApiBase.exception_error
     def post(self):
         """
         URL: '/create-mision'
@@ -90,7 +93,8 @@ class CreateMissionApi(Resource):
         data = request.get_json(force = True)
         for missionName in missionNames:
             if missionName.name == data['name']:
-                return "Namesake"
+                return create_response_message("Tên đã tồn tại", 400)
+
         mission = Mission(name = data['name'])
         db.session.add(mission)
         db.session.commit()
@@ -109,7 +113,8 @@ class CreateMissionApi(Resource):
             dataMission.steps.append(stepMission)
             db.session.add(dataMission)
             db.session.commit()
-        return "Tạo thành công"
+        return create_response_message("Tạo mới thành công", 200)
+
         #Body:
         #     {
         # "name" : "MissionTest5",
@@ -126,3 +131,59 @@ class CreateMissionApi(Resource):
         #             }
         #         ]
         #    }   
+    @ApiBase.exception_error
+    def patch(self):
+        """
+        Hàm sửa edit mission
+
+        """
+        data = request.get_json(force = True)
+        mission = Mission.query.get(data['id'])
+        assert mission is not None, f"Mission {data['id']} không tồn tại"
+        for dataIndex in data:
+            if dataIndex == 'name':
+                mission.name = data['name']
+                db.session.add(mission)
+                db.session.commit()
+            if dataIndex == 'steps':                
+                for stepIndex in data['steps']:
+                    # assert "id" not in stepIndex,"Thiếu id trong step"
+
+                    step = Step.query.get(stepIndex['id'])
+                    step.start_point = stepIndex['start_point']
+                    step.end_point = stepIndex['end_point']
+
+                    while len(step.products): # xoa het cac product trong step
+                        step.products.pop(0)
+                    # them moi product
+                    productId = stepIndex["products"]["id"]
+                    productDb = Product.query.get(productId)
+                    assert productDb is not None, f"Product {productId} khong ton tai"
+                    step.products.append(productDb)
+                    db.session.add(step)
+                    db.session.commit()
+                
+        return create_response_message("Sửa thành công", 200)
+        # Body:
+        #     {
+        #         "id" : 1,
+        #         "name" : "Mission - 1 - patch",
+        #         "steps" : [
+        #             {
+        #                 "id" : 1,
+        #                 "start_point" : 2,
+        #                 "end_point"   : 2,
+        #                 "products"     : {
+        #                     "id" : 2
+        #                 }
+        #             },
+        #             {   
+        #                 "id" : 2,
+        #                 "start_point" : 1,
+        #                 "end_point"   : 1,
+        #                 "products"     : {
+        #                     "id" :1
+        #                 }
+        #             }
+        #         ]
+        #     }
