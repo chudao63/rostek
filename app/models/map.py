@@ -70,6 +70,9 @@ class MapData(db.Model, DbBaseModel):
 	
 	@staticmethod
 	def import_file(file, id):
+		"""
+		Khi thêm một file mới thì tìm đến đúng file để ghi - Đạo thêm
+		"""
 		data = yaml.load(file, Loader=yaml.FullLoader)
 		for point in data["points"]:
 			if "rfid" not in point:

@@ -78,6 +78,7 @@ class ActiveMapDataApi(ApiBase):
 	def patch(self):
 		"""
 		CHUYỂN ĐỎI DỮ LIỆU MAP ĐANG SỬ DỤNG
+		URL: /map_data_active
 		"""
 		parser = self.json_parser(["id"], [])
 		if parser["validate"]:

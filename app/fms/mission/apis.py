@@ -7,6 +7,7 @@ from utils.apimodel import BaseApiPagination, ApiBase
 from app.models.mission import Mission
 from app.models.step import Step
 from app.models.product import Product
+from app.models.position import Position
 
 from app import db
 from utils.common import create_response_message
@@ -49,11 +50,33 @@ class MissionStepApi(Resource):
         for mission in missions:
             missionDict = mission.as_dict
             missionDict["steps"] = []
+            startPointDict = {}
+            endPointDict = {}
             for step in mission.steps:
                 stepDict = step.as_dict
+                
+                startPoint = Position.query.get(step.start_point)
+                endPoint   = Position.query.get(step.end_point)
+                startPointName = startPoint.name
+                endPointName  = endPoint.name
+                startPointId = startPoint.id
+                endPointId  = endPoint.id
+                startPointDict['id'] = startPointId
+                startPointDict['name'] = startPointName
+
+                endPointDict['id'] = endPointId
+                endPointDict['name'] = endPointName
+                
+                stepDict['start_point'] = startPointDict
+                stepDict['end_point'] = endPointDict
+
+
                 for product in step.products:
                     stepDict["product"] = product.as_dict
+                
                 missionDict["steps"].append(stepDict)
+
+                
             output.append(missionDict)
         return output
         # ---- Code cũ đúng nhưng dài ---- 
@@ -102,12 +125,12 @@ class CreateMissionApi(ApiBase):
 
         for stepIndex in data['steps']:
 
-            step = Step(start_point = stepIndex['start_point'], end_point = stepIndex['end_point'])
+            step = Step(start_point = stepIndex['start_point_id'], end_point = stepIndex['end_point_id'])
             db.session.add(step)
             db.session.commit()
 
             stepMission = Step.query.order_by(Step.id.desc()).first()
-            product = Product.query.get(stepIndex['product'])
+            product = Product.query.get(stepIndex['product_id'])
             stepMission.products.append(product)
     
             dataMission.steps.append(stepMission)
@@ -120,14 +143,14 @@ class CreateMissionApi(ApiBase):
         # "name" : "MissionTest5",
         # "step" : [
         #             {
-        #                 "start_point" : 2,
-        #                 "end_point"   : 1,
-        #                 "product"     : 1
+        #                 "start_point_id" : 2,
+        #                 "end_point_id"   : 1,
+        #                 "product_id"     : 1
         #             },
         #             {
-        #                 "start_point" : 1,
-        #                 "end_point"   : 2,
-        #                 "product"     : 2
+        #                 "start_point_id" : 1,
+        #                 "end_point_id"   : 2,
+        #                 "product_id"     : 2
         #             }
         #         ]
         #    }   
@@ -150,13 +173,13 @@ class CreateMissionApi(ApiBase):
                     # assert "id" not in stepIndex,"Thiếu id trong step"
 
                     step = Step.query.get(stepIndex['id'])
-                    step.start_point = stepIndex['start_point']
-                    step.end_point = stepIndex['end_point']
+                    step.start_point = stepIndex['start_point_id']
+                    step.end_point = stepIndex['end_point_id']
 
                     while len(step.products): # xoa het cac product trong step
                         step.products.pop(0)
                     # them moi product
-                    productId = stepIndex["products"]["id"]
+                    productId = stepIndex["product_id"]
                     productDb = Product.query.get(productId)
                     assert productDb is not None, f"Product {productId} khong ton tai"
                     step.products.append(productDb)
@@ -165,25 +188,22 @@ class CreateMissionApi(ApiBase):
                 
         return create_response_message("Sửa thành công", 200)
         # Body:
-        #     {
-        #         "id" : 1,
-        #         "name" : "Mission - 1 - patch",
-        #         "steps" : [
-        #             {
-        #                 "id" : 1,
-        #                 "start_point" : 2,
-        #                 "end_point"   : 2,
-        #                 "products"     : {
-        #                     "id" : 2
-        #                 }
-        #             },
-        #             {   
-        #                 "id" : 2,
-        #                 "start_point" : 1,
-        #                 "end_point"   : 1,
-        #                 "products"     : {
-        #                     "id" :1
-        #                 }
-        #             }
-        #         ]
-        #     }
+            # {
+            #     "id" : 1,
+            #     "name" : "Mission - 1 - patch",
+            #     "steps" : [
+            #         {
+            #             "id" : 1,
+            #             "start_point_id" : 2,
+            #             "end_point_id"   : 2,
+            #             "product_id"     : 1
+            #         },
+            #         {   
+            #             "id" : 2,
+            #             "start_point_id" : 1,
+            #             "end_point_id"   : 1,
+            #             "product_id"     : 1
+
+            #         }
+            #     ]
+            # }
