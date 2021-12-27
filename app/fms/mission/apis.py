@@ -86,7 +86,11 @@ class CreateMissionApi(Resource):
         2, Ghi bản tin vào bảng Step
         3, Ghi bản tin vào bảng tạm giữa step và Product
         """
+        missionNames = Mission.query.all()
         data = request.get_json(force = True)
+        for missionName in missionNames:
+            if missionName.name == data['name']:
+                return "Namesake"
         mission = Mission(name = data['name'])
         db.session.add(mission)
         db.session.commit()

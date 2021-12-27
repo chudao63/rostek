@@ -19,7 +19,7 @@ class Step(db.Model, DbBaseModel):
     id             =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     start_point    =  Column(Integer, ForeignKey('position.id'), nullable= False)
     end_point      =  Column(Integer, ForeignKey('position.id'), nullable= False)
-    products       = relationship("Product",secondary=product_step, lazy='subquery', backref=backref('steps', lazy=True))
+    products       = relationship("Product",secondary=product_step, lazy='subquery', backref=backref('steps', lazy=False))
 
 
 
