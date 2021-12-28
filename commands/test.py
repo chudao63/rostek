@@ -5,6 +5,9 @@
 # Authors: "hoinv" - hoinv@rostek.com.vn
 
 from flask_script import Command
+from app.fms.orders.apis import OrderApi
+from app.models.map import Map, MapData
+from app.models.position import Position
 from app.models.product import Product
 from utils.vntime import VnTimestamp
 import requests, random, logging, coloredlogs
@@ -19,7 +22,7 @@ class TestCommand(Command):
 		self.count = 1
 
 	def test(self):
-		pass
+		
 		#---- mission-step -----#
 		# missions = Mission.query.all()
 		# for mission in missions:
@@ -40,7 +43,14 @@ class TestCommand(Command):
 		# db.session.commit()
 		# ms1 =  Mission.query.get(1)
 		# print(ms1.steps)
-
+		positions = Position.query.all()
+		for position in positions:
+			print(position.id, "-->")
+			print(position.mapDatas)
+		mapDatas = MapData.query.all()
+		for mapData in mapDatas:
+			print(mapData.id, "-->")
+			print(mapData.positions)
 	
 
 	def run(self):

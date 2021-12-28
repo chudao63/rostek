@@ -30,20 +30,35 @@ api.add_resource(
 )
 
 api.add_resource(
-    MapDataApi,  
-    '/map_data',
-)
-
-api.add_resource(
     ActiveMapDataApi,  
     '/map_data_active',
 )
-
 api.add_resource(
-    MapFileImEx, 
-    '/map_data/file'
+    PointAPI,
+    '/point'
 )
 
+api.add_resource(
+    MapDataApi,
+    '/mapdata'
+)
+
+
+# api.add_resource(
+#     MapDataApi,  
+#     '/map_data',
+# )
+
+
+# api.add_resource(
+#     MapFileImEx, 
+#     '/map_data/file'
+# )
+
+# api.add_resource( 
+#     MapApi, 
+#     '/route/detail'
+# )
 
 
 # Chưa viết được api
@@ -54,7 +69,3 @@ api.add_resource(
 #     '/map_data/speed'
 # )
  
-api.add_resource( 
-    MapApi, 
-    '/route/detail'
-)

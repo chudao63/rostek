@@ -6,7 +6,7 @@ from PIL import Image
 
 class Map(db.Model, DbBaseModel):
 	__tablename__ = "map"
-	id 		= Column(String(50), primary_key=True, nullable=False)
+	id 		= Column(Integer, primary_key=True,autoincrement= True, nullable=False)
 	active  = Column(Boolean, default=False, nullable=False)
 
 	
@@ -71,7 +71,7 @@ class MapData(db.Model, DbBaseModel):
 	@staticmethod
 	def import_file(file, id):
 		"""
-		Khi thêm một file mới thì tìm đến đúng file để ghi - Đạo thêm
+		Khi thêm một file mới thì tìm đến đúng file để ghi - Daocm
 		"""
 		data = yaml.load(file, Loader=yaml.FullLoader)
 		for point in data["points"]:

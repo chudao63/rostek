@@ -66,41 +66,16 @@ class MissionStepApi(Resource):
 
                 endPointDict['id'] = endPointId
                 endPointDict['name'] = endPointName
-                
+            
                 stepDict['start_point'] = startPointDict
                 stepDict['end_point'] = endPointDict
-
-
                 for product in step.products:
                     stepDict["product"] = product.as_dict
                 
                 missionDict["steps"].append(stepDict)
 
-                
             output.append(missionDict)
         return output
-        # ---- Code cũ đúng nhưng dài ---- 
-        # listSteps   = []
-        # for indexStep in range(len(mission.steps)):
-        #     listProduct = {}
-        #     for indexProduct in range(len(mission.steps[indexStep].products)):
-        #         productDict = mission.steps[indexStep].products[indexProduct].__dict__
-        #         listProduct['id'] = productDict['id']
-        #         listProduct['name'] = productDict['name']
-
-        #     missionStepDict = mission.steps[indexStep].__dict__
-        #     missionStepDict.pop("_sa_instance_state")
-        #     missionStepDict.pop("missions")
-        #     missionStepDict.pop("products")
-        #     missionStepDict['products'] = listProduct
-        #     listSteps.append(missionStepDict)
-            
-        # missionDict = mission.__dict__
-        # missionDict.pop("_sa_instance_state")
-        # missionDict["steps"] = listSteps
-        # return missionDict
-
-
 
 class CreateMissionApi(ApiBase):
     @ApiBase.exception_error
@@ -111,6 +86,22 @@ class CreateMissionApi(ApiBase):
         1, Ghi bản tin vào mission
         2, Ghi bản tin vào bảng Step
         3, Ghi bản tin vào bảng tạm giữa step và Product
+        Body:
+            {
+                "name" : "MissionTest5",
+                "step" : [
+                            {
+                                "start_point_id" : 2,
+                                "end_point_id"   : 1,
+                                "product_id"     : 1
+                            },
+                            {
+                                "start_point_id" : 1,
+                                "end_point_id"   : 2,
+                                "product_id"     : 2
+                            }
+                        ]
+           }   
         """
         missionNames = Mission.query.all()
         data = request.get_json(force = True)
@@ -138,27 +129,31 @@ class CreateMissionApi(ApiBase):
             db.session.commit()
         return create_response_message("Tạo mới thành công", 200)
 
-        #Body:
-        #     {
-        # "name" : "MissionTest5",
-        # "step" : [
-        #             {
-        #                 "start_point_id" : 2,
-        #                 "end_point_id"   : 1,
-        #                 "product_id"     : 1
-        #             },
-        #             {
-        #                 "start_point_id" : 1,
-        #                 "end_point_id"   : 2,
-        #                 "product_id"     : 2
-        #             }
-        #         ]
-        #    }   
+     
     @ApiBase.exception_error
     def patch(self):
         """
-        Hàm sửa edit mission
+        Hàm sửa mission
+        Body:
+            {
+                "id" : 1,
+                "name" : "Mission - 1 - patch",
+                "steps" : [
+                    {
+                        "id" : 1,
+                        "start_point_id" : 2,
+                        "end_point_id"   : 2,
+                        "product_id"     : 1
+                    },
+                    {   
+                        "id" : 2,
+                        "start_point_id" : 1,
+                        "end_point_id"   : 1,
+                        "product_id"     : 1
 
+                    }
+                ]
+            }
         """
         data = request.get_json(force = True)
         mission = Mission.query.get(data['id'])
@@ -170,7 +165,7 @@ class CreateMissionApi(ApiBase):
                 db.session.commit()
             if dataIndex == 'steps':                
                 for stepIndex in data['steps']:
-                    # assert "id" not in stepIndex,"Thiếu id trong step"
+                    assert "id" in stepIndex,"Thiếu id trong step"
 
                     step = Step.query.get(stepIndex['id'])
                     step.start_point = stepIndex['start_point_id']
@@ -187,23 +182,4 @@ class CreateMissionApi(ApiBase):
                     db.session.commit()
                 
         return create_response_message("Sửa thành công", 200)
-        # Body:
-            # {
-            #     "id" : 1,
-            #     "name" : "Mission - 1 - patch",
-            #     "steps" : [
-            #         {
-            #             "id" : 1,
-            #             "start_point_id" : 2,
-            #             "end_point_id"   : 2,
-            #             "product_id"     : 1
-            #         },
-            #         {   
-            #             "id" : 2,
-            #             "start_point_id" : 1,
-            #             "end_point_id"   : 1,
-            #             "product_id"     : 1
-
-            #         }
-            #     ]
-            # }
+ 

@@ -19,3 +19,6 @@ class PositionApi(BaseApiPagination):
     #     self.ModelType.add_new_from_dict(data):
     #         return create_response_message("Thêm mới thành công", 200)
     #     return parser["message"]
+
+
+    
