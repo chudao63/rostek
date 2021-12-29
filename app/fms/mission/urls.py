@@ -19,4 +19,7 @@ api.add_resource(
     MissionApi,
     '/mission'
 )
-
+api.add_resource(
+    DeleteMission,
+    '/delete-mission'
+)

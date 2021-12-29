@@ -78,40 +78,42 @@ class MissionApi(Resource):
     def get(self):
         """
         Lấy dữ liệu các Mission có trong database
+        URL:'/mission'
         """
         missions = Mission.query.all()
         output = []
         for mission in missions:
-            missionDict = mission.as_dict
-            missionDict["steps"] = []
-            
-            for step in mission.steps:
-                stepDict = step.as_dict
-                startPointDict = {}
-                endPointDict = {}
-                startPoint = Position.query.get(step.start_point)
-                endPoint   = Position.query.get(step.end_point)
-
-                startPointName = startPoint.name
-                startPointId = startPoint.id
-
-                endPointName  = endPoint.name
-                endPointId  = endPoint.id
-
-                startPointDict['id'] = startPointId
-                startPointDict['name'] = startPointName
-
-                endPointDict['id'] = endPointId
-                endPointDict['name'] = endPointName
-            
-                stepDict['start_point'] = startPointDict
-                stepDict['end_point'] = endPointDict
-                for product in step.products:
-                    stepDict["product"] = product.as_dict
+            if mission.active == 1:
+                missionDict = mission.as_dict
+                missionDict["steps"] = []
                 
-                missionDict["steps"].append(stepDict)
+                for step in mission.steps:
+                    stepDict = step.as_dict
+                    startPointDict = {}
+                    endPointDict = {}
+                    startPoint = Position.query.get(step.start_point)
+                    endPoint   = Position.query.get(step.end_point)
 
-            output.append(missionDict)
+                    startPointName = startPoint.name
+                    startPointId = startPoint.id
+
+                    endPointName  = endPoint.name
+                    endPointId  = endPoint.id
+
+                    startPointDict['id'] = startPointId
+                    startPointDict['name'] = startPointName
+
+                    endPointDict['id'] = endPointId
+                    endPointDict['name'] = endPointName
+                
+                    stepDict['start_point'] = startPointDict
+                    stepDict['end_point'] = endPointDict
+                    for product in step.products:
+                        stepDict["product"] = product.as_dict
+                    
+                    missionDict["steps"].append(stepDict)
+
+                output.append(missionDict)
         return output
 
     @ApiBase.exception_error
@@ -206,3 +208,13 @@ class MissionApi(Resource):
                         new_step_data(mission, stepIndex['start_point_id'],stepIndex['end_point_id'],stepIndex['product_id'])
         return create_response_message("Sửa thành công", 200)
  
+
+class DeleteMission(ApiBase):
+    @ApiBase.exception_error
+    def delete(self):
+        data = request.get_json(force = True)
+        mission = Mission.query.get(data['id'])
+        mission.active = 0
+        db.session.add(mission)
+        db.session.commit()
+        return create_response_message("Xóa thành công", 200)

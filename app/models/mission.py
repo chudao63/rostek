@@ -1,8 +1,8 @@
 
-from PIL.Image import TRANSPOSE
+from PIL.Image import FASTOCTREE, TRANSPOSE
 from sqlalchemy.orm import relation, relationship, backref
 from sqlalchemy.sql.schema import Column, ForeignKey
-from sqlalchemy.sql.sqltypes import Float, Integer, String
+from sqlalchemy.sql.sqltypes import Boolean, Float, Integer, String
 from app import db
 
 from utils.dbmodel import DbBaseModel
@@ -17,5 +17,6 @@ class Mission(db.Model, DbBaseModel):
     id       =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     name     =  Column(String(50),unique= True, nullable= False)
     active   =  Column(String(50), default= False, nullable= False)
+    active   =  Column(Boolean, default= 1, nullable= False )
     steps = relationship("Step",secondary=mission_step, lazy='subquery', backref=backref('missions', lazy=False))
 
