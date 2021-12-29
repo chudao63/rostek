@@ -43,29 +43,7 @@ api.add_resource(
     '/mapdata'
 )
 
-
-# api.add_resource(
-#     MapDataApi,  
-#     '/map_data',
-# )
-
-
-# api.add_resource(
-#     MapFileImEx, 
-#     '/map_data/file'
-# )
-
-# api.add_resource( 
-#     MapApi, 
-#     '/route/detail'
-# )
-
-
-# Chưa viết được api
-# api.add_resource( MapImageApi, '/map/img')
-
-# api.add_resource(
-#     MapSpeedApi, 
-#     '/map_data/speed'
-# )
- 
+api.add_resource(
+    CreateMapDataApi,
+    '/create-mapdata'
+)
