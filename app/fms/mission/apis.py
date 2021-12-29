@@ -2,6 +2,7 @@ import logging
 from os import name
 import re
 from flask_restful import Resource, reqparse, request
+from humanfriendly.terminal import auto_encode
 from sqlalchemy.orm.util import outerjoin
 from utils.apimodel import BaseApiPagination, ApiBase
 from app.models.mission import Mission
@@ -11,38 +12,15 @@ from app.models.position import Position
 
 from app import db
 from utils.common import create_response_message
-class MissionApi(BaseApiPagination):
+class MissionBaseApi(BaseApiPagination):
     """
-    URL: /location
+    URL: /mission-base
     """
     def __init__(self):
-        BaseApiPagination.__init__(self, Mission, "/mission")
+        BaseApiPagination.__init__(self, Mission, "/mission-base")
 
 
-class MissionDetailApi(Resource):
-    """
-    URL: /
-    """
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('id')
-        args = parser.parse_args()
- 
-        output = []
-        if args['id']:
-            datas = Mission.query.filter(Mission.id == args['id'])
-        for data in datas:
-            dataDict    = data.__dict__
-            stepDict = data.step
-            dataDict.pop("_sa_instance_state")
-            # output.append(stepDict)
-            logging.warning(stepDict)
-
-            dataDict["steps"] = output
-        # return dataDict
- 
-
-class MissionStepApi(Resource):
+class MissionApi(Resource):
     def get(self):
        
         missions = Mission.query.all()
@@ -50,17 +28,20 @@ class MissionStepApi(Resource):
         for mission in missions:
             missionDict = mission.as_dict
             missionDict["steps"] = []
-            startPointDict = {}
-            endPointDict = {}
+            
             for step in mission.steps:
                 stepDict = step.as_dict
-                
+                startPointDict = {}
+                endPointDict = {}
                 startPoint = Position.query.get(step.start_point)
                 endPoint   = Position.query.get(step.end_point)
+
                 startPointName = startPoint.name
-                endPointName  = endPoint.name
                 startPointId = startPoint.id
+
+                endPointName  = endPoint.name
                 endPointId  = endPoint.id
+
                 startPointDict['id'] = startPointId
                 startPointDict['name'] = startPointName
 
@@ -77,7 +58,6 @@ class MissionStepApi(Resource):
             output.append(missionDict)
         return output
 
-class CreateMissionApi(ApiBase):
     @ApiBase.exception_error
     def post(self):
         """
@@ -115,11 +95,9 @@ class CreateMissionApi(ApiBase):
         dataMission = Mission.query.order_by(Mission.id.desc()).first()
 
         for stepIndex in data['steps']:
-
             step = Step(start_point = stepIndex['start_point_id'], end_point = stepIndex['end_point_id'])
             db.session.add(step)
             db.session.commit()
-
             stepMission = Step.query.order_by(Step.id.desc()).first()
             product = Product.query.get(stepIndex['product_id'])
             stepMission.products.append(product)
@@ -157,6 +135,7 @@ class CreateMissionApi(ApiBase):
         """
         data = request.get_json(force = True)
         mission = Mission.query.get(data['id'])
+
         assert mission is not None, f"Mission {data['id']} không tồn tại"
         for dataIndex in data:
             if dataIndex == 'name':
@@ -165,21 +144,45 @@ class CreateMissionApi(ApiBase):
                 db.session.commit()
             if dataIndex == 'steps':                
                 for stepIndex in data['steps']:
-                    assert "id" in stepIndex,"Thiếu id trong step"
+                    if "id" in stepIndex:
+                        # edit_step_data()
+                        startPointId = stepIndex['start_point_id']
+                        startPointDb = Position.query.get(startPointId)
 
-                    step = Step.query.get(stepIndex['id'])
-                    step.start_point = stepIndex['start_point_id']
-                    step.end_point = stepIndex['end_point_id']
+                        assert startPointDb is not None, f"Point {startPointId} không tồn tại"
+                        endPointId = stepIndex['end_point_id']
+                        endPointDb = Position.query.get(endPointId)
 
-                    while len(step.products): # xoa het cac product trong step
-                        step.products.pop(0)
-                    # them moi product
-                    productId = stepIndex["product_id"]
-                    productDb = Product.query.get(productId)
-                    assert productDb is not None, f"Product {productId} khong ton tai"
-                    step.products.append(productDb)
-                    db.session.add(step)
-                    db.session.commit()
-                
+                        assert endPointDb is not None, f"Point {endPointId} không tồn tại"
+                        step = Step.query.get(stepIndex['id'])
+                        assert step is not None, f"Step {stepIndex['id']} không tồn tại"
+
+                        step.start_point = stepIndex['start_point_id']
+                        step.end_point = stepIndex['end_point_id']
+                        while len(step.products): # xoa het cac product trong step
+                            step.products.pop(0)
+                        # them moi product
+
+                        productId = stepIndex["product_id"]
+                        productDb = Product.query.get(productId)
+                        assert productDb is not None, f"Product {productId} không tồn tại"
+
+                        step.products.append(productDb)
+                        db.session.add(step)
+                        db.session.commit()
+                    if "id" not in stepIndex:
+                        step = Step(start_point = stepIndex['start_point_id'], end_point = stepIndex['end_point_id'])
+                        db.session.add(step)
+                        db.session.commit()
+                        stepMission = Step.query.order_by(Step.id.desc()).first()
+                        product = Product.query.get(stepIndex['product_id'])
+                        stepMission.products.append(product)
+
+                        mission.steps.append(stepMission)
+                        db.session.add(mission)
+                        db.session.commit()
+
+                        
+                        
         return create_response_message("Sửa thành công", 200)
  

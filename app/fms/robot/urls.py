@@ -1,24 +1,17 @@
 from app import api 
-from .apis import RobotApi, RobotFoundApi, DeleteRobotApi
+from .apis import RobotApi, RobotBaseApi
 from .fe_configure import RobotConfigureApi
 
+
+api.add_resource(
+    RobotBaseApi,
+    '/robot-base'
+)
 
 api.add_resource(
     RobotApi,
     '/robot'
 )
-
-
-api.add_resource(
-    RobotFoundApi,
-    '/robots'
-)
-
-api.add_resource(
-    DeleteRobotApi,
-    '/robot-delete'
-)
-
 
 api.add_resource(
     RobotConfigureApi, 

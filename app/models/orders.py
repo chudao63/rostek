@@ -17,7 +17,7 @@ class Order(db.Model, DbBaseModel):
     mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= False)
     priority    = Column(Integer, default=ORDER_PRIORITY.LEVEL_1.name,nullable= False)
     active      = Column(Boolean, default = ORDER_ACTIVE.TRUE.name, nullable=False)
-    note        = Column(String(300), nullable= False)
+    note        = Column(String(300), nullable= True)
     robot       = relationship("Robot", backref= "order", lazy= True) #***#
     mission     = relationship("Mission", backref= "order", lazy= True)
 

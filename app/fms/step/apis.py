@@ -16,7 +16,6 @@ class StepApi(BaseApiPagination):
 
 class StepProductApi(Resource):
     def get(self):
-        steps = Step.query.all()
         missions = Mission.query.all()
 
         for mission in missions:
@@ -24,15 +23,3 @@ class StepProductApi(Resource):
             logging.warning(mission.steps)
             for step in mission.steps:
                 logging.error(step.products)
-
-        # output = []
-        # for step in steps:
-        #     logging.warning(step.products)
-        #     logging.warning(step.missions)
-        #     # stepDict = step.__dict__
-        #     # stepDict.pop("_sa_instance_state")
-        #     # stepDict.pop("products")
-        #     # stepDict.pop("missions")
-        #     # output.append(stepDict)
-        #     # logging.warning(output)
-        # return output

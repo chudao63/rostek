@@ -3,29 +3,20 @@ from .apis import *
 from .fe_configure import MissionConfigureApi
 
 api.add_resource(
-    MissionApi,
-    '/mission'
-)
-
-api.add_resource(
-    MissionDetailApi,
-    '/mission-detail'
+    MissionBaseApi,
+    '/mission-base'
 )
 
 api.add_resource(
     MissionConfigureApi, 
-    '/mission/filter',      # replace mission to module name
-    '/mission/post',        # replace mission to module name
-    '/mission/patch',       # replace mission to module name
-    '/mission/delete'       # replace mission to module name
+    '/mission-base/filter',      # replace mission to module name
+    '/mission-base/post',        # replace mission to module name
+    '/mission-base/patch',       # replace mission to module name
+    '/mission-base/delete'       # replace mission to module name
 )
 
 api.add_resource(
-    MissionStepApi,
-    '/mission-step'
+    MissionApi,
+    '/mission'
 )
 
-api.add_resource(
-CreateMissionApi,
-    '/create-mission'
-)
