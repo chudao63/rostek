@@ -1,21 +1,17 @@
+from logging import log
 import logging
 import re
-from sqlalchemy.sql.expression import outerjoin
-from sqlalchemy.sql.functions import count
 
-from sqlalchemy.sql.sqltypes import DateTime
+from sqlalchemy.sql.functions import count
 from app.models.map import Map
 from app.models.position import Position
 from utils.apimodel import BaseApiPagination, ApiBase, ApiCommon
-from flask_restful import Api, Resource, reqparse, request
+from flask_restful import Resource, reqparse, request
 import os, sys
 from flask import send_from_directory
 from app.models.map import Map, MapData
-from app import APP_PATH, db
-# from app.ros.subcriber import Monitor
+from app import  db
 from utils.common import object_as_dict, create_response_message
-import yaml
-from utils.yamlmodel import YamlReadWrite
 
 class MapApiBase(BaseApiPagination):
     """
@@ -34,12 +30,10 @@ class UploadMapApi(ApiBase):
 		map = Map()
 		db.session.add(map)
 		db.session.commit()
-	
 		if request.files:
 			infile = request.files['file']
 		appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
 		fileName = f"{appPath}/app/fms/map/img/{map.id}.png"
-
 		infile.save(fileName)
 		return create_response_message("Thêm mới thành công", 200)
 
@@ -57,11 +51,12 @@ class DisplayMapApi(Resource):
             directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/app/fms/map/img", filename= f"{args['imageName']}.png")
 
 class DeleteImageApi(ApiBase):
-
+	
 	@ApiBase.exception_error
 	def get(self):
 		"""
-		Xóa img trên sever theo id, đồng thời xóa trên db
+		Xóa img trên db
+		URL: '/deleteimage'
 		"""
 		parser = reqparse.RequestParser()
 		parser.add_argument('id')
@@ -76,7 +71,7 @@ class DeleteImageApi(ApiBase):
 class ActiveMapDataApi(ApiBase):
 	def patch(self):
 		"""
-		CHUYỂN ĐỎI DỮ LIỆU MAP ĐANG SỬ DỤNG
+		CHUYỂN ĐỔI DỮ LIỆU MAP ĐANG SỬ DỤNG
 		URL: /map_data_active
 		Body: Truyền Json
 		"""
@@ -94,8 +89,24 @@ class ActiveMapDataApi(ApiBase):
 			db.session.commit()
 			return create_response_message("Active thành công",200)
 		return parser["message"]
+class CreateMapDataApi(ApiBase):
+	@ApiBase.exception_error
+	def post(self):
+		"""
+		Thêm một Map Data mới
+		URL: '/create-mapdata'
+		Method: POST
+		"""
+		data = request.get_json(force = True)
+		map = MapData()
+		for indexData in data:
+			if indexData == 'description':
+				map = MapData(description = data['description'])
+		db.session.add(map)
+		db.session.commit()
+		return create_response_message("Tạo mới thành công", 200)
 
-class PointAPI(ApiBase):
+class PointApi(ApiBase):
 	@ApiBase.exception_error
 	def get(self):
 		"""
@@ -131,12 +142,32 @@ class PointAPI(ApiBase):
 				]
 		"""
 		data = request.get_json(force=True)
-		for dataIndex in data['points']:
-			position = Position(X = dataIndex['x'], Y = dataIndex['y'], name = dataIndex['name'], action = dataIndex['type'])
-			db.session.add(position)
-			db.session.commit()
-		return create_response_message("Thêm điểm thành công", 200)
+		points = Position.query.all()
 		
+		for dataIndex in data['points']:
+			logging.warning(dataIndex)
+			for point in points:
+				if point.name == dataIndex['name']:
+					return create_response_message(f"Tên {point.name} đã tồn tại", 409)
+			position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
+			db.session.add(position)
+		db.session.commit()
+
+			
+		return create_response_message("Thêm điểm thành công", 200)
+	
+	
+	@ApiBase.exception_error
+	def delete(self):
+		"""
+		Xóa một điểm 
+		"""
+		data = request.get_json(force = True)
+		position = Position.query.get(data['id'])
+		db.session.delete(position)
+		db.session.commit()
+		return create_response_message("Xóa thành công", 200)
+
 
 class MapDataApi(ApiBase):
 	@ApiBase.exception_error
@@ -156,21 +187,13 @@ class MapDataApi(ApiBase):
 			output.append(mapDataDict)
 		return output
 
-	@ApiBase.exception_error
-	def post(self):
-		"""
-		Thêm các điểm mới vào MapData
-		URL: '/mapdata'
-		Method: POST
-		"""
-		data = request.get_json(force=True)
-		mapData = MapData.query.get(data['id'])
-		position = Position.query.get(data['position'])
-		mapData.positions.append(position)
-		db.session.add(mapData)
-		db.session.commit()
-		return create_response_message("Thêm mới thành công", 200)
-
+	# @ApiBase.exception_error
+	# def post(self):
+	# 	"""
+	# 	Thêm các điểm mới vào MapData
+	# 	URL: '/mapdata'
+	# 	Method: POST
+	# 	"""
 		# data = request.get_json(force=True)
 		# mapData = MapData.query.get(data['id'])
 		# for positionIndex in data['positions']:
@@ -181,42 +204,28 @@ class MapDataApi(ApiBase):
 		# return create_response_message("Thêm mới thành công", 200)
 
 
-	@ApiBase.exception_error
-	def delete(self):
-		"""
-		Xóa một điểm được chọn trong Map data - Position
-		URL:'/mapdata'
-		Method: delete
-		"""
-		count = 0
-		data = request.get_json(force = True)
-		mapData = MapData.query.get(data['id'])
-		assert mapData is not None, f"MapData {data['id']} không tồn tại"
+	# @ApiBase.exception_error
+	# def delete(self):
+	# 	"""
+	# 	Xóa một điểm được chọn trong Map data - Position
+	# 	URL:'/mapdata'
+	# 	Method: delete
+	# 	"""
 
-		for mapDataIndex in mapData.positions: # tìm ra tất cả các position đang có trong map_data[id]
-			if mapDataIndex.id == data['position']:
-				mapData.positions.pop(count)
-				db.session.add(mapData)
-				db.session.commit()
-				return create_response_message("Xóa thành công", 200)
-			count = count + 1 
+		
+	# 	count = 0
+	# 	data = request.get_json(force = True)
+	# 	mapData = MapData.query.get(data['id'])
+	# 	assert mapData is not None, f"MapData {data['id']} không tồn tại"
 
-class CreateMapDataApi(ApiBase):
-	@ApiBase.exception_error
-	def post(self):
-		"""
-		Thêm một Map Data mới
-		URL: '/create-mapdata'
-		Method: POST
-		"""
-		data = request.get_json(force = True)
-		map = MapData()
-		for indexData in data:
-			if indexData == 'description':
-				map = MapData(description = data['description'])
-		db.session.add(map)
-		db.session.commit()
-		return create_response_message("Tạo mới thành công", 200)
+	# 	for mapDataIndex in mapData.positions: # tìm ra tất cả các position đang có trong map_data[id]
+	# 		if mapDataIndex.id == data['position']:
+	# 			mapData.positions.pop(count)
+	# 			db.session.add(mapData)
+	# 			db.session.commit()
+	# 			return create_response_message("Xóa thành công", 200)
+	# 		count = count + 1 
+
 
 
 

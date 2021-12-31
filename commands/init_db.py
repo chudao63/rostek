@@ -89,9 +89,7 @@ def create_robots():
     # db.session.flush()
     # db.session.commit()
 
-    groupDb  = Group(
-        name = "Group1",
-    )
+    groupDb  = Group(name = "Group1")
     db.session.add(groupDb)
     db.session.flush()
     db.session.commit()

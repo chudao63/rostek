@@ -34,7 +34,7 @@ api.add_resource(
     '/map_data_active',
 )
 api.add_resource(
-    PointAPI,
+    PointApi,
     '/point'
 )
 
