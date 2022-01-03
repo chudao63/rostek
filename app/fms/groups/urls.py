@@ -1,6 +1,12 @@
+from flask_restful import Api
 from app import api
 from .apis import *
 from .fe_configure import GroupConfigureApi
+
+api.add_resource(
+    GroupApiBase,
+    '/group-base'
+)
 
 api.add_resource(
     GroupApi,
@@ -9,8 +15,8 @@ api.add_resource(
 
 api.add_resource(
     GroupConfigureApi, 
-    '/group/filter',      # replace groups to module name
-    '/group/post',        # replace groups to module name
-    '/group/patch',       # replace groups to module name
-    '/group/delete'       # replace groups to module name
+    '/group-base/filter',      # replace group-bases to module name
+    '/group-base/post',        # replace group-bases to module name
+    '/group-base/patch',       # replace group-bases to module name
+    '/group-base/delete'       # replace group-bases to module name
 )
