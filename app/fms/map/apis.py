@@ -152,8 +152,6 @@ class PointApi(ApiBase):
 			position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
 			db.session.add(position)
 		db.session.commit()
-
-			
 		return create_response_message("Thêm điểm thành công", 200)
 	
 	
@@ -167,7 +165,6 @@ class PointApi(ApiBase):
 		db.session.delete(position)
 		db.session.commit()
 		return create_response_message("Xóa thành công", 200)
-
 
 class MapDataApi(ApiBase):
 	@ApiBase.exception_error
@@ -194,14 +191,14 @@ class MapDataApi(ApiBase):
 	# 	URL: '/mapdata'
 	# 	Method: POST
 	# 	"""
-		# data = request.get_json(force=True)
-		# mapData = MapData.query.get(data['id'])
-		# for positionIndex in data['positions']:
-		# 	position = Position.query.get(positionIndex)
-		# 	mapData.positions.append(position)
-		# 	db.session.add(mapData)
-		# 	db.session.commit()
-		# return create_response_message("Thêm mới thành công", 200)
+	# 	data = request.get_json(force=True)
+	# 	mapData = MapData.query.get(data['id'])
+	# 	for positionIndex in data['positions']:
+	# 		position = Position.query.get(positionIndex)
+	# 		mapData.positions.append(position)
+	# 		db.session.add(mapData)
+	# 		db.session.commit()
+	# 	return create_response_message("Thêm mới thành công", 200)
 
 
 	# @ApiBase.exception_error
