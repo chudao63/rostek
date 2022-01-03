@@ -1,10 +1,13 @@
 from logging import log
 import logging
 import re
-
+from sqlalchemy.sql.elements import or_
+from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy.sql.functions import count
 from app.models.map import Map
+from app.models.mission import Mission
 from app.models.position import Position
+from app.models.step import Step
 from utils.apimodel import BaseApiPagination, ApiBase, ApiCommon
 from flask_restful import Resource, reqparse, request
 import os, sys
@@ -164,6 +167,27 @@ class PointApi(ApiBase):
 		"""
 		data = request.get_json(force = True)
 		position = Position.query.get(data['id'])
+		missions = Mission.query.all()
+		steps = Step.query.filter(or_((Step.start_point == data['id']), (Step.end_point == data['id']))).all()
+		count = 0
+		for mission in missions:
+			logging.warning(mission)
+			logging.warning(mission.steps)
+			for index in mission.steps:
+				if index.id == data['id']:
+					while len(mission.steps):
+						mission.steps.pop(0)
+						db.session.add(mission)
+						db.session.commit()
+
+		for step in steps:
+			logging.warning(step)
+			if step.start_point or step.end_point == data['id']:
+				stepId = Step.query.get(step.id)
+				db.session.delete(stepId)
+				db.session.commit()
+				logging.warning(step.id)
+
 		db.session.delete(position)
 		db.session.commit()
 		return create_response_message("Xóa thành công", 200)
