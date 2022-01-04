@@ -4,7 +4,8 @@ from .fe_configure import PositionConfigureApi
 
 api.add_resource(
     PositionApi,
-    '/position'
+    '/position',
+    '/position/edit'
 )
 
 
