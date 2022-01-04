@@ -1,5 +1,8 @@
 import logging
+
+from humanfriendly.text import trim_empty_lines
 from app.fms.orders.consts import ORDER_STATUS
+from app.models.mission import Mission
 from utils.apimodel import ApiBase, BaseApiPagination
 from flask_restful import Api, Resource, reqparse,request
 from app.models.orders import Order
@@ -9,7 +12,7 @@ import os, sys
 from utils.common import create_response_message
 
 
-class OrderApi(BaseApiPagination):
+class OrderApiBase(BaseApiPagination):
     """
     URL: /order-base
     """
@@ -17,28 +20,29 @@ class OrderApi(BaseApiPagination):
         BaseApiPagination.__init__(self, Order, "/order-base")
 
 
-class OrdersApi(ApiBase):
+class OrderApi(ApiBase):
     @ApiBase.exception_error
     def get(self):
+        """
+        Lấy order theo trạng thái
+        URL: '/order'
+        Method: GET
+        """
+        
         parser = reqparse.RequestParser()
         parser.add_argument('status')
         args = parser.parse_args()
         dataFilter = []
-
-
         for orderStatus in ORDER_STATUS:
             if args['status'] == orderStatus.name.lower():
                 dataFilter.append(Order.status == orderStatus.value)
         datas = Order.query.filter(and_(*dataFilter)).all()
         output =[]
 
-
-
         for data in datas:
             # robotName = data.robot.name
             robotName = data.robot.name
             missionName = data.mission.name
-            job_type = data.mission.type_job
             logging.error(robotName)
             if data.active == 0:
                 continue
@@ -49,14 +53,30 @@ class OrdersApi(ApiBase):
                 dataDict.pop("mission")
                 dataDict["robot_name"] = robotName
                 dataDict["mission_name"] = missionName
-                dataDict['job_type'] = job_type
-                
                 output.append(dataDict)
         return output
 
-class OrderDetailsApi(ApiBase):
+    @ApiBase.exception_error
+    def post(self):
+        """
+        Thêm một order mới
+        URL: '/order'
+        Method: POST
+        """
+        data = request.get_json(force = True)
+        order = Order(start_time = data['start_time'], end_time = data['end_time'], robot_id = data['robot_id'], mission_id = data['mission_id'])
+        db.session.add(order)
+        db.session.commit()
+        return create_response_message("Thêm mới thành công", 200)
+
+
+class OrderDetailApi(ApiBase):
     @ApiBase.exception_error
     def get(self):
+        """
+        Xem chi tiết 1 Order
+        URL: '/order-detail'
+        """
         parser = reqparse.RequestParser()
         parser.add_argument('id')
         args = parser.parse_args()

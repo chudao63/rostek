@@ -4,18 +4,18 @@ from .fe_configure import OrderConfigureApi
 
 
 api.add_resource(
-    OrderApi,
+    OrderApiBase,
     '/order-base'
 )
 
 api.add_resource(
-    OrderDetailsApi,
-    '/order'
+    OrderDetailApi,
+    '/order-detail'
 )
 
 api.add_resource(
-    OrdersApi,
-    '/orders'
+    OrderApi,
+    '/order'
 )
 
 api.add_resource(
