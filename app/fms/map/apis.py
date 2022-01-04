@@ -3,7 +3,7 @@ import logging
 import re
 from sqlalchemy.sql.elements import or_
 from sqlalchemy.sql.expression import and_, or_
-from sqlalchemy.sql.functions import count
+from sqlalchemy.sql.functions import ReturnTypeFromArgs, count
 from app.models.map import Map
 from app.models.mission import Mission
 from app.models.position import Position
@@ -144,26 +144,52 @@ class PointApi(ApiBase):
 					}
 				]
 		"""
-		data = request.get_json(force=True)
-		points = Position.query.all()
-		
+
+		data =request.get_json(force = True)
+		pointDbs = Position.query.all()
+
 		for dataIndex in data['points']:
-			logging.warning(dataIndex)
-			for point in points:
-				if point.name == dataIndex['name']:
-					return create_response_message(f"Tên {point.name} đã tồn tại", 409)
-			position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
-			db.session.add(position)
-		db.session.commit()
+			if 'id' in dataIndex:
+				point = Position.query.get(dataIndex['id'])
+				point.x = dataIndex['x']
+				point.y = dataIndex['y']
+				point.name = dataIndex['name']
+				point.type = dataIndex['type']
+				point.map_data_id = dataIndex['map_data_id']
+				db.session.add(point)
+				db.session.commit()
+			else:
+				for pointDb in pointDbs:
+					if pointDb.name == dataIndex['name']:
+						return create_response_message(f"Tên {dataIndex['name']} đã tồn tại", 409)
+				position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
+				db.session.add(position)
+				db.session.commit()
+		return create_response_message("Sửa map_data thành công", 200)
+
+
+
+		# data = request.get_json(force=True)
+		# points = Position.query.all()
+		
+		# for dataIndex in data['points']:
+		# 	logging.warning(dataIndex)
+		# 	for point in points:
+		# 		if point.name == dataIndex['name']:
+		# 			return create_response_message(f"Tên {point.name} đã tồn tại", 409)
+		# 	position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
+		# 	db.session.add(position)
+		# db.session.commit()
 
 			
-		return create_response_message("Thêm điểm thành công", 200)
+		# return create_response_message("Thêm điểm thành công", 200)
 	
 	
 	@ApiBase.exception_error
 	def delete(self):
 		"""
-		Xóa một điểm 
+		Xóa một điểm
+		URL:'/point'
 		"""
 		data = request.get_json(force = True)
 		position = Position.query.get(data['id'])
@@ -203,7 +229,8 @@ class MapDataApi(ApiBase):
 			mapDataDict = mapData.as_dict
 			mapDataDict['positions'] = []
 			for position in mapData.positions:
-				mapDataDict['positions'].append(position.id)
+				positionDict = position.as_dict
+				mapDataDict['positions'].append(positionDict)
 			output.append(mapDataDict)
 		return output
 		
