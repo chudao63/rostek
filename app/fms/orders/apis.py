@@ -1,21 +1,24 @@
 import logging
 from app.fms.orders.consts import ORDER_STATUS
-from utils.apimodel import BaseApiPagination
-from flask_restful import Resource, reqparse,request
+from utils.apimodel import ApiBase, BaseApiPagination
+from flask_restful import Api, Resource, reqparse,request
 from app.models.orders import Order
 from app import db
 from sqlalchemy import and_
 import os, sys
+from utils.common import create_response_message
+
 
 class OrderApi(BaseApiPagination):
     """
-    URL: /order
+    URL: /order-base
     """
     def __init__(self):
         BaseApiPagination.__init__(self, Order, "/order-base")
 
 
-class OrdersApi(Resource):
+class OrdersApi(ApiBase):
+    @ApiBase.exception_error
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('status')
@@ -51,7 +54,8 @@ class OrdersApi(Resource):
                 output.append(dataDict)
         return output
 
-class OrderDetailsApi(Resource):
+class OrderDetailsApi(ApiBase):
+    @ApiBase.exception_error
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id')
@@ -82,7 +86,8 @@ class OrderDetailsApi(Resource):
 
 
   
-class SetActivation(Resource):
+class SetActivation(ApiBase):
+    @ApiBase.exception_error
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id')
@@ -97,12 +102,12 @@ class SetActivation(Resource):
                     data.active = 1
                     db.session.add(data)
                     db.session.commit()
-                    return "True"
+                    return create_response_message("Active thành công", 200)
                 if args['active'] == "false":
                     data.active = 0
                     db.session.add(data)
                     db.session.commit()
-                    return "False"
+                    return create_response_message("Xóa thành công", 200)
 
      
 class Test(Resource):

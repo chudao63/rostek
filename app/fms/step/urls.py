@@ -3,20 +3,20 @@ from .apis import *
 from .fe_configure import StepconfigureApi
 
 api.add_resource(
-    StepApi,
-    '/step'
+    StepApiBase,
+    '/step-base'
 )
 
 api.add_resource(
     StepconfigureApi, 
-    '/step/filter',      # replace step to module name
-    '/step/post',        # replace step to module name
-    '/step/patch',       # replace step to module name
-    '/step/delete'       # replace step to module name
+    '/step-base/filter',      # replace step-base to module name
+    '/step-base/post',        # replace step-base to module name
+    '/step-base/patch',       # replace step-base to module name
+    '/step-base/delete'       # replace step-base to module name
 )
 
 
 api.add_resource(
-    StepProductApi,
-    '/step-product'
+    StepApi,
+    '/step'
 )

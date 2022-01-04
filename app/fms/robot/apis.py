@@ -62,7 +62,7 @@ class RobotApi(ApiBase):
 
 class DeleteRobotApi(ApiBase):
     @ApiBase.exception_error    
-    def path(self):
+    def delete(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id')
         parser.add_argument('active')
