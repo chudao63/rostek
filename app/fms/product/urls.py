@@ -7,7 +7,10 @@ api.add_resource(
     '/product'
 )
 
-
+api.add_resource(
+    DeleteProductApi,
+    '/delete-product'
+)
 api.add_resource(
     ProductConfigureApi, 
     '/product/filter',      # replace product to module name

@@ -82,12 +82,17 @@ def create_users():
 
 
 def create_robots():
-    # missionDb  = Mission(
-    #     name = "LOAD"
-    # )
-    # db.session.add(missionDb)
-    # db.session.flush()
-    # db.session.commit()
+    missionDb  = Mission(
+        name = "LOAD"
+    )
+    db.session.add(missionDb)
+    db.session.flush()
+    db.session.commit()
+
+    productDb = Product(name = "Product1")
+    db.session.add(productDb)
+    db.session.flush()
+    db.session.commit()
 
     groupDb  = Group(name = "Group1")
     db.session.add(groupDb)

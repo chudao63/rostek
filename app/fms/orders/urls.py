@@ -19,21 +19,9 @@ api.add_resource(
 )
 
 api.add_resource(
-    SetActivation,
-    '/setactivation'
-)
-
-
-api.add_resource(
     OrderConfigureApi, 
     '/order/filter',      # replace order to module name
     '/order/post',        # replace order to module name
     '/order/patch',       # replace order to module name
     '/order/delete'       # replace order to module name
-)
-
-
-api.add_resource(
-    Test,
-    '/test'
 )

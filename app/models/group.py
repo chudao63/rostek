@@ -11,6 +11,6 @@ class Group(db.Model, DbBaseModel):
     id          = Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     name        = Column(String(50), unique= True,nullable= False)
     active      = Column(String(50),default= True ,nullable= False)
-    # mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= False)
+    mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= True)
 
 

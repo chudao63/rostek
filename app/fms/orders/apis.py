@@ -43,7 +43,6 @@ class OrderApi(ApiBase):
             # robotName = data.robot.name
             robotName = data.robot.name
             missionName = data.mission.name
-            logging.error(robotName)
             if data.active == 0:
                 continue
             else:
@@ -69,6 +68,14 @@ class OrderApi(ApiBase):
         db.session.commit()
         return create_response_message("Thêm mới thành công", 200)
 
+    @ApiBase.exception_error
+    def delete(self):
+        data = request.get_json(force = True)
+        order = Order.query.get(data['id'])
+        order.active = 0
+        db.session.add(order)
+        db.session.commit()
+        return create_response_message("Xóa thành công", 200)
 
 class OrderDetailApi(ApiBase):
     @ApiBase.exception_error
@@ -102,45 +109,3 @@ class OrderDetailApi(ApiBase):
                 dataDict["robot"]  = robotDict
                 dataDict["mission"] = missionDict
         return dataDict
-
-
-
-  
-class SetActivation(ApiBase):
-    @ApiBase.exception_error
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('id')
-        parser.add_argument('active')
-
-        args = parser.parse_args()
-
-        if  args['id']:
-            data = Order.query.get(args['id']) 
-            if args['active']:
-                if args['active'] == "true":
-                    data.active = 1
-                    db.session.add(data)
-                    db.session.commit()
-                    return create_response_message("Active thành công", 200)
-                if args['active'] == "false":
-                    data.active = 0
-                    db.session.add(data)
-                    db.session.commit()
-                    return create_response_message("Xóa thành công", 200)
-
-     
-class Test(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('fileName')
-
-        args = parser.parse_args()
-
-        if request.files:
-            infile = request.files['file']
-            appPath = os.path.dirname(os.path.realpath(sys.argv[0]))
-            fileName = f"{appPath}/app/fms/map/img/{str(args['fileName'])}.png"
-            infile.save(fileName)
-            return "Done!!!"
-
