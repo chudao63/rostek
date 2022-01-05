@@ -405,6 +405,7 @@ class PointApi(ApiBase):
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 		# data = request.get_json(force=True)
@@ -429,6 +430,8 @@ class PointApi(ApiBase):
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
 =======
 >>>>>>> parent of 257be39... update robot
+=======
+>>>>>>> parent of 257be39... update robot
 	
 	@ApiBase.exception_error
 	def delete(self):
@@ -436,11 +439,14 @@ class PointApi(ApiBase):
 		Xóa một điểm
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		URL:'/point'
 		"""
 		data = request.get_json(force = True)
 		position = Position.query.get(data['id'])
 =======
+=======
+>>>>>>> parent of 257be39... update robot
 =======
 >>>>>>> parent of 257be39... update robot
 		Khi xóa một điểm ->  Xóa step chứa điểm đó -> Xóa các bước của mission chứa step đó
@@ -451,7 +457,10 @@ class PointApi(ApiBase):
 		position = Position.query.get(data['id'])
 		assert position is not None, f"Point {data['id']} không tồn tại"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+>>>>>>> parent of 257be39... update robot
 =======
 >>>>>>> parent of 257be39... update robot
 		missions = Mission.query.all()
@@ -467,9 +476,12 @@ class PointApi(ApiBase):
 		for step in steps:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			logging.warning(step)
 =======
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+>>>>>>> parent of 257be39... update robot
 =======
 >>>>>>> parent of 257be39... update robot
 			if step.start_point or step.end_point == data['id']:
@@ -483,9 +495,13 @@ class PointApi(ApiBase):
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+
+>>>>>>> parent of 257be39... update robot
 =======
 
 >>>>>>> parent of 257be39... update robot
@@ -507,6 +523,7 @@ class MapDataApi(ApiBase):
 				mapDataDict['positions'].append(positionDict)
 			output.append(mapDataDict)
 		return output
+<<<<<<< HEAD
 <<<<<<< HEAD
 		
 
@@ -663,6 +680,8 @@ class MapDataApi(ApiBase):
 				mapDataDict['positions'].append(positionDict)
 			output.append(mapDataDict)
 		return output
+=======
+>>>>>>> parent of 257be39... update robot
 =======
 >>>>>>> parent of 257be39... update robot
 		

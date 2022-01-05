@@ -23,6 +23,7 @@ class PositionApi(BaseApiPagination):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
     
@@ -59,6 +60,8 @@ class PositionApi(BaseApiPagination):
 >>>>>>> parent of 257be39 (update robot)
 =======
 >>>>>>> parent of 257be39 (update robot)
+=======
+>>>>>>> parent of 257be39... update robot
 =======
 >>>>>>> parent of 257be39... update robot
 

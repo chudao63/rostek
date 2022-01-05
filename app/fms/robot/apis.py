@@ -66,11 +66,14 @@ class DeleteRobotApi(ApiBase):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         """
         Xóa robot
         URL:'/robot'
         METHOD: DELETE
         """
+=======
+>>>>>>> parent of 257be39... update robot
 =======
 >>>>>>> parent of 257be39... update robot
         data = request.get_json(force = True)
