@@ -60,22 +60,14 @@ class RobotApi(ApiBase):
         db.session.commit()
 
 
-class DeleteRobotApi(ApiBase):
-    @ApiBase.exception_error    
+    @ApiBase.exception_error
     def delete(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('id')
-        parser.add_argument('active')
-        args = parser.parse_args()
-        if  args['id']:
-            data = Robot.query.get(args['id']) 
-            if args['active']:
-                if args['active'] == '1':
-                    data.active = 1
-                    db.session.add(data)
-                    db.session.commit()
-                    return "Active robot"
-            data.active = 0
-            db.session.add(data)
-            db.session.commit()
-            return create_response_message("Xóa thành công", 200)
+        data = request.get_json(force = True)
+        robot = Robot.query.get(data['id'])
+        assert robot is not None, f"robot {data['id']} không tồn tại"
+        robot.active = 0
+        db.session.add(robot)
+        db.session.commit()
+        return create_response_message("Xóa thành công", 200)
+
+

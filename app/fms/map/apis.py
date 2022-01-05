@@ -167,32 +167,18 @@ class PointApi(ApiBase):
 				db.session.commit()
 		return create_response_message("Sửa map_data thành công", 200)
 
-
-
-		# data = request.get_json(force=True)
-		# points = Position.query.all()
-		
-		# for dataIndex in data['points']:
-		# 	logging.warning(dataIndex)
-		# 	for point in points:
-		# 		if point.name == dataIndex['name']:
-		# 			return create_response_message(f"Tên {point.name} đã tồn tại", 409)
-		# 	position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
-		# 	db.session.add(position)
-		# db.session.commit()
-
-			
-		# return create_response_message("Thêm điểm thành công", 200)
-	
 	
 	@ApiBase.exception_error
 	def delete(self):
 		"""
 		Xóa một điểm
+		Khi xóa một điểm ->  Xóa step chứa điểm đó -> Xóa các bước của mission chứa step đó
 		URL:'/point'
+		METHOD: DELETE
 		"""
 		data = request.get_json(force = True)
 		position = Position.query.get(data['id'])
+		assert position is not None, f"Point {data['id']} không tồn tại"
 		missions = Mission.query.all()
 		steps = Step.query.filter(or_((Step.start_point == data['id']), (Step.end_point == data['id']))).all()
 		for mission in missions:
@@ -204,7 +190,6 @@ class PointApi(ApiBase):
 						db.session.commit()
 
 		for step in steps:
-			logging.warning(step)
 			if step.start_point or step.end_point == data['id']:
 				stepId = Step.query.get(step.id)
 				db.session.delete(stepId)
