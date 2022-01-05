@@ -39,3 +39,8 @@ api.add_resource(
     MapDataApi,
     '/mapdata'
 )
+
+api.add_resource(
+    CreateMapDataApi,
+    '/create-mapdata'
+)

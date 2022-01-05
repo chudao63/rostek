@@ -17,9 +17,10 @@ product_step = db.Table('product_step',
 class Step(db.Model, DbBaseModel):
     __tablename__  = 'step_table'
     id             =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
-    start_point    =  Column(Integer, nullable= True)
-    end_point      =  Column(Integer, nullable= True)
+    start_point    =  Column(Integer, ForeignKey('position.id'), nullable= False)
+    end_point      =  Column(Integer, ForeignKey('position.id'), nullable= False)
     products       = relationship("Product",secondary=product_step, lazy='subquery', backref=backref('steps', lazy=False))
+
 
 
 
