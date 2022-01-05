@@ -15,6 +15,7 @@ api.add_resource(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 api.add_resource(
     PointApi,
     '/point'
@@ -27,6 +28,8 @@ api.add_resource(
 >>>>>>> parent of 257be39 (update robot)
 =======
 >>>>>>> parent of 257be39 (update robot)
+=======
+>>>>>>> parent of 257be39... update robot
 
 
 api.add_resource(

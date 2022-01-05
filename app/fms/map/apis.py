@@ -404,6 +404,7 @@ class PointApi(ApiBase):
 		return create_response_message("Sửa map_data thành công", 200)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 		# data = request.get_json(force=True)
@@ -426,17 +427,22 @@ class PointApi(ApiBase):
 	
 =======
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+>>>>>>> parent of 257be39... update robot
 	
 	@ApiBase.exception_error
 	def delete(self):
 		"""
 		Xóa một điểm
 <<<<<<< HEAD
+<<<<<<< HEAD
 		URL:'/point'
 		"""
 		data = request.get_json(force = True)
 		position = Position.query.get(data['id'])
 =======
+=======
+>>>>>>> parent of 257be39... update robot
 		Khi xóa một điểm ->  Xóa step chứa điểm đó -> Xóa các bước của mission chứa step đó
 		URL:'/point'
 		METHOD: DELETE
@@ -444,7 +450,10 @@ class PointApi(ApiBase):
 		data = request.get_json(force = True)
 		position = Position.query.get(data['id'])
 		assert position is not None, f"Point {data['id']} không tồn tại"
+<<<<<<< HEAD
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+>>>>>>> parent of 257be39... update robot
 		missions = Mission.query.all()
 		steps = Step.query.filter(or_((Step.start_point == data['id']), (Step.end_point == data['id']))).all()
 		for mission in missions:
@@ -457,9 +466,12 @@ class PointApi(ApiBase):
 
 		for step in steps:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			logging.warning(step)
 =======
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+>>>>>>> parent of 257be39... update robot
 			if step.start_point or step.end_point == data['id']:
 				stepId = Step.query.get(step.id)
 				db.session.delete(stepId)
@@ -470,9 +482,13 @@ class PointApi(ApiBase):
 		return create_response_message("Xóa thành công", 200)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 18e7651b8d3fe9f2172eb02efccb36b9a2981f34
+=======
+
+>>>>>>> parent of 257be39... update robot
 class MapDataApi(ApiBase):
 	@ApiBase.exception_error
 	def get(self):
@@ -491,6 +507,7 @@ class MapDataApi(ApiBase):
 				mapDataDict['positions'].append(positionDict)
 			output.append(mapDataDict)
 		return output
+<<<<<<< HEAD
 		
 
 	@ApiBase.exception_error
@@ -646,6 +663,8 @@ class MapDataApi(ApiBase):
 				mapDataDict['positions'].append(positionDict)
 			output.append(mapDataDict)
 		return output
+=======
+>>>>>>> parent of 257be39... update robot
 		
 
 	# @ApiBase.exception_error
