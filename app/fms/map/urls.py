@@ -33,17 +33,9 @@ api.add_resource(
     ActiveMapDataApi,  
     '/map_data_active',
 )
-api.add_resource(
-    PointApi,
-    '/point'
-)
+
 
 api.add_resource(
     MapDataApi,
     '/mapdata'
-)
-
-api.add_resource(
-    CreateMapDataApi,
-    '/create-mapdata'
 )
