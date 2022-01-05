@@ -1,5 +1,5 @@
 from app import api 
-from .apis import RobotApi, RobotBaseApi, DeleteRobotApi
+from .apis import RobotApi, RobotBaseApi
 from .fe_configure import RobotConfigureApi
 
 
@@ -11,11 +11,6 @@ api.add_resource(
 api.add_resource(
     RobotApi,
     '/robot'
-)
-
-api.add_resource(
-    DeleteRobotApi,
-    '/delete-robot'
 )
 
 api.add_resource(
