@@ -115,8 +115,10 @@ class RobotApi(ApiBase):
         return create_response_message("Sửa thành công", 200)
 
 
-    @ApiBase.exception_error
+class DeleteRobotApi(ApiBase):
+    @ApiBase.exception_error    
     def delete(self):
+<<<<<<< HEAD
         """
         Xóa robot
         URL:'/robot'
@@ -131,3 +133,21 @@ class RobotApi(ApiBase):
         return create_response_message("Xóa thành công", 200)
 
 
+=======
+        parser = reqparse.RequestParser()
+        parser.add_argument('id')
+        parser.add_argument('active')
+        args = parser.parse_args()
+        if  args['id']:
+            data = Robot.query.get(args['id']) 
+            if args['active']:
+                if args['active'] == '1':
+                    data.active = 1
+                    db.session.add(data)
+                    db.session.commit()
+                    return "Active robot"
+            data.active = 0
+            db.session.add(data)
+            db.session.commit()
+            return create_response_message("Xóa thành công", 200)
+>>>>>>> parent of b89d34c... Update Modles Robot
