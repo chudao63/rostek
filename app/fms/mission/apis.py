@@ -4,6 +4,7 @@ import re
 from flask_restful import Resource, reqparse, request
 from humanfriendly.terminal import auto_encode
 from sqlalchemy.orm.util import outerjoin
+from sqlalchemy.sql.base import NO_ARG
 from utils.apimodel import BaseApiPagination, ApiBase
 from app.models.mission import Mission
 from app.models.step import Step
@@ -92,13 +93,20 @@ class MissionApi(Resource):
                     startPointDict = {}
                     endPointDict = {}
                     startPoint = Position.query.get(step.start_point)
+                    if startPoint is None:
+                        startPointName = None
+                        startPointId = None
+                    else:
+                        startPointName = startPoint.name
+                        startPointId = startPoint.id
+
                     endPoint   = Position.query.get(step.end_point)
-
-                    startPointName = startPoint.name
-                    startPointId = startPoint.id
-
-                    endPointName  = endPoint.name
-                    endPointId  = endPoint.id
+                    if endPoint is None:
+                        endPointName = None
+                        endPointId   = None
+                    else:
+                        endPointName  = endPoint.name
+                        endPointId  = endPoint.id
 
                     startPointDict['id'] = startPointId
                     startPointDict['name'] = startPointName
