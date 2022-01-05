@@ -74,6 +74,9 @@ class DeleteImageApi(ApiBase):
 class ActiveMapDataApi(ApiBase):
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2c9b1bd4ba15b6639053861f8d6f94417747ea05
 =======
 >>>>>>> 2c9b1bd4ba15b6639053861f8d6f94417747ea05
     def patch(self):
@@ -219,6 +222,7 @@ class PointApi(ApiBase):
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 class MapDataApi(ApiBase):
     @ApiBase.exception_error
@@ -484,6 +488,9 @@ class MapDataApi(ApiBase):
 >>>>>>> parent of 257be39 (update robot)
 =======
 class MapDataApi(ApiBase):
+=======
+class MapDataApi(ApiBase):
+>>>>>>> 2c9b1bd4ba15b6639053861f8d6f94417747ea05
     @ApiBase.exception_error
     def get(self):
         """
@@ -557,6 +564,9 @@ class MapDataApi(ApiBase):
     # 			db.session.commit()
     # 			return create_response_message("Xóa thành công", 200)
     # 		count = count + 1 
+<<<<<<< HEAD
+>>>>>>> 2c9b1bd4ba15b6639053861f8d6f94417747ea05
+=======
 >>>>>>> 2c9b1bd4ba15b6639053861f8d6f94417747ea05
 
 
