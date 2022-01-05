@@ -14,5 +14,5 @@ class Group(db.Model, DbBaseModel):
     active      = Column(String(50),default= True ,nullable= False)
     mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= True)
     robots      = relationship("Robot", backref="groups", lazy= True)
-
+    mission     = relationship("Mission", backref= "groups", lazy= True)
 

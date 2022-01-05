@@ -3,6 +3,7 @@ import logging
 import re
 from sqlalchemy.sql.functions import ReturnTypeFromArgs
 from sqlalchemy.sql.sqltypes import REAL
+from app.models.mission import Mission
 from utils.apimodel import BaseApiPagination, ApiBase
 from flask_restful import Resource, reqparse,request
 from app.models.group import Group
@@ -27,12 +28,34 @@ class GroupApi(ApiBase):
     def get(self):
         groups = Group.query.all()
         output = []
+
+        listMission = {}
+        missionDict = {}
+
+        listRobot = []
+        robotDict = {}
+
         for group in groups:
-            logging.warning(group.robots)
             if group.active == '0':
                 continue
             else:
                 groupDict = group.as_dict
+                groupDict.pop("mission_id")
+
+                if group.mission_id != None:
+                    missionDict['mission_name'] = group.mission.name
+                    missionDict['mission_id'] = group.mission_id
+                    listMission = missionDict
+                    groupDict['robots'] = listRobot
+                    groupDict['mission'] = listMission
+
+                for robot in group.robots:
+                    robotName = robot.name
+                    robotId   = robot.id
+                    robotDict['robot_name'] = robotName
+                    robotDict['robot_id'] = robotId
+                    listRobot.append(robotDict)
+                
                 output.append(groupDict)
         return output
 
