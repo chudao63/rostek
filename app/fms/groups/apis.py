@@ -28,6 +28,7 @@ class GroupApi(ApiBase):
         groups = Group.query.all()
         output = []
         for group in groups:
+            logging.warning(group.robots)
             if group.active == '0':
                 continue
             else:

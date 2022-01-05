@@ -123,3 +123,7 @@ def create_robots():
     )
     db.session.add(robotDb)
     db.session.commit()
+
+    mapDataDb = MapData()
+    db.session.add(mapDataDb)
+    db.session.commit()
