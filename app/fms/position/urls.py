@@ -6,7 +6,10 @@ api.add_resource(
     PositionApi,
     '/position'
 )
-
+api.add_resource(
+    PointApi,
+    '/point'
+)
 
 api.add_resource(
     PositionConfigureApi, 

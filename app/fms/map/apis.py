@@ -1,7 +1,7 @@
 from logging import log
 import logging
 import re
-from sqlalchemy.sql.elements import or_
+from sqlalchemy.sql.elements import Null, or_
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy.sql.functions import ReturnTypeFromArgs, count
 from app.models.map import Map
@@ -92,114 +92,6 @@ class ActiveMapDataApi(ApiBase):
 			db.session.commit()
 			return create_response_message("Active thành công",200)
 		return parser["message"]
-class CreateMapDataApi(ApiBase):
-	@ApiBase.exception_error
-	def post(self):
-		"""
-		Thêm một Map Data mới
-		URL: '/create-mapdata'
-		Method: POST
-		"""
-		data = request.get_json(force = True)
-		map = MapData()
-		for indexData in data:
-			if indexData == 'description':
-				map = MapData(description = data['description'])
-		db.session.add(map)
-		db.session.commit()
-		return create_response_message("Tạo mới thành công", 200)
-
-class PointApi(ApiBase):
-	@ApiBase.exception_error
-	def get(self):
-		"""
-		Trả về tất cả các điểm đã được lưu trên db
-		URL: '/point'
-		method: GET
-		"""
-		positions = Position.query.all()
-
-		output = []
-		for position in positions:
-			positionDict = position.as_dict
-			output.append(positionDict)
-		return output
-		
-	@ApiBase.exception_error
-	def post(self):
-		"""
-		Thêm danh sách các điểm mới 
-		URL: '/point'
-		method: POST
-		Body:
-			{
-				"description": "null",
-				"points":
-				[
-					{
-						"name": "Point44",
-						"x": 236,
-						"y": 277,
-						"type": "MOVING"
-					}
-				]
-		"""
-
-		data =request.get_json(force = True)
-		pointDbs = Position.query.all()
-
-		for dataIndex in data['points']:
-			if 'id' in dataIndex:
-				point = Position.query.get(dataIndex['id'])
-				point.x = dataIndex['x']
-				point.y = dataIndex['y']
-				point.name = dataIndex['name']
-				point.type = dataIndex['type']
-				point.map_data_id = dataIndex['map_data_id']
-				db.session.add(point)
-				db.session.commit()
-			else:
-				for pointDb in pointDbs:
-					if pointDb.name == dataIndex['name']:
-						return create_response_message(f"Tên {dataIndex['name']} đã tồn tại", 409)
-				position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
-				db.session.add(position)
-				db.session.commit()
-		return create_response_message("Sửa map_data thành công", 200)
-
-	
-	@ApiBase.exception_error
-	def delete(self):
-		"""
-		Xóa một điểm
-		Khi xóa một điểm ->  Xóa step chứa điểm đó -> Xóa các bước của mission chứa step đó
-		URL:'/point'
-		METHOD: DELETE
-		"""
-		data = request.get_json(force = True)
-		position = Position.query.get(data['id'])
-		assert position is not None, f"Point {data['id']} không tồn tại"
-		missions = Mission.query.all()
-		steps = Step.query.filter(or_((Step.start_point == data['id']), (Step.end_point == data['id']))).all()
-		for mission in missions:
-			for index in mission.steps:
-				if index.id == data['id']:
-					while len(mission.steps):
-						mission.steps.pop(0)
-						db.session.add(mission)
-						db.session.commit()
-
-		for step in steps:
-			if step.start_point or step.end_point == data['id']:
-				stepId = Step.query.get(step.id)
-				db.session.delete(stepId)
-				db.session.commit()
-
-		db.session.delete(position)
-		db.session.commit()
-		return create_response_message("Xóa thành công", 200)
-
-
 class MapDataApi(ApiBase):
 	@ApiBase.exception_error
 	def get(self):
@@ -218,6 +110,22 @@ class MapDataApi(ApiBase):
 				mapDataDict['positions'].append(positionDict)
 			output.append(mapDataDict)
 		return output
+
+	@ApiBase.exception_error
+	def post(self):
+		"""
+		Thêm một Map Data mới
+		URL: '/create-mapdata'
+		Method: POST
+		"""
+		data = request.get_json(force = True)
+		map = MapData()
+		for indexData in data:
+			if indexData == 'description':
+				map = MapData(description = data['description'])
+		db.session.add(map)
+		db.session.commit()
+		return create_response_message("Tạo mới thành công", 200)
 		
 
 	# @ApiBase.exception_error
