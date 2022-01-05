@@ -119,6 +119,7 @@ class DeleteRobotApi(ApiBase):
     @ApiBase.exception_error    
     def delete(self):
 <<<<<<< HEAD
+<<<<<<< HEAD
         """
         Xóa robot
         URL:'/robot'
@@ -134,6 +135,8 @@ class DeleteRobotApi(ApiBase):
 
 
 =======
+=======
+>>>>>>> parent of b89d34c... Update Modles Robot
         parser = reqparse.RequestParser()
         parser.add_argument('id')
         parser.add_argument('active')
@@ -149,5 +152,9 @@ class DeleteRobotApi(ApiBase):
             data.active = 0
             db.session.add(data)
             db.session.commit()
+<<<<<<< HEAD
+            return create_response_message("Xóa thành công", 200)
+>>>>>>> parent of b89d34c... Update Modles Robot
+=======
             return create_response_message("Xóa thành công", 200)
 >>>>>>> parent of b89d34c... Update Modles Robot

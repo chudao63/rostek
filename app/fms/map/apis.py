@@ -184,6 +184,7 @@ class PointApi(ApiBase):
 			
 		# return create_response_message("Thêm điểm thành công", 200)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #>>>>>>> 499da75c48069d4aa7bd96586f1725825b3f56a4
 	
 	
@@ -350,6 +351,9 @@ class PointApi(ApiBase):
 				db.session.commit()
 		return create_response_message("Sửa map_data thành công", 200)
 
+=======
+	
+>>>>>>> parent of b89d34c... Update Modles Robot
 =======
 	
 >>>>>>> parent of b89d34c... Update Modles Robot
