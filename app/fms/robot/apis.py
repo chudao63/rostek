@@ -60,9 +60,9 @@ class RobotApi(ApiBase):
                 db.session.commit()
                 return create_response_message("Thêm mới thành công", 200)
             if robot.name  == data['name']:
-                return create_response_message(f"Tên {data['name']} đã tồn tại", 200)
+                return create_response_message(f"Tên {data['name']} đã tồn tại", 409)
             if robot.ip == data['ip']:
-                return create_response_message(f"ip {data['ip']} đã tồn tại", 200)
+                return create_response_message(f"ip {data['ip']} đã tồn tại", 409)
         robot = Robot(name = data['name'], ip = data['ip'], port = data['port'], area_id = data['area_id'], type_id = data['type_id'],group_id = data['group_id'])
         db.session.add(robot)
         db.session.commit()

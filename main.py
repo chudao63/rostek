@@ -16,7 +16,7 @@ from app import socketio
 
 if __name__ == "__main__":
     if MqttConfigure.ACTIVE:
-        socketio.run(app, host=FlaskConfigure.HOST, port=FlaskConfigure.PORT, use_reloader=True , debug=FlaskConfigure.DEBUG)
+        socketio.run(app, host=FlaskConfigure.HOST, port=FlaskConfigure.PORT, use_reloader=False , debug=FlaskConfigure.DEBUG)
     else:
-        socketio.run(app, host=FlaskConfigure.HOST, port=FlaskConfigure.PORT, use_reloader=True , debug=FlaskConfigure.DEBUG)
+        socketio.run(app, host=FlaskConfigure.HOST, port=FlaskConfigure.PORT, use_reloader=False , debug=FlaskConfigure.DEBUG)
     # app.run(host=FlaskConfigure.HOST, port=FlaskConfigure.PORT, use_reloader=False , debug=False)

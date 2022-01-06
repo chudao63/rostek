@@ -51,13 +51,14 @@ class RobotRuning:
 		"""
 		GỬI DỮ LIỆU TỚI FRONTEND
 		"""
-		pose = self.pose.copy()
-		theta = pose.pop("theta")
-		pose["θ"] = theta
+		#khi nao chay that thi bo command
+		# pose = self.pose.copy()
+		# theta = pose.pop("theta")
+		# pose["θ"] = theta
 		data = {
 			"robot_id" 		: self.robotId,
 			"status"	    : self.__robotStatus,
-			"pose"          : pose,
+			"pose"          : 1, #pose, # khi nao chay that thi bo cmd
 			"info"			: self.info
 		}
 		mqtt.publish(MqttConfigure.FRONTEND_TOPIC, json.dumps(data))
@@ -218,20 +219,23 @@ class RobotRuning:
 			"status" : AGV_STATUS[frame_id['status']],
 			
 			"state" : frame_id['state'],
-			"pose" : {
-				"x" : round(pose['x']*1000),
-				"y" : round(pose['y']*1000),
-				"theta" : pose['theta'],
-			},
-			"info" : {
-				"runningtime" : frame_id["runningtime"],
-				"batery" : frame_id["battery"]
-			},
-			"conveyor_status" : frame_id["conveyor_status"]
-			# "conveyor_status" : 1
+			"pose" : 1,
+			#chay that thi bo command, xoa 1
+			# {
+			# 	"x" : round(pose['x']*1000),
+			# 	"y" : round(pose['y']*1000),
+			# 	"theta" : pose['theta'],
+			# },
+			# "info" : {
+			# 	"runningtime" : frame_id["runningtime"],
+			# 	"batery" : frame_id["battery"]
+			# },
+			# "conveyor_status" : frame_id["conveyor_status"] #chay that thi bo command nay, xoa dong duoi
+			"conveyor_status" : 1
 
 		}
 		self.update(payload)
+
 
 
 	def agv_control_printer(self, message):
