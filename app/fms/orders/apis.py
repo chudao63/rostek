@@ -36,7 +36,11 @@ class OrderApi(ApiBase):
                 continue
             else:
                 dataDict    = data.as_dict
-                robotDict   = data.robot.as_dict
+                if data.robot.active == True:
+                    robotDict   = data.robot.as_dict
+                else:
+                    robotDict = None
+                logging.warning(data.robot.active)
                 missionDict = data.mission.as_dict
                 dataDict["robot"]  = robotDict
                 dataDict["mission"] = missionDict

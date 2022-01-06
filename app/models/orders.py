@@ -13,7 +13,7 @@ class Order(db.Model, DbBaseModel):
     start_time  = Column(String(50), nullable= False)
     end_time    = Column(String(50), nullable= False)
     status      = Column(Integer, default=1,  unique=False,  nullable=False)
-    robot_id    = Column(Integer, ForeignKey('robot.id'), nullable=False)
+    robot_id    = Column(Integer, ForeignKey('robot.id'), nullable=True)
     mission_id  = Column(Integer, ForeignKey('mission.id'), nullable= False)
     priority    = Column(Integer, default=1,nullable= False)
     active      = Column(Boolean, default = 1, nullable=False)
