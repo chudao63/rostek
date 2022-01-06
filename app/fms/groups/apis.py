@@ -97,23 +97,21 @@ class GroupApi(ApiBase):
                     return create_response_message(f"Tên {data['name']} đã tồn tại", 200)
             group.name = data['name']
             db.session.add(group)
-            db.session.commit()
+
 
         if 'mission_id' in data:
             group.mission_id = data['mission_id']
             db.session.add(group)
-            db.session.commit()
+
 
         if 'robots' in data:
-            logging.warning(group.robots)
             while len(group.robots):
                 group.robots.pop(0)
             for robot in data['robots']:
-                logging.warning(robot)
                 robotDb = Robot.query.get(robot)
                 group.robots.append(robotDb)
                 db.session.add(group)
-                db.session.commit()
+        db.session.commit()
         return create_response_message("Sửa thành công", 200)
             
 
