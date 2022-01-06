@@ -6,7 +6,7 @@ from sqlalchemy.sql.functions import ReturnTypeFromArgs
 from sqlalchemy.sql.sqltypes import REAL
 from app.models.mission import Mission
 from utils.apimodel import BaseApiPagination, ApiBase
-from flask_restful import Resource, reqparse,request
+from flask_restful import Api, Resource, reqparse,request
 from app.models.group import Group
 from app.models.robot import Robot
 
@@ -90,6 +90,40 @@ class GroupApi(ApiBase):
             db.session.add(robot)
             db.session.commit()
         return create_response_message("Thêm mới thành công", 200)
+
+    @ApiBase.exception_error
+    def patch(self):
+        data = request.get_json(force = True)
+        group = Group.query.get(data['id'])
+        groupDb = Group.query.all()
+        if 'name' in data:
+            for groupName in groupDb:
+                logging.warning(groupName.name)
+                if groupName.name == data['name']:
+                    return create_response_message(f"Tên {data['name']} đã tồn tại", 200)
+            group.name = data['name']
+            db.session.add(group)
+            db.session.commit()
+
+        if 'mission_id' in data:
+            group.mission_id = data['mission_id']
+            db.session.add(group)
+            db.session.commit()
+
+        if 'robots' in data:
+            logging.warning(group.robots)
+            while len(group.robots):
+                group.robots.pop(0)
+            for robot in data['robots']:
+                logging.warning(robot)
+                robotDb = Robot.query.get(robot)
+                group.robots.append(robotDb)
+                db.session.add(group)
+                db.session.commit()
+        return create_response_message("Sửa thành công", 200)
+            
+
+
 
     @ApiBase.exception_error
     def delete(self):
