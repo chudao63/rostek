@@ -30,10 +30,8 @@ class GroupApi(ApiBase):
         groups = Group.query.all()
         output = []
 
-        listMission = {}
-        missionDict = {}
-        for group in groups:
 
+        for group in groups:
             if group.active == '0':
                 continue
             else:
@@ -41,12 +39,11 @@ class GroupApi(ApiBase):
                 groupDict.pop("mission_id")
 
                 if group.mission_id != None:
+                    missionDict = {}
                     mission = Mission.query.get(group.mission_id)
                     if mission.active == True:
                         missionDict['mission_name'] = group.mission.name
                         missionDict['mission_id'] = group.mission_id
-                        listMission = missionDict
-                
                 listRobot = []
                 for robot in group.robots:
                     robotDict = {}
@@ -57,7 +54,8 @@ class GroupApi(ApiBase):
                     robotDict['robot_id'] = robotId
                     listRobot.append(robotDict)
                 groupDict['robots'] = listRobot
-                groupDict['mission'] = listMission
+                groupDict['mission'] = missionDict
+            
             output.append(groupDict)
         return output
 
