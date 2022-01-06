@@ -99,7 +99,7 @@ class GroupApi(ApiBase):
         if 'name' in data:
             for groupName in groupDb:
                 logging.warning(groupName.name)
-                if groupName.name == data['name']:
+                if groupName.name == data['name'] and groupName.id != data['id']:
                     return create_response_message(f"Tên {data['name']} đã tồn tại", 200)
             group.name = data['name']
             db.session.add(group)
