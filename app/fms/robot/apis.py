@@ -131,15 +131,14 @@ class RobotApi(ApiBase):
         data = request.get_json(force = True)
         robot = Robot.query.get(data['id'])
         assert robot is not None, f"robot {data['id']} không tồn tại"
-        robot.active = 0
         robot.group_id = None
-        logging.warning(robot.order)
         for order in robot.order:
             if order.status == 2:
-                return create_response_message("Không thể xóa Robot", 409)
+                return create_response_message("Robot đang làm nhiệm vụ, không thể xóa", 409)
             if order.status == 1:
                 order.robot_id = None
                 db.session.add(order)
+        robot.active = 0
         db.session.add(robot)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)

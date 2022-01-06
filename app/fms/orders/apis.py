@@ -28,22 +28,31 @@ class OrderApi(ApiBase):
         URL: '/order'
         Method: GET
         """
-        datas = Order.query.all()
+        orders = Order.query.all()
         output =[]
 
-        for data in datas:
+        for data in orders:
+
             if data.active == 0:
                 continue
             else:
-                dataDict    = data.as_dict
-                if data.robot.active == True:
-                    robotDict   = data.robot.as_dict
+                dataDict = data.as_dict
+                if data.robot_id is not None:
+                    if data.robot.active == True:
+                        robotDict   = data.robot.as_dict
+                    else:
+                        robotDict = None
                 else:
                     robotDict = None
-                if data.mission.active == True:
-                    missionDict = data.mission.as_dict
+
+                if data.mission_id is not None:
+                    if data.mission.active == True:
+                        missionDict = data.mission.as_dict
+                    else:
+                        missionDict = None
                 else:
                     missionDict = None
+
                 dataDict["robot"]  = robotDict
                 dataDict["mission"] = missionDict
                 output.append(dataDict)
