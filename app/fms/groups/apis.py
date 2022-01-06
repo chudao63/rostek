@@ -117,14 +117,15 @@ class GroupApi(ApiBase):
         return create_response_message("Sửa thành công", 200)
             
 
-
-
     @ApiBase.exception_error
     def delete(self):
         data = request.get_json(force = True)
         group = Group.query.get(data["id"])
         group.active = data["active"]
         group.mission_id = None
+        for robot in group.robots:
+            robot.group_id = None
+            db.session.add(robot)
         db.session.add(group)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
