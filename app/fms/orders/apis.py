@@ -35,20 +35,9 @@ class OrderApi(ApiBase):
             if data.active == 0:
                 continue
             else:
-                dataDict    = data.__dict__
-                robotDict   = data.robot.__dict__
-                missionDict = data.mission.__dict__
-                
-                dataDict.pop("_sa_instance_state")
-                robotDict.pop("_sa_instance_state")
-                missionDict.pop("_sa_instance_state")
-                missionDict.pop("steps")
-
-
-                dataDict.pop("robot")
-                dataDict.pop("mission")
-
-
+                dataDict    = data.as_dict
+                robotDict   = data.robot.as_dict
+                missionDict = data.mission.as_dict
                 dataDict["robot"]  = robotDict
                 dataDict["mission"] = missionDict
                 output.append(dataDict)
