@@ -33,7 +33,7 @@ class GroupApi(ApiBase):
         listMission = {}
         missionDict = {}
         for group in groups:
-            logging.warning(group)
+
             if group.active == '0':
                 continue
             else:
@@ -41,9 +41,11 @@ class GroupApi(ApiBase):
                 groupDict.pop("mission_id")
 
                 if group.mission_id != None:
-                    missionDict['mission_name'] = group.mission.name
-                    missionDict['mission_id'] = group.mission_id
-                    listMission = missionDict
+                    mission = Mission.query.get(group.mission_id)
+                    if mission.active == True:
+                        missionDict['mission_name'] = group.mission.name
+                        missionDict['mission_id'] = group.mission_id
+                        listMission = missionDict
                 
                 listRobot = []
                 for robot in group.robots:
