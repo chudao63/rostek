@@ -88,15 +88,16 @@ class RobotApi(ApiBase):
         assert robot is not None, f"Robot id {data['id']} không hợp lệ"
 
         if 'name' in data:
-            for robot in robotDb:
-                if robot.name == data['name'] and robot.id != data['id']:
+            for robotDetail in robotDb:
+                if robotDetail.name == data['name'] and robotDetail.id != data['id']:
                     return create_response_message(f"Robot {data['name']} đã tồn tại", 409)
             robot.name = data['name']
             db.session.add(robot)
+            db.session.commit()
 
         if 'ip' in data:
-            for robot in robotDb:
-                if robot.ip == data['ip'] and robot.id != data['id']:
+            for robotDetail in robotDb:
+                if robotDetail.ip == data['ip'] and robotDetail.id != data['id']:
                     return create_response_message(f"IP {data['ip']} đã tồn tại", 409)
             robot.ip = data['ip']
             db.session.add(robot)
