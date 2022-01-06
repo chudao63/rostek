@@ -138,7 +138,8 @@ class RobotApi(ApiBase):
             if order.status == 1:
                 order.robot_id = None
                 db.session.add(order)
-        robot.active = 0
+                robot.active = 0
+
         db.session.add(robot)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
