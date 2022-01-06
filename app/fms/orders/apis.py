@@ -28,30 +28,29 @@ class OrderApi(ApiBase):
         URL: '/order'
         Method: GET
         """
-        
-        parser = reqparse.RequestParser()
-        parser.add_argument('status')
-        args = parser.parse_args()
-        dataFilter = []
-        for orderStatus in ORDER_STATUS:
-            if args['status'] == orderStatus.name.lower():
-                dataFilter.append(Order.status == orderStatus.value)
-        datas = Order.query.filter(and_(*dataFilter)).all()
+        datas = Order.query.all()
         output =[]
 
         for data in datas:
-            # robotName = data.robot.name
-            robotName = data.robot.name
-            missionName = data.mission.name
             if data.active == 0:
                 continue
             else:
-                dataDict = data.__dict__
+                dataDict    = data.__dict__
+                robotDict   = data.robot.__dict__
+                missionDict = data.mission.__dict__
+                
                 dataDict.pop("_sa_instance_state")
+                robotDict.pop("_sa_instance_state")
+                missionDict.pop("_sa_instance_state")
+                missionDict.pop("steps")
+
+
                 dataDict.pop("robot")
                 dataDict.pop("mission")
-                dataDict["robot_name"] = robotName
-                dataDict["mission_name"] = missionName
+
+
+                dataDict["robot"]  = robotDict
+                dataDict["mission"] = missionDict
                 output.append(dataDict)
         return output
 
