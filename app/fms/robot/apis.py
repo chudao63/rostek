@@ -132,6 +132,7 @@ class RobotApi(ApiBase):
         robot = Robot.query.get(data['id'])
         assert robot is not None, f"robot {data['id']} không tồn tại"
         robot.active = 0
+        robot.group_id = None
         db.session.add(robot)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)

@@ -32,9 +32,6 @@ class GroupApi(ApiBase):
 
         listMission = {}
         missionDict = {}
-
-
-
         for group in groups:
             logging.warning(group)
             if group.active == '0':
@@ -50,18 +47,13 @@ class GroupApi(ApiBase):
                 
                 listRobot = []
                 for robot in group.robots:
-                    logging.warning(robot)
                     robotDict = {}
 
                     robotName = robot.name
                     robotId   = robot.id
                     robotDict['robot_name'] = robotName
                     robotDict['robot_id'] = robotId
-                    logging.warning(robotDict)
-
                     listRobot.append(robotDict)
-                    logging.warning(listRobot)
-
                 groupDict['robots'] = listRobot
                 groupDict['mission'] = listMission
             output.append(groupDict)
@@ -130,6 +122,7 @@ class GroupApi(ApiBase):
         data = request.get_json(force = True)
         group = Group.query.get(data["id"])
         group.active = data["active"]
+        group.mission_id = None
         db.session.add(group)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
