@@ -1,5 +1,6 @@
 from logging import log
 import logging
+from os import listdir
 import re
 from sqlalchemy.sql.functions import ReturnTypeFromArgs
 from sqlalchemy.sql.sqltypes import REAL
@@ -32,10 +33,10 @@ class GroupApi(ApiBase):
         listMission = {}
         missionDict = {}
 
-        listRobot = []
-        robotDict = {}
+
 
         for group in groups:
+            logging.warning(group)
             if group.active == '0':
                 continue
             else:
@@ -46,18 +47,24 @@ class GroupApi(ApiBase):
                     missionDict['mission_name'] = group.mission.name
                     missionDict['mission_id'] = group.mission_id
                     listMission = missionDict
-
+                
+                listRobot = []
                 for robot in group.robots:
+                    logging.warning(robot)
+                    robotDict = {}
+
                     robotName = robot.name
                     robotId   = robot.id
                     robotDict['robot_name'] = robotName
                     robotDict['robot_id'] = robotId
+                    logging.warning(robotDict)
+
                     listRobot.append(robotDict)
+                    logging.warning(listRobot)
+
                 groupDict['robots'] = listRobot
                 groupDict['mission'] = listMission
-
-                
-                output.append(groupDict)
+            output.append(groupDict)
         return output
 
     @ApiBase.exception_error
