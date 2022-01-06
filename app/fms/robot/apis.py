@@ -89,15 +89,15 @@ class RobotApi(ApiBase):
 
         if 'name' in data:
             for robot in robotDb:
-                if robot.name == data['name']:
-                    return create_response_message(f"Robot {data['name']} đã tồn tại", 200)
+                if robot.name == data['name'] and robot.id != data['id']:
+                    return create_response_message(f"Robot {data['name']} đã tồn tại", 409)
             robot.name = data['name']
             db.session.add(robot)
 
         if 'ip' in data:
             for robot in robotDb:
-                if robot.ip == data['ip']:
-                    return create_response_message(f"IP {data['ip']} đã tồn tại", 200)
+                if robot.ip == data['ip'] and robot.id != data['id']:
+                    return create_response_message(f"IP {data['ip']} đã tồn tại", 409)
             robot.ip = data['ip']
             db.session.add(robot)
 
