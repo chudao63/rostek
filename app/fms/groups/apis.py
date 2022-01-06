@@ -46,8 +46,6 @@ class GroupApi(ApiBase):
                     missionDict['mission_name'] = group.mission.name
                     missionDict['mission_id'] = group.mission_id
                     listMission = missionDict
-                    groupDict['robots'] = listRobot
-                    groupDict['mission'] = listMission
 
                 for robot in group.robots:
                     robotName = robot.name
@@ -55,6 +53,9 @@ class GroupApi(ApiBase):
                     robotDict['robot_name'] = robotName
                     robotDict['robot_id'] = robotId
                     listRobot.append(robotDict)
+                groupDict['robots'] = listRobot
+                groupDict['mission'] = listMission
+
                 
                 output.append(groupDict)
         return output
