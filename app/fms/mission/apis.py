@@ -31,12 +31,12 @@ def edit_step_data(data):
         if "id" in stepIndex:
             startPointId = stepIndex['start_point_id']
             startPointDb = Position.query.get(startPointId)
-
             assert startPointDb is not None, f"Point {startPointId} không tồn tại"
+
             endPointId = stepIndex['end_point_id']
             endPointDb = Position.query.get(endPointId)
-
             assert endPointDb is not None, f"Point {endPointId} không tồn tại"
+
             step = Step.query.get(stepIndex['id'])
             assert step is not None, f"Step {stepIndex['id']} không tồn tại"
 
@@ -80,6 +80,7 @@ class MissionApi(Resource):
         """
         Lấy dữ liệu các Mission có trong database
         URL:'/mission'
+        Method: GET
         """
         missions = Mission.query.all()
         output = []
@@ -127,11 +128,12 @@ class MissionApi(Resource):
     @ApiBase.exception_error
     def post(self):
         """
-        URL: '/create-mision'
         Tạo mission mới 
-        1, Ghi bản tin vào mission
-        2, Ghi bản tin vào bảng Step
-        3, Ghi bản tin vào bảng tạm giữa step và Product
+        1, Tạo mission mới
+        2, Tạo step mới
+        3, Ghi bản tin mới vào bảng tạm giữa step và Product
+        URL: '/mision'
+        Method: POST
         Body:
             {
                 "name" : "MissionTest5",
@@ -178,6 +180,8 @@ class MissionApi(Resource):
     def patch(self):
         """
         Hàm sửa mission
+        URL: /mission
+        Method: PATCH
         Body:
             {
                 "id" : 1,
@@ -220,6 +224,11 @@ class MissionApi(Resource):
 class DeleteMission(ApiBase):
     @ApiBase.exception_error
     def delete(self):
+        """
+        Hàm xóa mission, nếu mission đang thực hiện ở Order Running không thể xóa, Order Waiiting thì xóa, Order Finished không xóa dữ liệu
+        URL: /delete-mission
+        Method: DELETE
+        """
         data = request.get_json(force = True)
         mission = Mission.query.get(data['id'])
 
@@ -228,7 +237,7 @@ class DeleteMission(ApiBase):
                 return create_response_message("Không thể xóa nhiệm vụ đang thực thi", 409)
             if order.status == 1:
                 order.mission_id = None
-                mission.active = 0
+        mission.active = 0
         db.session.add(mission)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)

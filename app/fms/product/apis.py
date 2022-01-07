@@ -12,7 +12,7 @@ from app import db
 
 class ProductApi(BaseApiPagination):
     """
-    URL: /location
+    URL: /product
     """
     def __init__(self):
         BaseApiPagination.__init__(self, Product, "/product")

@@ -9,11 +9,6 @@ api.add_resource(
 )
 
 api.add_resource(
-    OrderDetailApi,
-    '/order-detail'
-)
-
-api.add_resource(
     OrderApi,
     '/order'
 )

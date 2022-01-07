@@ -24,6 +24,7 @@ class RobotBaseApi(BaseApiPagination):
 class RobotApi(ApiBase):
     def get(self):
         """
+        Lấy dữ liệu tất cả robot trên database
         URL: '/robot'
         Method: GET
         """
@@ -41,7 +42,7 @@ class RobotApi(ApiBase):
     @ApiBase.exception_error
     def post(self):
         """
-        Thêm robot mới
+        Thêm robot mới, nếu trùng tên với robot cũ đã xóa thì thay đổi thông tin robot cũ
         URL: '/robot'
         Method: POST
         """
@@ -55,7 +56,10 @@ class RobotApi(ApiBase):
                 robot.area_id = data['area_id']
                 robot.type_id = data['type_id']
                 robot.active = 1
-                robot.group_id = data['group_id']
+                if 'group_id' in data:
+                    robot.group_id = data['group_id']
+                else:
+                    robot.group_id = None
                 db.session.add(robot)
                 db.session.commit()
                 return create_response_message("Thêm mới thành công", 200)
@@ -138,7 +142,7 @@ class RobotApi(ApiBase):
             if order.status == 1:
                 order.robot_id = None
                 db.session.add(order)
-                robot.active = 0
+        robot.active = 0
 
         db.session.add(robot)
         db.session.commit()

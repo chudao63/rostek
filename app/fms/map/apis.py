@@ -54,7 +54,6 @@ class DisplayMapApi(Resource):
             directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/app/fms/map/img", filename= f"{args['imageName']}.png")
 
 class DeleteImageApi(ApiBase):
-	
 	@ApiBase.exception_error
 	def get(self):
 		"""

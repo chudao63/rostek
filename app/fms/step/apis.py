@@ -24,6 +24,11 @@ class StepApiBase(BaseApiPagination):
 
 class StepApi(ApiBase):
     def get(self):
+        """
+        Lấy dữ liệu các step lưu trên database
+        URL: /step
+        Method: GET
+        """
         missions = Mission.query.all()
         for mission in missions:
             logging.info(mission)
@@ -34,6 +39,11 @@ class StepApi(ApiBase):
 
     @ApiBase.exception_error
     def post(self):
+        """
+        Thêm một step mới
+        URL: /step
+        Method: POST
+        """
         data = request.get_json(force = True)
         points = Position.query.all()
         notiStartPoint = 0
@@ -60,6 +70,8 @@ class StepApi(ApiBase):
     def delete(self):
         """
         Xóa một step
+        URL: /step
+        Method: DELETE
         """
         data = request.get_json(force = True)
         missions = Mission.query.all()

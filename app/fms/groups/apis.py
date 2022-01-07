@@ -27,6 +27,11 @@ class GroupApi(ApiBase):
 
     @ApiBase.exception_error
     def get(self):
+        """
+        Trả về dữ liệu của các group lưu trên database
+        URL: /group
+        Method: GET
+        """
         groups = Group.query.all()
         output = []
 
@@ -61,6 +66,11 @@ class GroupApi(ApiBase):
 
     @ApiBase.exception_error
     def post(self):
+        """
+        Thêm một group mới
+        URL: /group
+        Method: POST
+        """
         data = request.get_json(force = True)
         groupDb = Group.query.all()
         for groupName in groupDb:
@@ -85,6 +95,11 @@ class GroupApi(ApiBase):
 
     @ApiBase.exception_error
     def patch(self):
+        """
+        Sửa thông tin group
+        URL: /group
+        Method: PATCH
+        """
         data = request.get_json(force = True)
         group = Group.query.get(data['id'])
         groupDb = Group.query.all()
@@ -92,7 +107,7 @@ class GroupApi(ApiBase):
             for groupName in groupDb:
                 logging.warning(groupName.name)
                 if groupName.name == data['name'] and groupName.id != data['id']:
-                    return create_response_message(f"Tên {data['name']} đã tồn tại", 200)
+                    return create_response_message(f"Tên {data['name']} đã tồn tại", 409)
             group.name = data['name']
             db.session.add(group)
 
@@ -115,6 +130,11 @@ class GroupApi(ApiBase):
 
     @ApiBase.exception_error
     def delete(self):
+        """
+        Xóa một group, đồng thời xóa tất cả các robot đang thuộc group đó khỏi group
+        URL: /group
+        Method: DELETE
+        """
         data = request.get_json(force = True)
         group = Group.query.get(data["id"])
         group.active = data["active"]

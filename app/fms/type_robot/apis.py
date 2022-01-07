@@ -5,7 +5,7 @@ from app.models.type_robot import TypeRobot
 
 class TypeRobotApi(BaseApiPagination):
     """
-    URL: /location
+    URL: /typeroobt
     """
     def __init__(self):
         BaseApiPagination.__init__(self, TypeRobot, "/typerobot")

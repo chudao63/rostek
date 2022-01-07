@@ -24,35 +24,31 @@ class OrderApi(ApiBase):
     @ApiBase.exception_error
     def get(self):
         """
-        Lấy order theo trạng thái
+        Lấy tất cả các order đang active trên db
         URL: '/order'
         Method: GET
         """
         orders = Order.query.all()
         output =[]
-
         for data in orders:
-
             if data.active == 0:
                 continue
             else:
                 dataDict = data.as_dict
                 if data.robot_id is not None:
-                    if data.robot.active == True:
+                    if data.robot.active == True or data.status == 0:
                         robotDict   = data.robot.as_dict
                     else:
                         robotDict = None
                 else:
                     robotDict = None
-
                 if data.mission_id is not None:
-                    if data.mission.active == True:
+                    if data.mission.active == True or data.status == 0:
                         missionDict = data.mission.as_dict
                     else:
                         missionDict = None
                 else:
                     missionDict = None
-
                 dataDict["robot"]  = robotDict
                 dataDict["mission"] = missionDict
                 output.append(dataDict)
@@ -73,42 +69,14 @@ class OrderApi(ApiBase):
 
     @ApiBase.exception_error
     def delete(self):
+        """
+        Xóa Order 
+        URL: /order
+        Method: DELETE
+        """
         data = request.get_json(force = True)
         order = Order.query.get(data['id'])
         order.active = 0
         db.session.add(order)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
-
-class OrderDetailApi(ApiBase):
-    @ApiBase.exception_error
-    def get(self):
-        """
-        Xem chi tiết 1 Order
-        URL: '/order-detail'
-        """
-        parser = reqparse.RequestParser()
-        parser.add_argument('id')
-        args = parser.parse_args()
-        dataDict = {}
-        if args['id']:
-            datas = Order.query.filter(Order.id == args['id'])
-        for data in datas:
-            if data.active == 0:
-                continue
-            else:
-                dataDict    = data.__dict__
-                robotDict   = data.robot.__dict__
-                missionDict = data.mission.__dict__
-                
-                dataDict.pop("_sa_instance_state")
-                robotDict.pop("_sa_instance_state")
-                missionDict.pop("_sa_instance_state")
-
-                dataDict.pop("robot")
-                dataDict.pop("mission")
-
-
-                dataDict["robot"]  = robotDict
-                dataDict["mission"] = missionDict
-        return dataDict

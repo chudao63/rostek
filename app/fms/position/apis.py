@@ -92,8 +92,6 @@ class PointApi(ApiBase):
         missions = Mission.query.all()
         steps = Step.query.filter(or_((Step.start_point == data['id']), (Step.end_point == data['id']))).all()
         for mission in missions:
-            logging.warning(mission)
-            logging.warning(mission.steps)
             for index in mission.steps:
                 if index.id == data['id']:
                     while len(mission.steps):
@@ -102,12 +100,10 @@ class PointApi(ApiBase):
                         db.session.commit()
 
         for step in steps:
-            logging.warning(step)
             if step.start_point or step.end_point == data['id']:
                 stepId = Step.query.get(step.id)
                 db.session.delete(stepId)
                 db.session.commit()
-                logging.warning(step.id)
 
         db.session.delete(position)
         db.session.commit()
