@@ -223,14 +223,12 @@ class DeleteMission(ApiBase):
         data = request.get_json(force = True)
         mission = Mission.query.get(data['id'])
 
-
-        logging.warning(mission.order)
         for order in mission.order:
             if order.status == 2:
                 return create_response_message("Không thể xóa nhiệm vụ đang thực thi", 409)
             if order.status == 1:
                 order.mission_id = None
-        mission.active = 0
+                mission.active = 0
         db.session.add(mission)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
