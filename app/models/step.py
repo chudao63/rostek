@@ -15,11 +15,13 @@ product_step = db.Table('product_step',
 
 
 class Step(db.Model, DbBaseModel):
-    __tablename__  = 'step_table'
-    id             =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
-    start_point    =  Column(Integer, nullable= True)
-    end_point      =  Column(Integer, nullable= True)
-    products       = relationship("Product",secondary=product_step, lazy='subquery', backref=backref('steps', lazy=False))
+    __tablename__       = 'step_table'
+    id                  =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
+    start_point         =  Column(Integer, nullable= True)
+    action_start_point  =  Column(Integer, nullable= True)
+    end_point           =  Column(Integer, nullable= True)
+    action_end_point    =  Column(Integer, nullable= True)
+    products            = relationship("Product",secondary=product_step, lazy='subquery', backref=backref('steps', lazy=False))
 
 
 

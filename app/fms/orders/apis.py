@@ -80,3 +80,10 @@ class OrderApi(ApiBase):
         db.session.add(order)
         db.session.commit()
         return create_response_message("Xóa thành công", 200)
+
+
+class RunNowOrder(ApiBase):
+    def get():
+        data = request.get_json(force = True) 
+        order = Order.query.get(data['id'])
+        logging.warning(order)

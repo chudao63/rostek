@@ -26,7 +26,7 @@ class MqttConfigure(object):
     MQTT_TLS_ENABLED    = False
     FRONTEND_TOPIC      = '/agv/realtime'
     COM_NOTIFY_TOPIC    = '/notify_com'
-    AGV_COUNT_MESSAGE   = 5
+    AGV_COUNT_MESSAGE   = 20
     ACTIVE              = True
     
 class MysqlConfigure(object):

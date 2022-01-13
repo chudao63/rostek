@@ -16,7 +16,7 @@ class Mission(db.Model, DbBaseModel):
     __tablename__ = 'mission'
     id       =  Column(Integer, primary_key= True, autoincrement= True, nullable= False)
     name     =  Column(String(50),unique= True, nullable= False)
-    active   =  Column(String(50), default= False, nullable= False)
+    # active   =  Column(String(50), default= False, nullable= False)
     active   =  Column(Boolean, default= 1, nullable= False )
     steps = relationship("Step",secondary=mission_step, lazy='subquery', backref=backref('missions', lazy=False))
 

@@ -48,14 +48,23 @@ class StepApi(ApiBase):
         points = Position.query.all()
         notiStartPoint = 0
         notiEndPoint = 0
+        assert "start_point" in data, "Thiếu start_point"
+        assert "end_point" in data, "Thiếu end_point"
+        assert "action_start_point" in data, "Thiếu action_start_point"
+        assert "action_end_point" in data, "Thiếu action_end_point"
+
 
         for point in points:
             if point.id == data['start_point']:
                 notiStartPoint = 1
             if point.id == data['end_point']:    
                 notiEndPoint = 1
+
+
+
         if notiStartPoint == 1 and notiEndPoint == 1:
-            stepPoint = Step(start_point = data['start_point'], end_point = data['end_point'])
+            stepPoint = Step(start_point = data['start_point'], end_point = data['end_point'], action_start_point = data['action_start_point'], action_end_point = data['action_end_point'])
+            
             db.session.add(stepPoint)
             db.session.commit()
             return create_response_message("Thêm thành công", 200)

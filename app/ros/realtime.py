@@ -52,13 +52,13 @@ class RobotRuning:
 		GỬI DỮ LIỆU TỚI FRONTEND
 		"""
 		#khi nao chay that thi bo command
-		# pose = self.pose.copy()
-		# theta = pose.pop("theta")
-		# pose["θ"] = theta
+		pose = self.pose.copy()
+		theta = pose.pop("theta")
+		pose["θ"] = theta
 		data = {
 			"robot_id" 		: self.robotId,
 			"status"	    : self.__robotStatus,
-			"pose"          : 1, #pose, # khi nao chay that thi bo cmd
+			"pose"          : pose, # khi nao chay that thi bo cmd
 			"info"			: self.info
 		}
 		mqtt.publish(MqttConfigure.FRONTEND_TOPIC, json.dumps(data))
@@ -135,7 +135,6 @@ class RobotRuning:
 			if self.rosClient.is_connected :
 				self.agvStatus = roslibpy.Topic(self.rosClient, '/agv_status', 'geometry_msgs/PoseStamped')
 				# self.agvStatus = roslibpy.Topic(self.rosClient, '/agv_status', 'geometry_msgs/PoseStamped')
-
 				self.agvWayPoint = roslibpy.Topic(self.rosClient, '/agv_waypoints', 'geometry_msgs/PoseStamped')
 				self.agvOrderCommand = roslibpy.Topic(self.rosClient, '/order_command', 'std_msgs/String')
 				self.agvWayPoint.subscribe(self.agv_control_printer)
@@ -206,7 +205,7 @@ class RobotRuning:
 		Lắng nghe thay đổi trạng thái của robot
 		"""
 		# print(message)
-		# print("->")
+		# print("->", message)
 		frame_id = json.loads(message['header']['frame_id'])
 		pose = message['pose']['position']
 		pose.pop('z')
@@ -219,20 +218,18 @@ class RobotRuning:
 			"status" : AGV_STATUS[frame_id['status']],
 			
 			"state" : frame_id['state'],
-			"pose" : 1,
-			#chay that thi bo command, xoa 1
-			# {
-			# 	"x" : round(pose['x']*1000),
-			# 	"y" : round(pose['y']*1000),
-			# 	"theta" : pose['theta'],
-			# },
-			# "info" : {
-			# 	"runningtime" : frame_id["runningtime"],
-			# 	"batery" : frame_id["battery"]
-			# },
+			"pose" :
+			{
+				"x" : round(pose['x']*1000),
+				"y" : round(pose['y']*1000),
+				"theta" : pose['theta'],
+			},
+			"info" : {
+				"runningtime" : frame_id["runningtime"],
+				"batery" : frame_id["battery"]
+			},
 			# "conveyor_status" : frame_id["conveyor_status"] #chay that thi bo command nay, xoa dong duoi
 			"conveyor_status" : 1
-
 		}
 		self.update(payload)
 
@@ -260,11 +257,14 @@ class RobotRuning:
 		}
 		# logging.info(frame_id)
 		message = {
-			'header': {'stamp': {'secs': 0, 'nsecs': 0}, 
-			'frame_id': json.dumps(frame_id), 
-			'seq': 1}, 
-			'pose': {'position': positon,
-			'orientation': orientation}
+			'header': 
+				{
+					'stamp': {'secs': 0, 'nsecs': 0}, 
+					'frame_id': json.dumps(frame_id), 
+					'seq': 1
+				}, 
+				'pose': {'position': positon,
+				'orientation': orientation}
 		}
 		if self.agvWayPoint:
 			self.agvWayPoint.publish(message)
