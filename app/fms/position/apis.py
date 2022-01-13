@@ -64,7 +64,6 @@ class PointApi(ApiBase):
                 point.x = dataIndex['x']
                 point.y = dataIndex['y']
                 point.name = dataIndex['name']
-                point.type = dataIndex['type']
                 point.map_data_id = dataIndex['map_data_id']
                 db.session.add(point)
                 db.session.commit()
@@ -72,7 +71,7 @@ class PointApi(ApiBase):
                 for pointDb in pointDbs:
                     if pointDb.name == dataIndex['name']:
                         return create_response_message(f"Tên {dataIndex['name']} đã tồn tại", 409)
-                position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], type = dataIndex['type'], map_data_id = dataIndex['map_data_id'])
+                position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], map_data_id = dataIndex['map_data_id'])
                 db.session.add(position)
                 db.session.commit()
         return create_response_message("Sửa map_data thành công", 200)

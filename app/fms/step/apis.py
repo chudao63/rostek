@@ -29,13 +29,7 @@ class StepApi(ApiBase):
         URL: /step
         Method: GET
         """
-        missions = Mission.query.all()
-        for mission in missions:
-            logging.info(mission)
-            logging.warning(mission.steps)
-            for step in mission.steps:
-                logging.error(step.products)
-
+        pass
 
     @ApiBase.exception_error
     def post(self):
