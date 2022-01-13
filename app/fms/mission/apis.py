@@ -42,6 +42,9 @@ def edit_step_data(data):
 
             step.start_point = stepIndex['start_point_id']
             step.end_point = stepIndex['end_point_id']
+            step.action_start_point = stepIndex['action_start_point']
+            step.action_end_point   = stepIndex['action_end_point']
+
             while len(step.products): # xoa het cac product trong step
                 step.products.pop(0)
             # them moi product
@@ -54,15 +57,17 @@ def edit_step_data(data):
             db.session.add(step)
             db.session.commit()
 
-def new_step_data(missionDb, start_point, end_point, productData):
+def new_step_data(missionDb, start_point, end_point, action_start_point, action_end_point ,productData):
     """
     Ghi thêm một step mới vào Mission cũ
     missionDb  : Mission muốn sửa
     start_point: Điểm bắt đầu của step
     end_point  : Điểm kết thúc của step
+    action_start_point: Action tại điểm start_point
+    action_end_point: Action tại điểm end_point
     productData: Hàng hóa phục vụ cho step
     """
-    step = Step(start_point = start_point, end_point = end_point)
+    step = Step(start_point = start_point, end_point = end_point, action_start_point = action_start_point, action_end_point = action_end_point)
     db.session.add(step)
     db.session.commit()
     stepMission = Step.query.order_by(Step.id.desc()).first()
@@ -163,7 +168,7 @@ class MissionApi(Resource):
         dataMission = Mission.query.order_by(Mission.id.desc()).first()
 
         for stepIndex in data['steps']:
-            step = Step(start_point = stepIndex['start_point_id'], end_point = stepIndex['end_point_id'])
+            step = Step(start_point = stepIndex['start_point_id'], end_point = stepIndex['end_point_id'], action_start_point = stepIndex['action_start_point'], action_end_point = stepIndex['action_end_point'])
             db.session.add(step)
             db.session.commit()
             stepMission = Step.query.order_by(Step.id.desc()).first()
@@ -217,7 +222,7 @@ class MissionApi(Resource):
                     if "id" in stepIndex:
                         edit_step_data(data)
                     if "id" not in stepIndex:
-                        new_step_data(mission, stepIndex['start_point_id'],stepIndex['end_point_id'],stepIndex['product_id'])
+                        new_step_data(mission, stepIndex['start_point_id'],stepIndex['end_point_id'],stepIndex['product_id'], stepIndex['action_start_point'], stepIndex['action_end_point'])
         return create_response_message("Sửa thành công", 200)
  
 
