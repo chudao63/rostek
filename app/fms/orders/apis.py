@@ -88,6 +88,9 @@ class OrderApi(ApiBase):
 
 class RunNowOrder(ApiBase):
     def get(self):
+        """
+        Khi nhấn Run Now của Order đang ở trạng thái Waitting thì sẽ gửi Order_id vào Key "robot{id}/command" của Server Redis
+        """
         data = request.get_json(force = True) 
         order = Order.query.get(data['id'])
         redisClient.rpush(f"robot{order.robot_id}/command", f"{data['id']}")
