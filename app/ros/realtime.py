@@ -51,19 +51,20 @@ class RobotRuning:
 		"""
 		GỬI DỮ LIỆU TỚI FRONTEND
 		"""
-		#khi nao chay that thi bo command
+	
 		pose = self.pose.copy()
 		theta = pose.pop("theta")
 		pose["θ"] = theta
 		data = {
 			"robot_id" 		: self.robotId,
 			"status"	    : self.__robotStatus,
-			"pose"          : pose, # khi nao chay that thi bo cmd
+			"pose"          : pose, 
 			"info"			: self.info
 		}
 		mqtt.publish(MqttConfigure.FRONTEND_TOPIC, json.dumps(data))
 		self.mqtt_count += 1
-		print(f"Pub to frontend -> {self.mqtt_count}")
+		# print(f"Pub to frontend -> {self.mqtt_count}")
+		# logging.error(self.__robotStatus)
 
 
 	def update(self, data):
@@ -149,7 +150,7 @@ class RobotRuning:
 		except Exception as e:
 			logging.error(str(e))
 
-	def init_ros_bridge(self):
+	def  init_ros_bridge(self):
 		"""
 		Khởi tạo kết nối tới AGV
 		"""

@@ -1,6 +1,6 @@
 class FlaskConfigure(object):
     HOST    = '0.0.0.0'
-    PORT    = 5015
+    PORT    = 5016
     DEBUG   = True
 
 

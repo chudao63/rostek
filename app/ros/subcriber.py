@@ -22,7 +22,6 @@ class Monitor:
 		robots = Robot.query.all()
 		for robot in robots:
 			self.robots[robot.id] = RobotRuning(robot.id, robot.ip, robot.port)
-
 		if Monitor.__instance != None:
 			raise Exception("Do not call __init__(). Monitor is a singleton!")
 		else:
@@ -62,7 +61,6 @@ def handle_mqtt_message(client, userdata, message):
 
 		if point_type and position and orientation:
 			Monitor.getInstance().robots[robot_id].send_message_to_agv(point_type,1,1,position,orientation) 
-
 			
 # if cmd == 'moving':
 # 	print("moving")

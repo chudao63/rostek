@@ -2,6 +2,7 @@ from logging import log
 import logging
 from os import listdir
 import re
+from tkinter.messagebox import NO
 from sqlalchemy.sql.functions import ReturnTypeFromArgs
 from sqlalchemy.sql.sqltypes import REAL
 from app.models.mission import Mission
@@ -49,6 +50,9 @@ class GroupApi(ApiBase):
                     if mission.active == True:
                         missionDict['mission_name'] = group.mission.name
                         missionDict['mission_id'] = group.mission_id
+                    groupDict['mission'] = missionDict
+                else:
+                    groupDict['mission'] = None
                 listRobot = []
                 for robot in group.robots:
                     robotDict = {}
@@ -59,7 +63,6 @@ class GroupApi(ApiBase):
                     robotDict['robot_id'] = robotId
                     listRobot.append(robotDict)
                 groupDict['robots'] = listRobot
-                groupDict['mission'] = missionDict
             
             output.append(groupDict)
         return output

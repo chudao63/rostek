@@ -9,7 +9,7 @@ import eventlet
 from flask_mqtt import Mqtt
 import logging, os
 from configure import *
-
+import redis
 """
 CONFIGURE LOG
 """
@@ -67,3 +67,10 @@ jwt = JWTManager(app)
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 
+
+redisClient = redis.Redis(
+    host='54.169.159.150',
+    port=6379,
+    password= 'Rostek#2019',
+    decode_responses= True
+    )

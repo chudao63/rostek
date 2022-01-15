@@ -7,10 +7,14 @@ from utils.apimodel import ApiBase, BaseApiPagination
 from flask_restful import Api, Resource, reqparse,request
 from app.models.orders import Order
 from app import db
-from sqlalchemy import and_
 import os, sys
 from utils.common import create_response_message
+from app.ros.subcriber import *
+from app.models.robot import Robot
+from app.models.position import Position
 
+from app import redisClient
+# from app.ros.realtime import RobotRuning
 
 class OrderApiBase(BaseApiPagination):
     """
@@ -83,7 +87,8 @@ class OrderApi(ApiBase):
 
 
 class RunNowOrder(ApiBase):
-    def get():
+    def get(self):
         data = request.get_json(force = True) 
         order = Order.query.get(data['id'])
-        logging.warning(order)
+        redisClient.rpush(f"robot{order.robot_id}/command", f"{data['id']}")
+        return create_response_message("Gửi lệnh thành công", 200)
