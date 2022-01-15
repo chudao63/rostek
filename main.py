@@ -8,7 +8,7 @@ IMPORT URL FROM SOFTWARE
 from app.users.urls import *
 from app.update.urls import *
 from app.fms.urls import *
-from app.ros.subcriber import *
+# from app.ros.subcriber import *
 from app import socketio
 
 

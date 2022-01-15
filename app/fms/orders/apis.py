@@ -9,7 +9,7 @@ from app.models.orders import Order
 from app import db
 import os, sys
 from utils.common import create_response_message
-from app.ros.subcriber import *
+# from app.ros.subcriber import *
 from app.models.robot import Robot
 from app.models.position import Position
 
