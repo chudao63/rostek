@@ -27,15 +27,20 @@ class InitDbCommand(Command):
     def run(self):
         INITDB.ACTIVE = True
         init_db()
+        # db.create_all()
         logging.info('Migrate done')
 
 def init_db():
     """ Initialize the database."""
+    # logging.warning("----0")
     db.drop_all()
+    # logging.warning("----1")
     db.create_all()
     create_user_roles()
     create_users()
+    # logging.warning("----2")
     create_robots()
+    # logging.warning("----3")
 
 def create_user_roles():
     db.session.add(UserRole(name= "admin",      label = "Quản trị viên"))

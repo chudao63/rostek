@@ -38,7 +38,7 @@ class PointApi(ApiBase):
     @ApiBase.exception_error
     def post(self):
         """
-        Thêm danh sách các điểm mới 
+        Thêm danh sách các điểm mới, nếu có id trong bản tin gửi xuống sẽ coi như sửa, nếu không có id sẽ thêm mới
         URL: '/point'
         method: POST
         Body:
@@ -63,7 +63,11 @@ class PointApi(ApiBase):
                 point = Position.query.get(dataIndex['id'])
                 point.x = dataIndex['x']
                 point.y = dataIndex['y']
+                point.angle = dataIndex['angle']
                 point.name = dataIndex['name']
+                for pointDb in pointDbs:
+                    if pointDb.name == dataIndex['name'] and pointDb.id != dataIndex['id']:
+                        return create_response_message(f"tên {pointDb.name} đã tồn tại", 409)
                 point.map_data_id = dataIndex['map_data_id']
                 db.session.add(point)
                 db.session.commit()
@@ -71,7 +75,7 @@ class PointApi(ApiBase):
                 for pointDb in pointDbs:
                     if pointDb.name == dataIndex['name']:
                         return create_response_message(f"Tên {dataIndex['name']} đã tồn tại", 409)
-                position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'], map_data_id = dataIndex['map_data_id'])
+                position = Position(x = dataIndex['x'], y = dataIndex['y'], name = dataIndex['name'],angle = dataIndex['angle'] ,map_data_id = dataIndex['map_data_id'])
                 db.session.add(position)
                 db.session.commit()
         return create_response_message("Sửa map_data thành công", 200)
