@@ -1,0 +1,33 @@
+---
+data:
+- name: username
+  label: Mã đăng nhập
+  rules:
+  - required: true
+- name: name
+  label: Tên
+  rules:
+  - required: true
+- name: email
+  label: email
+  rules:
+  - required: true
+- name: password
+  label: Mật khẩu
+  rules:
+  - required: true
+- name: phone
+  type: number
+  label: Số điện thoại
+  rules:
+  - type: number
+- name: role_id
+  label: Chức năng
+  'type:': select
+  data: []
+  rules:
+  - required: true
+- name: description
+  label: Mô tả
+  rules:
+  - required: true

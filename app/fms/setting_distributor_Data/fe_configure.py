@@ -1,9 +1,11 @@
+
 from utils.apimodel import BaseConfigureApi
 from utils.yamlmodel import YamlReadWrite
 import os, logging
 
 
-class RobotConfigureApi(BaseConfigureApi, YamlReadWrite):
+
+class SettingDistributorDataConfigureApi(BaseConfigureApi, YamlReadWrite):
     """
     URL: /module/filter
     Lấy giá trị filter/post/path/delete cho frontend

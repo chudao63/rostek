@@ -18,6 +18,9 @@ from app.models.map import *
 # from app.models.users import *
 from app.models.robot_status import *
 from app.models.step import *
+from app.models.setting_charging_staging import *
+from app.models.setting_collision_avoidance import *
+from app.models.setting_distributor_data import *
 
 
 
@@ -26,8 +29,8 @@ class InitDbCommand(Command):
 
     def run(self):
         INITDB.ACTIVE = True
-        init_db()
-        # db.create_all()
+        # init_db()
+        db.create_all()
         logging.info('Migrate done')
 
 def init_db():

@@ -1,14 +1,9 @@
 from logging import log
 import logging
-from flask_restful import Api, Resource, reqparse, request
-from flask_sqlalchemy import get_debug_queries
-from sqlalchemy.sql.base import NO_ARG
-from sqlalchemy.util.langhelpers import group_expirable_memoized_property
+from flask_restful import  request
 from app.models.area import Area
 from app.models.group import Group
 from app.models.robot import Robot
-from app.models.robot_status import RobotStatus
-from utils.apimodel import BaseApiPagination
 from app import db
 from utils.apimodel import BaseApiPagination, ApiBase
 from utils.common import create_response_message

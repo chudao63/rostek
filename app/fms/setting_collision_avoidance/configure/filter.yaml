@@ -1,0 +1,8 @@
+---
+- name: name
+  label: Tên người dùng
+  type: string
+- name: role
+  label: Chức năng
+  type: list
+  data: []
