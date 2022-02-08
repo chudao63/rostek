@@ -20,6 +20,11 @@ api.add_resource(
 )
 
 api.add_resource(
+    DownloadImageApi,
+    '/download'
+)
+
+api.add_resource(
     DisplayMapApi,
     '/display'
 )

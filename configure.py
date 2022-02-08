@@ -25,6 +25,7 @@ class MqttConfigure(object):
     MQTT_KEEPALIVE      = 5
     MQTT_TLS_ENABLED    = False
     FRONTEND_TOPIC      = '/agv/realtime'
+    LOGGING_TOPIC       = "/system/log"
     COM_NOTIFY_TOPIC    = '/notify_com'
     AGV_COUNT_MESSAGE   = 20
     ACTIVE              = True

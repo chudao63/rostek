@@ -1,14 +1,6 @@
-from logging import log
 import logging
-import re
-from sqlalchemy.sql.elements import Null, or_
-from sqlalchemy.sql.expression import and_, or_
-from sqlalchemy.sql.functions import ReturnTypeFromArgs, count
 from app.models.map import Map
-from app.models.mission import Mission
-from app.models.position import Position
-from app.models.step import Step
-from utils.apimodel import BaseApiPagination, ApiBase, ApiCommon
+from utils.apimodel import BaseApiPagination, ApiBase
 from flask_restful import Resource, reqparse, request
 import os, sys
 from flask import send_from_directory
@@ -41,17 +33,33 @@ class UploadMapApi(ApiBase):
 		return create_response_message("Thêm mới thành công", 200)
 
 class DisplayMapApi(Resource):
-    """
-    Lấy dữ liệu bản đồ theo tên
-    URL: '/display'
-    Param: 'imageName'
-    """
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('imageName')
-        args = parser.parse_args()
-        return send_from_directory(
-            directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/app/fms/map/img", filename= f"{args['imageName']}.png")
+	"""
+	Lấy dữ liệu bản đồ theo tên
+	URL: '/display'
+	Param: 'imageName'
+	"""
+	def get(self):
+		parser = reqparse.RequestParser()
+		parser.add_argument('imageName')
+		args = parser.parse_args()
+		return send_from_directory(
+			directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/app/fms/map/img", filename= f"{args['imageName']}.png", as_attachment = False)
+
+
+class DownloadImageApi(Resource):
+	"""
+	Lấy dữ liệu bản đồ theo tên
+	URL: '/display'
+	Param: 'imageName'
+	"""
+	def get(self):
+		parser = reqparse.RequestParser()
+		parser.add_argument('imageName')
+		args = parser.parse_args()
+		return send_from_directory(
+			directory= f"{os.path.dirname(os.path.realpath(sys.argv[0]))}/app/fms/map/img", filename= f"{args['imageName']}.png", as_attachment = True)
+
+
 
 class DeleteImageApi(ApiBase):
 	@ApiBase.exception_error
