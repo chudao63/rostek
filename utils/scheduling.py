@@ -25,6 +25,7 @@ class Scheduling(threading.Thread):
 			for actionId in Actions.get_instance().actions:
 				action = Actions.get_instance().actions[actionId]
 				print("Add schedule at ", action["time"] )
+				logging.warning(action)
 				schedule.every().day.at(action["time"]).do(action["func"])
 				# schedule.every(5).seconds.do(action["func"])
 		except Exception as e:

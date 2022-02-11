@@ -16,13 +16,14 @@ class OrderApiBase(BaseApiPagination):
     def __init__(self):
         BaseApiPagination.__init__(self, Order, "/order-base")
 
-def send_order_id(orderId):
-    extOrder = redisClient.lrange("orderList",0,-1)
-    extOrder.append(orderId) 
-    redisClient.lpush("orderList",*extOrder)
+def send_order_id(robotId, orderId):
+    def send():
+        redisClient.rpush(f"robot{robotId}/command", f"{orderId}")
+    return send
 
-def printmessage():
-    print("hello")
+
+def printmessage(message):
+    print(message)
 
 class OrderApi(ApiBase):
     @ApiBase.exception_error
@@ -75,7 +76,7 @@ class OrderApi(ApiBase):
         Actions.get_instance().add_action({
             order.id : {
                 "time" : timeString,
-                "func" : send_order_id(order.id)
+                "func" : send_order_id(orderId= order.id, robotId= order.robot_id)
             }
         })
         logging.warning(timeString)
@@ -103,6 +104,9 @@ class RunNowOrder(ApiBase):
     #     """
     #     data = request.get_json(force = True) 
     #     order = Order.query.get(data['id'])
+    #     order.status = 2
+    #     db.session.add(order)
+    #     db.session.commit()
     #     redisClient.rpush(f"robot{order.robot_id}/command", f"{data['id']}")
     #     return create_response_message("Gửi lệnh thành công", 200)
 
@@ -111,11 +115,17 @@ class RunNowOrder(ApiBase):
         Khi nhấn Run Now của Order đang ở trạng thái Waitting thì sẽ gửi Order_id vào Key của Server Redis
         """
         data = request.get_json(force = True) 
+        order = Order.query.get(data['order'])
         extOrder = redisClient.lrange("orderList",0,-1)
+        order.status = 2
+        db.session.add(order)
+        db.session.commit()
+
         if data['order'] in extOrder:
             return create_response_message("Invalid",409)
         else:
             extOrder.append(data['order']) 
+            redisClient.delete("orderList")
             redisClient.lpush("orderList",*extOrder)
             return create_response_message("Gửi thành công",200)
 
