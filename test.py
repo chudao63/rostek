@@ -12,7 +12,7 @@ coloredlogs.install(
 )
 
 def printer():
-	logging.warning("This is action printer")
+	logging.warning("HELLO")
 
 def printer1():
 	logging.warning("This is action printer 1")
@@ -36,6 +36,7 @@ def add_schedule():
 	"""
 	Add action
 	"""
+	message = "hello"
 	parser = reqparse.RequestParser()
 	parser.add_argument('time')
 	parser.add_argument('action_id')

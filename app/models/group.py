@@ -5,8 +5,6 @@ from sqlalchemy import ForeignKey
 from app import db
 from utils.dbmodel import DbBaseModel
 
-
-
 class Group(db.Model, DbBaseModel):
     __tablename__ = 'group'
     id          = Column(Integer, primary_key= True, autoincrement= True, nullable= False)

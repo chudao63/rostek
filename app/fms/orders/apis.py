@@ -1,18 +1,11 @@
 import logging
-
-from humanfriendly.text import trim_empty_lines
-from app.fms.orders.consts import ORDER_STATUS
-from app.models.mission import Mission
 from utils.apimodel import ApiBase, BaseApiPagination
-from flask_restful import Api, Resource, reqparse,request
+from flask_restful import request
 from app.models.orders import Order
 from app import db
-import os, sys
 from utils.common import create_response_message
-# from app.ros.subcriber import *
-from app.models.robot import Robot
-from app.models.position import Position
-
+from utils.scheduling import Actions
+from utils.vntime import *
 from app import redisClient
 # from app.ros.realtime import RobotRuning
 
@@ -23,6 +16,13 @@ class OrderApiBase(BaseApiPagination):
     def __init__(self):
         BaseApiPagination.__init__(self, Order, "/order-base")
 
+def send_order_id(orderId):
+    extOrder = redisClient.lrange("orderList",0,-1)
+    extOrder.append(orderId) 
+    redisClient.lpush("orderList",*extOrder)
+
+def printmessage():
+    print("hello")
 
 class OrderApi(ApiBase):
     @ApiBase.exception_error
@@ -61,7 +61,7 @@ class OrderApi(ApiBase):
     @ApiBase.exception_error
     def post(self):
         """
-        Thêm một order mới
+        Thêm một order mới, khi đến thời gian start_time của order sẽ gửi một order_id của order vừa tạo xuống redis
         URL: '/order'
         Method: POST
         """
@@ -69,7 +69,17 @@ class OrderApi(ApiBase):
         order = Order(start_time = data['start_time'], end_time = data['end_time'], robot_id = data['robot_id'], mission_id = data['mission_id'])
         db.session.add(order)
         db.session.commit()
-        return create_response_message("Thêm mới thành công", 200)
+        timeString = VnTimestamp.get_time_str(data['start_time'])
+        logging.warning(order.id)
+
+        Actions.get_instance().add_action({
+            order.id : {
+                "time" : timeString,
+                "func" : send_order_id(order.id)
+            }
+        })
+        logging.warning(timeString)
+        return create_response_message(f"Thêm mới thành công", 200)
 
     @ApiBase.exception_error
     def delete(self):
@@ -87,11 +97,25 @@ class OrderApi(ApiBase):
 
 
 class RunNowOrder(ApiBase):
-    def get(self):
+    # def get(self):
+    #     """
+    #     Khi nhấn Run Now của Order đang ở trạng thái Waitting thì sẽ gửi Order_id vào Key "robot{id}/command" của Server Redis
+    #     """
+    #     data = request.get_json(force = True) 
+    #     order = Order.query.get(data['id'])
+    #     redisClient.rpush(f"robot{order.robot_id}/command", f"{data['id']}")
+    #     return create_response_message("Gửi lệnh thành công", 200)
+
+    def post(self):
         """
-        Khi nhấn Run Now của Order đang ở trạng thái Waitting thì sẽ gửi Order_id vào Key "robot{id}/command" của Server Redis
+        Khi nhấn Run Now của Order đang ở trạng thái Waitting thì sẽ gửi Order_id vào Key của Server Redis
         """
         data = request.get_json(force = True) 
-        order = Order.query.get(data['id'])
-        redisClient.rpush(f"robot{order.robot_id}/command", f"{data['id']}")
-        return create_response_message("Gửi lệnh thành công", 200)
+        extOrder = redisClient.lrange("orderList",0,-1)
+        if data['order'] in extOrder:
+            return create_response_message("Invalid",409)
+        else:
+            extOrder.append(data['order']) 
+            redisClient.lpush("orderList",*extOrder)
+            return create_response_message("Gửi thành công",200)
+
