@@ -16,9 +16,13 @@ class OrderApiBase(BaseApiPagination):
     def __init__(self):
         BaseApiPagination.__init__(self, Order, "/order-base")
 
-def send_order_id(robotId, orderId):
+def send_order_id(orderId):
     def send():
-        redisClient.rpush(f"robot{robotId}/command", f"{orderId}")
+        extOrder = redisClient.lrange("orderList",0,-1)
+        extOrder.append(orderId) 
+        redisClient.delete("orderList")
+        redisClient.lpush("orderList",*extOrder)
+        # redisClient.rpush(f"robot{robotId}/command", f"{orderId}")
     return send
 
 
@@ -76,7 +80,7 @@ class OrderApi(ApiBase):
         Actions.get_instance().add_action({
             order.id : {
                 "time" : timeString,
-                "func" : send_order_id(orderId= order.id, robotId= order.robot_id)
+                "func" : send_order_id(orderId= order.id)
             }
         })
         logging.warning(timeString)

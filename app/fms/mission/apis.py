@@ -1,3 +1,4 @@
+from errno import ESTALE
 import logging
 from os import name
 import re
@@ -211,6 +212,25 @@ class MissionApi(Resource):
         data = request.get_json(force = True)
         mission = Mission.query.get(data['id'])
 
+        DataStepId =  []
+        for ValueId in data['steps']:
+            if "id" in ValueId:
+                DataStepId.append(ValueId['id'])
+            else:
+                pass
+
+
+ 
+        count = 0
+        for stepId in mission.steps:
+            if stepId.id not in DataStepId:
+                mission.steps.pop(count)
+                count = count -1
+            else:
+                count = count +1
+            
+ 
+
         assert mission is not None, f"Mission {data['id']} không tồn tại"
         for dataIndex in data:
             if dataIndex == 'name':
@@ -223,6 +243,9 @@ class MissionApi(Resource):
                         edit_step_data(data)
                     if "id" not in stepIndex:
                         new_step_data(mission, stepIndex['start_point_id'],stepIndex['end_point_id'],stepIndex['product_id'], stepIndex['action_start_point'], stepIndex['action_end_point'])
+
+
+
         return create_response_message("Sửa thành công", 200)
  
 

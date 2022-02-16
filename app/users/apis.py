@@ -260,6 +260,7 @@ class UserLogin(ApiBase):
 		args = ["username", "password"]
 		required_args = ["username", "password"]
 		parser = self.json_parser(args, required_args)
+
 		if parser["validate"]:
 			login_username = parser["data"]["username"]
 			login_password = parser["data"]["password"]
