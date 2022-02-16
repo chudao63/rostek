@@ -229,7 +229,6 @@ class MissionApi(Resource):
             else:
                 count = count +1
             
- 
 
         assert mission is not None, f"Mission {data['id']} không tồn tại"
         for dataIndex in data:
@@ -242,9 +241,7 @@ class MissionApi(Resource):
                     if "id" in stepIndex:
                         edit_step_data(data)
                     if "id" not in stepIndex:
-                        new_step_data(mission, stepIndex['start_point_id'],stepIndex['end_point_id'],stepIndex['product_id'], stepIndex['action_start_point'], stepIndex['action_end_point'])
-
-
+                        new_step_data(missionDb = mission, start_point= stepIndex['start_point_id'],end_point= stepIndex['end_point_id'],productData= stepIndex['product_id'],action_start_point= stepIndex['action_start_point'],action_end_point= stepIndex['action_end_point'])
 
         return create_response_message("Sửa thành công", 200)
  

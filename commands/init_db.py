@@ -29,7 +29,7 @@ class InitDbCommand(Command):
 
     def run(self):
         INITDB.ACTIVE = True
-        # init_db()
+        init_db()
         db.create_all()
         logging.info('Migrate done')
 
