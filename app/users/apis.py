@@ -273,7 +273,8 @@ class UserLogin(ApiBase):
 						'msg': f'Logged in as {login_username}',
 						'access_token': access_token,
 						'refresh_token': refresh_token,
-						'userrole': login_user.role_id
+						'userrole': login_user.role_id,
+						'username': login_username
 					}, 200
 				else:
 					return create_response_message("Sai mật khẩu", 401)
